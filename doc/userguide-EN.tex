@@ -1,0 +1,179 @@
+%%%%% Main pour appeler les sat %%%%%
+\documentclass[english, a4paper, 11pt, oneside]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% regle la mise en page, et les chapitres %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}
+\usepackage{babel}
+\usepackage[english]{minitoc}
+\usepackage{amssymb,amsbsy,amsfonts,amsmath,subeqnarray,eqnarray}
+\usepackage{amsfonts}
+\usepackage{vmargin}	% gere les marges
+\usepackage{color}  % gere toute les couleurs
+\usepackage{picins}
+\usepackage{graphicx}
+\usepackage{program}
+\usepackage{hyperref}
+\usepackage{atxy}
+
+\hypersetup{
+     backref=true,    %permet d'ajouter des liens dans...
+     pagebackref=true,%...les bibliographies
+     hyperindex=true, %ajoute des liens dans les index.
+     colorlinks=true, %colorise les liens
+     breaklinks=true, %permet le retour a la ligne dans les liens trop longs
+     urlcolor= blue,  %couleur des hyperliens
+     linkcolor= blue, %couleur des liens internes
+     bookmarks=true,  %cree des signets pour Acrobat
+     bookmarksopen=true,            %si les signets Acrobat sont crees,
+                                    %les afficher completement.
+     pdftitle={Userguide IFDDA}, %informations apparaissant dans
+     pdfauthor={Patrick C. Chaumet},     %dans les informations du document
+     pdfsubject={IFDDA}          %sous Acrobat.
+}
+
+
+
+%%%%%%%%% declaration pour references comme ds revtex 4 %%%%%%%
+\usepackage[numbers,super,sort&compress]{natbib}
+\makeatletter \DeclareRobustCommand\onlinecite{\@onlinecite}
+\def\@onlinecite#1{\begingroup\let\@cite
+\NAT@citenum\citealp{#1}\endgroup} \makeatother
+%%%%%%%%% change numerotation des footnotes %%%%%%%%%%%%%%%%%
+\renewcommand{\thefootnote}{\roman{footnote}}
+
+% A4wide pour elargir la page....
+
+%%%% redefini les captions
+\usepackage[small]{caption2}
+\renewcommand{\captionfont}{\it \small}
+\renewcommand{\captionlabelfont}{\it \bf \small}
+\renewcommand{\captionlabeldelim}{ :}
+\setlength{\captionmargin}{20 pt}%\captionmargin
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% regle des marges %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setmargins{25mm}{16mm}{150mm}{240mm}{10mm}{5mm}{10mm}{10mm}
+%           left  top   width  height head  hsep foot  fskip
+\setcounter{secnumdepth}{7}
+\setcounter{tocdepth}{7}
+\setcounter{minitocdepth}{2}
+%\setcounter{lofdepth}{2}
+%\setlength{\doublerulesep}{\arrayrulewidth} %% pour les tableaux(E)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%% style de la page %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{gris}{gray}{0.50}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO,RE]{\bfseries\footnotesize\textcolor{gris}{\rightmark}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% style des chapitres %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\def\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
+\def\@makechapterhead#1{%
+  %\vspace*{50\p@}%
+  \vspace*{10\p@}%
+  {\parindent \z@ \centering \reset@font
+        \thickhrulefill\quad
+        \scshape \@chapapp{} \thechapter
+        \quad \thickhrulefill
+        \par\nobreak
+        \vspace*{10\p@}%
+        \interlinepenalty\@M
+        \hrule
+        \vspace*{10\p@}%
+        \Huge \bfseries #1\par\nobreak
+        \par
+        \vspace*{10\p@}%
+        \hrule
+    %\vskip 40\p@
+    \vskip 100\p@
+  }}
+\def\@makeschapterhead#1{%
+  %\vspace*{50\p@}%
+  \vspace*{10\p@}%
+  {\parindent \z@ \centering \reset@font
+        \thickhrulefill
+        \par\nobreak
+        \vspace*{10\p@}%
+        \interlinepenalty\@M
+        \hrule
+        \vspace*{10\p@}%
+        \Huge \bfseries #1\par\nobreak
+        \par
+        \vspace*{10\p@}%
+        \hrule
+    %\vskip 40\p@
+    \vskip 100\p@
+  }}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% L'environnement changemargin décrit ci-dessous permet de
+% modifier localement les marges d'un document. Il prend deux
+% arguments, la marge gauche et la marge droite (ces arguments
+% peuvent prendre des valeurs négatives).
+%%%% debut macro %%%%
+\newenvironment{changemargin}[2]{\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{0pt}%
+\setlength{\rightmargin}{0pt}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{0pt plus 1pt}%
+\addtolength{\leftmargin}{#1}%
+\addtolength{\rightmargin}{#2}%
+}\item }{\end{list}}
+%%%%%%%%%%%
+\interfootnotelinepenalty=10000
+%%%evite les orphelins
+\widowpenalty=10000
+\clubpenalty=10000
+\raggedbottom
+
+
+
+%%%% fin macro %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% Debut du document %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\frontmatter 
+\include{def}
+\pagenumbering{roman}
+\include{titre}
+\newpage{\pagestyle{empty}\cleardoublepage}
+\dominitoc 
+\newpage{\pagestyle{empty}\cleardoublepage}
+\tableofcontents
+\clearpage{\pagestyle{empty}\cleardoublepage}
+\addstarredchapter{List of figures}
+\listoffigures
+\clearpage{\pagestyle{empty}\cleardoublepage}
+%\include{remerciements}
+\mainmatter 
+\pagenumbering{arabic}
+\include{chap1a}   %    Generalites 
+\include{chapapproxa}
+\include{chappolaa}   %    Gestion des configurations
+\include{chap2a}   %    Gestion des configurations
+\include{chap3a}   %    Illumination
+\include{chap4a}   %    Définition de l'objet
+\include{chap5a} % Etude
+\include{chap6a}   %    Représentation des résultats 
+\include{chap7a}   %    Output file for matlab
+
+\bibliographystyle{apsrev} 
+\bibliography{bibliographie}
+
+
+
+\end{document}

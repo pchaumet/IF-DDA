@@ -1,0 +1,299 @@
+\chapter{Propriétés de l'illumination}\label{chap3}
+\markboth{\uppercase{Propriétés de
+    l'illumination}}{\uppercase{Propriétés de l'illumination}}
+
+\minitoc
+
+\section{Introduction}
+
+Dans la section propriétés de l'illumination, le champ {\it
+  Wavelength} permet de rentrer la longueur d'utilisation. Celle-ci se
+rentre en nanomètre. Le champ $P_0$ permet de rentrer la puissance du
+faisceau laser en Watt.  Le champ $W_0$ en nanomètre permet de rentrer
+pour une onde plane le rayon du faisceau laser et pour un faisceau
+Gaussien la col du faisceau
+
+
+\section{Le type de faisceau}
+
+\subsection{Introduction}
+
+Il y a six faisceau prédéfinis, leur direction de propagation est
+toujours définie de la même manière, avec deux angles $\theta$ et
+$\varphi$. Ils sont reliés à la direction donnée par le vecteur d'onde
+de la manière suivante:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be k_x & = & k_0 \sin \theta \cos\varphi \\
+k_y & = & k_0 \sin \theta \sin\varphi \\
+k_z & = & k_0 \cos \theta \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+où $\ve{k}_0=(k_x,k_y,k_z)$ est le vecteur d'onde parallèle à la
+direction du faisceau incident et $k_0$ le nombre d'onde, voir
+Fig.~\ref{faisceau}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=8.0cm,draft=false]{faisceau.eps}
+\end{center}
+\caption{Définition de la direction du faisceau}
+\label{faisceau}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Pour la polarisation on utilise le plan $(x,y)$ comme surface de
+référence. Alors on peut définir une polarisation TM ($p$) et TE ($s$)
+comme en présence d'une surface, voir Fig.~\ref{pola}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=8.0cm,draft=false]{pola.eps}
+\end{center}
+\caption{Définition de la polarisation du faisceau.}
+\label{pola}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Le repère $(x,y,z)$ sert de référentiel absolu par rapport auquel les
+différents éléments (illumination plus objets) sont repérés.
+
+\subsection{Linear plane wave}
+
+{\it Linear plane wave } est une onde plane polarisée linéairement. La
+première ligne est relative à $\theta$ et la deuxième à $\varphi$. La
+troisième ligne est liée à la polarisation, pola=1 en TM et pola=0 en
+TE.  A noter que la polarisation n'est pas forcément purement en TE ou
+TM: soit ${\rm pola}\in[0~1]$ tel que $E^2_{\rm TM}={\rm pola}^2E^2$
+et $E^2_{\rm TE}=(1-{\rm pola}^2)E^2$.
+
+A noter que la phase est toujours prise nulle à l'origine du repère:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(\ve{r})= \ve{E}_0 e^{i\ve{k}.\ve{r}}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec ${\rm Irradiance}=P_0/S$ où $S=\pi w_0^2$ est la surface du
+faisceau et $E_0=\sqrt{2 {\rm Irradiance}/c/\varepsilon_0}$.
+
+\subsection{Circular plane wave}
+
+{\it Circular plane wave } est une onde plane polarisée
+circulairement. La première ligne est relative à $\theta$ et la
+deuxième à $\varphi$. La troisième ligne est liée à la polarisation
+que l'on peut choisir droite (1) ou gauche (-1).
+
+A noter que la phase est prise nulle à l'origine du repère:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(\ve{r})= \ve{E}_0 e^{i\ve{k}.\ve{r}}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec ${\rm Irradiance}=P_0/S$ où $S=\pi w_0^2$ est la surface du
+faisceau et $E_0=\sqrt{2 {\rm Irradiance}/c/\varepsilon_0}$.
+
+
+
+\subsection{Multiplane wave}
+
+{\it Multiplane wave} consiste à choisir comme illumination
+différentes onde planes cohérentes. Il faut d'abord choisir le nombre
+d'onde plane désiré, puis pour chacune des ondes planes, il faut
+choisir son incidence et sa polarisation.  Dans ce cas, il faut
+choisir aussi son amplitude complexe ce qui permet de déphaser les
+ondes planes les unes par rapport aux autres. La somme de la puissance
+de chacune des ondes planes est égales à $P_0$, et chaque puissance
+associée à une onde plane est calculée proportionnellement à son
+amplitude.
+
+\subsection{Antenna}
+
+{\it Antenna} consiste à placer un dipôle, $\ve{p}$, comme source. On
+doit donc donner sa localisation dans les coordonnées cartésiennes,
+ainsi que son orientation, toujours en utilisant les angles
+d'Euler. Son amplitude est calculée telle que sa puissance rayonnée
+est égale à $P_0$, c'est à dire:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be P_0 & = & \frac{1}{4\pi\varepsilon_0} \frac{k^4 c}{3} \| \ve{p}
+\|^2 . \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ A noter que l'antenne peut être en dehors ou dans l'objet.
+
+\subsection{Linear Gaussian}
+
+{\it Linear Gaussian} est une onde gaussienne polarisée
+linéairement. La première ligne est relative à $\theta$ et la deuxième
+à $\varphi$. La troisième ligne est liée à la polarisation, pola=1 en
+TM et pola=0 en TE.  A noter que la polarisation n'est pas forcément
+purement en TE ou TM: soit ${\rm pola}\in[0~1]$ tel que
+$E^2_{\rm TM}={\rm pola}^2E^2$ et $E^2_{\rm TE}=(1-{\rm pola}^2)E^2$.
+
+Les trois lignes suivantes permettent de fixer la position du centre
+du col en nanomètres dans le repère $(x,y,z)$.
+
+A noter que cette onde Gaussienne peut avoir un col très faible, car
+elle est calculée sans aucune approximation à travers un spectre
+d'onde plane. La définition du col est la suivante, pour un faisceau
+de propageant suivant l'axe $z$:\cite{Agrawal_JOSA_79}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E(x,y,0)= E_0 e^{-\rho^2/(2 w_0^2)}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec $\rho=\sqrt{x^2+y^2}$. A partir de cette définition de
+l'amplitude du champ en $z=0$, le faisceau Gaussien est calculé
+rigoureusement à partir d'un spectre d'onde plane. Si le faisceau est
+polarisé suivant l'axe $x$ nous avons:\cite{Chaumet_JOSAA_06}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_x & = & E_0 \int_{0}^{k_0} w_0^2
+\exp\left(-\frac{w_0^2(k_0^2-k_z^2)}{2}\right) \exp(ik_z z)
+J_0\left(\rho\sqrt{k_0^2-k_z^2}\right) k_z {\rm d}k_z
+\label{eqgausint} \\ E_z & = & -i E_0 \frac{x}{\rho} \int_{0}^{k_0}
+w_0^2 \exp\left(-\frac{w_0^2(k_0^2-k_z^2)}{2}\right) \exp(ik_z z)
+J_1\left(\rho\sqrt{k_0^2-k_z^2}\right)\sqrt{k_0^2-k_z^2} {\rm d}k_z,
+\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec $J_1$ et $J_0$ les fonctions de Bessel. L'irradiance est calculée
+au centre du faisceau Gaussien. Le lien entre la puissance est
+l'amplitude $E_0$ est:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be P_0 & = & \frac{\pi w_0^2}{ 4 } c\varepsilon_0 E_0^2\left(
+  1+\frac{(k_0 w_0)^2-1}{k_0 w_0} \frac{\sqrt{\pi}}{2} {\rm Im}[
+  w(k_0w_0)] \right) \\
+{\rm Irradiance} & = & \frac{E_0^2}{ 4 } c\varepsilon_0 \left(
+  1+\frac{(k_0 w_0)^2-1}{k_0 w_0} \frac{\sqrt{\pi}}{2} {\rm Im}\left[
+    w(k_0w_0/\sqrt{2})\right]  \right) , \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+et $w()$ est la fonction Faddeeva. Si on suppose $w()\approx 0$, nous
+avons $P_0=\pi w_0^2 {\rm Irradiance}$ et on retrouve la relation vue
+pour l'onde plane.
+
+\subsection{Circular Gaussian} 
+
+{\it Circular Gaussian} est une onde gaussienne polarisée
+circulairement. La première ligne est relative à $\theta$ et la
+deuxième à $\varphi$.  La troisième ligne est liée à la polarisation
+que l'on peut choisir droite (1) ou gauche (-1).
+
+
+Les trois lignes suivantes permettent de fixer la position du centre
+du col  en nanomètres  dans le repère $(x,y,z)$.
+
+Le calcul se fait donc comme gwavelinear mais avec une quadrature
+entre la composante $y$ et $x$.
+
+\subsection{Circular and linear Gaussian (FFT)} 
+
+{\it Circular and linear Gaussian (FFT)} est une onde gaussienne basée
+sur le calcul précédent, respectivement. En effet, l'onde plane
+incident pour le premier plan de l'objet est calculé avec les
+intégrales définies au dessus, Eq.~(\ref{eqgausint}), puis après le
+faisceau gaussien est propagé par FFT comme la beam propagation
+method. Cela a l'avantage d'aller plus vite quand la boîte est grande
+car les intégrales sont calculées que sur le premier plan. Par contre
+il faut choisir un nombre de points de la FFT suffisamment grand pour
+ne pas tronquer le faisceau gaussien et ne pas avoir des problèmes de
+périodisation.
+
+
+\subsection{Linear Guaussian (para)}
+
+
+{\it Linear Guaussian (para)} est une onde gaussienne dans le cadre de
+l'approximation paraxiale polarisée linéairement. La première ligne
+est relative à $\theta$ et la deuxième à $\varphi$. La troisième ligne
+est liée à la polarisation, pola=1 en TM et pola=0 en TE.  A noter que
+la polarisation n'est pas forcément purement en TE ou TM: soit
+${\rm pola}\in[0~1]$ tel que $E^2_{\rm TM}={\rm pola}^2E^2$ et
+$E^2_{\rm TE}=(1-{\rm pola}^2)E^2$.
+
+Les trois lignes suivantes permettent de fixer la position du centre
+du col  en nanomètres dans le repère $(x,y,z)$.
+
+L'onde est donc définie de la manière suivante si elle est polarisée
+suivant $x$ et se propage suivant l'axe $z$:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_x & = & E_0 \sqrt{2}\frac{w_0}{w}e^{-\rho^2/w^2}e^{i k_0 \rho^2
+  R(z)/2 }e^{i(k_0 z+\eta)} \\
+w & = & \sqrt{2} w_0 \sqrt{1+\frac{z^2}{z_0^2} } \\
+z_0 & = & k_0 w_0^2 \\
+R(z) & = & \frac{z}{z^2+z_0^2} \\
+\eta & = & \tan^{-1}(z/z_0). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+On remarque que quand $z=0$ l'onde gaussienne à la même amplitude que
+celle calculée rigoureusement. Le champ à l'origine (au centre du
+col) et l'irradiance se calculent de la manière suivante:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_0 & = & \sqrt{\frac{2 P_0}{\pi c \varepsilon_0 w_0^2} } \\
+{\rm irradiance} & = & c \varepsilon_0 E_0^2/2 = \frac{P_0}{\pi w_0^2}
+.\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+L'irradiance est calculée au centre du col.  A noter que cette onde
+Gaussienne est calculée dans le cadre de l'approximation paraxiale et
+donc ne satisfait pas rigoureusement les équations de Maxwell.
+
+\subsection{Circular Gaussian (para)}
+
+{\it Circular Gaussian (para)} est une onde gaussienne polarisée
+circulairement. La première ligne est relative à $\theta$ et la
+deuxième à $\varphi$.  La troisième ligne est liée à la polarisation
+que l'on peut choisir droite ou gauche.
+
+
+Les trois lignes suivantes permettent de fixer la position du centre
+du col en nanomètres dans le repère $(x,y,z)$.
+
+Le calcul se fait donc comme gparawavelinear mais avec une quadrature
+entre la composante $y$ et $x$.
+
+
+\subsection{Arbitrary wave}
+
+Dans le cas d'un champ arbitraire celui-ci est défini par
+l'utilisateur. C'est à dire que celui-ci doit créer lui même le champ,
+et il convient alors de faire ces fichiers en respectant les
+conventions choisies par le code. 
+
+
+La description de la discrétisation du champ incident est faite dans
+un fichier qui est demandé quand on clique sur {\it Props}. Par
+exemple pour la partie réelle de la composante $x$ du champ il doit
+être construit de la manière suivante:
+
+nx,ny,nz 
+
+dx,dy,dz
+
+xmin,ymin,zmin
+
+\begin{itemize}
+\item  nx est le nombre de maille suivant l'axe $x$
+\item  ny est le nombre de maille suivant l'axe $y$
+\item  nz est le nombre de maille suivant l'axe $z$
+\item  dx est le pas suivant l'axe $x$
+\item  dy est le pas suivant l'axe $y$
+\item  dz est le pas suivant l'axe $z$
+\item xmin l'abscisse la plus petite
+\item ymin l'ordonnée la plus petite
+\item zmin la cote la plus petite
+\end{itemize}
+
+puis les fichiers du champ électrique sont créés de la manière
+suivante pour chacune des composantes du champ partie réelle et
+imaginaire séparées:
+
+\vspace{10mm}
+
+open(11, file='Exr.mat', status='new', form='formatted', access='direct', recl=22)
+
+{\bf do} k=1,nz
+
+\hspace{5mm} {\bf do} j=1,ny
+
+\hspace{10mm} {\bf do} i=1,nx 
+
+\hspace{15mm} ii=i+nx*(j-1)+nx*ny*(k-1)
+
+\hspace{15mm} write(11,FMT='(D22.15)',rec=ii) dreal(Ex)
+
+\hspace{10mm} {\bf enddo}
+
+\hspace{5mm} {\bf enddo}
+
+{\bf enddo}
+
+\vspace{10mm}
+
+Attention la maille de discrétisation de l'objet doit être plus grande
+que la maille de discrétisation du champ.
+

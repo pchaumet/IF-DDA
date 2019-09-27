@@ -1,0 +1,204 @@
+\chapter{Approximated method}\label{chapapprox}
+\markboth{\uppercase{Approximated method}}{\uppercase{Approximated method}}
+
+\minitoc
+
+\section{Introduction}
+
+In the previous chapter we have presented the DDA in a simple way
+where the object under study is a set of radiating dipole. In an
+approach more rigorous, with the Maxwell's equation, we get in
+Gaussian unit:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \venab \times \ve{E}^{\rm m}(\ve{r}) & = & i \frac{\omega}{c}
+\ve{B}(\ve{r}) \\
+\venab \times \ve{B}(\ve{r}) & = & -i \frac{\omega}{c}
+\varepsilon(\ve{r}) \ve{E}^{\rm m}(\ve{r}), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $\varepsilon(\ve{r})$ denotes the relative permittivity of the
+object and $\ve{E}^{\rm m}$ the macroscopic field inside the object,
+then we get
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \venab \times ( \venab \times \ve{E}^{\rm m}(\ve{r}) ) & = &
+\varepsilon(\ve{r}) k_0^2 \ve{E}^{\rm m}(\ve{r}), \ee 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with $k_0=\omega^2/c^2$. Using the relationship
+$\varepsilon=1+4\pi \chi$, where $\chi$ denotes the linear field
+susceptibility, we have:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \venab \times ( \venab \times \ve{E}^{\rm m}(\ve{r}) ) -k_0^2
+\ve{E}^{\rm m}(\ve{r}) & = & 4\pi \chi(\ve{r}) k_0^2 \ve{E}^{\rm
+  m}(\ve{r}) . \label{champref}\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+To solve this equation one needs the Green function defined as:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \venab \times ( \venab \times \ve{T}(\ve{r},\ve{r}') ) -k_0^2
+\ve{T}(\ve{r},\ve{r}') & = & 4\pi k_0^2 \ve{I}
+\delta(\ve{r}-\ve{r}'), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and the solution of Eq.~(\ref{champref}) reads:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm m}(\ve{r}) = \ve{E}_0(\ve{r}) +\int_{\Omega}
+\ve{T}(\ve{r},\ve{r}') \chi(\ve{r}') \ve{E}^{\rm m}(\ve{r}') {\rm d}
+(\ve{r}'),\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $\ve{E}^0$ is the incident field and $\Omega$ the support of the
+object under study. When we solve Eq.~(\ref{champref}) the field
+$\ve{E}^{\rm m}$ corresponds to macroscopic field inside the object.
+To solve Eq.~(\ref{champref}) we discretize the object in a set of $N$
+subunits with a cubic meshsize $d$, then the integral equation becomes
+the sum of $N$ integrals:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm m}(\ve{r}_i) = \ve{E}^0(\ve{r}_i) +\sum_{j=1}^{N}
+\int_{V_j} \ve{T}(\ve{r}_i,\ve{r}') \chi(\ve{r}') \ve{E}^{\rm
+  m}(\ve{r}') {\rm d} \ve{r}',\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with $V_j=d^3$.  Assuming the field, the Green function and the
+susceptibility constant over a subunit we get:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm m}(\ve{r}_i) = \ve{E}^0(\ve{r}_i) +\sum_{j=1}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \chi(\ve{r}_j) \ve{E}^{\rm m}(\ve{r}_j)
+d^3.\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using, in first approximation (the radiative reaction term neglected)
+$\int_{V_i}\ve{T}(\ve{r}_i,\ve{r}') {\rm d} \ve{r}'= -4\pi/3
+$~\cite{Yaghjian_PIEEE_80}), we get:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm m}(\ve{r}_i) = \ve{E}^0(\ve{r}_i) +\sum_{j=1,i\neq j}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \chi(\ve{r}_j) d^3 \ve{E}^{\rm
+  m}(\ve{r}_j)-\frac{4\pi}{3}\chi(\ve{r}_i) \ve{E}^{\rm
+  m}(\ve{r}_i),\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+then we can write
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}(\ve{r}_i) & = & \ve{E}^0(\ve{r}_i) +\sum_{j=1,i\neq j}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \alpha_{\rm CM}(\ve{r}_j) \ve{E}(\ve{r}_j) \\
+{\rm with} \phantom{000} \ve{E}(\ve{r}_i) & = &
+\frac{\varepsilon(\ve{r}_i)+2}{3}
+\ve{E}^{\rm m}(\ve{r}_i) \\
+\alpha_{\rm CM}(\ve{r}_j) & = & \frac{3}{4\pi} d^3
+\frac{\varepsilon(\ve{r}_i)-1}{\varepsilon(\ve{r}_i)+2} .\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The field $\ve{E}(\ve{r}_i)$ is the local field, {\it i.e.}  the field
+at the position $i$ in the absence of the subunit $i$.Then the linear
+system can be written formally as
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E} = \ve{E}^0 + \ve{A} \ve{D}_\alpha \ve{E}, \label{eqmsym}\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $\ve{A}$ is a matrix which contains all the Green function and
+$\ve{D}_\alpha$ is a tridiagonal matrix with the polarizabilities of
+each element of discretization. In the next chapter we detail how to
+solve Eq.~(\ref{eqmsym}) rigorously, but in this present chapter we
+detail different approached methods to avoid the tedious resolution of
+Eq.~(\ref{eqmsym}).  The scattered field is computed through
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm d}(\ve{r}) & = & \sum_{j=1}^N \ve{T}(\ve{r},\ve{r}_j)
+\alpha(\ve{r}_j) \ve{E}(\ve{r}_j). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{Approximated method}
+
+
+\subsection{Born}
+
+
+The most simple approximation is the Born approximation which consists
+to assume the field inside the object equal to the incident field for
+each element of discretization:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}^{\rm m}(\ve{r}_i) = \ve{E}^0(\ve{r}_i), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This approximation hold if the contrast is weak and the object small
+compare to the wavelength of illumination.
+
+
+\subsection{Renormalized Born }
+
+The renormalized Born approximation consists to assume the local field
+inside the object equal to the incident field :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(\ve{r}_i) = \ve{E}^0(\ve{r}_i). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In that case the macroscopic field reads:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}^{\rm m}(\ve{r}_i) = \frac{3}{\varepsilon(\ve{r}_i)+2}
+\ve{E}^0(\ve{r}_i). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This approximation is better that the classical Born approximation
+when the permittivity is high.
+
+
+\subsection{Born at the order 1}
+
+To be more precise that the renormalized Born approximation, one can
+perform the Born series at the order one:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}(\ve{r}_i) & = & \ve{E}^0(\ve{r}_i) +\sum_{j=1,i\neq j}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \alpha(\ve{r}_j) \ve{E}^0(\ve{r}_j). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In that case we take into account the simple scattering.
+
+
+\subsection{Rytov}
+
+The Rytov approximation consist to take into account the phase
+variation inside the object:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_\beta^{\rm m}(\ve{r}_i) & = & E_\beta^0(\ve{r}_i) e^{E^{\rm
+    d}_\beta(\ve{r}_i)/E^0_\beta(\ve{r}_i)}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with $\beta=x,y,z$. Notice that when a component of the incident field
+is null, then $E_\beta^{\rm m}=0$. This approximation permits to deal
+with large object compare to the wavelength of illumination, but
+always with low contrast of permittivity. The diffracted field reads:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm d}(\ve{r}_i) & = & \sum_{j=1}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \chi(\ve{r}_j) \ve{E}^0(\ve{r}_j), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Renormalized Rytov }
+
+The renormalized Rytov approximation deals with the local field:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_\beta(\ve{r}_i) & = & E_\beta^0(\ve{r}_i) e^{E_\beta^{\rm
+    d}(\ve{r}_i)/E_\beta^0(\ve{r}_i)}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and the diffracted field reads:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm d}(\ve{r}_i) & = & \sum_{j=1,i\neq j}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \alpha(\ve{r}_j) \ve{E}^0(\ve{r}_j). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\subsection{Beam propagation method (BPM)}
+
+BPM is a class of algorithms designed for calculating the optical
+field distribution in space for very large object compare to the
+wavelength of illumination. BPM allows to obtain the electromagnetic
+field via alternating evaluation of diffraction and refraction steps
+handled in the Fourier and space domains It is important to note that
+BPM ignores reflections, for more details see
+Ref.~\onlinecite{Kamilov_IEEE_16}. In final the field reads
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}^{\rm m}(x,y,z+d)= e^{i k_0 n(x,y,z+d) d } {\cal
+  F}^{-1}\left[ {\cal F} [\ve{E}^{\rm m}(x,y,z)] e^{-i(k_0-k_z) d}
+\right], \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where the field at the position $(x,y,z+d)$ is computed with the
+permittity at the same position and the field at the previous plane
+$z$.  It is clear with this relation that the field is propagated only
+in the direction of the positive $z$. Note that the size of the FFT is
+given by the drop down menu and to avoid angle of incidence too
+high. Notice that the diffracted field is computed like the other
+methods which is more precise that the Kirchhoff's equation.
+
+\subsection{Renormalized BPM}
+
+We can do the same but with the local field:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(x,y,z+d)= e^{i k_0 n(x,y,z+d) d } {\cal F}^{-1}\left[ {\cal
+    F} [\ve{E}(x,y,z)] e^{-i(k_0-k_z) d} \right]. \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

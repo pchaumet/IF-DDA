@@ -1,0 +1,134 @@
+\chapter{Numerical details}\label{chappola}
+\markboth{\uppercase{Numerical details}}{\uppercase{Numerical details}}
+
+\minitoc
+
+\section{Polarizability}
+
+
+The DDA discretizes the object into a set of punctual dipoles, where a
+polarizability $\alpha$ is associated to each punctual dipoles. There
+are different forms for this polarizability. The first to have been
+used, and the simplest, is the relation of Clausius Mossotti
+(CM)~\cite{Purcell_AJ_73}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm CM} & = & \frac{3}{4\pi}
+\frac{\varepsilon-1}{\varepsilon+2}d^3=
+\frac{\varepsilon-1}{\varepsilon+2}a^3, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $\varepsilon$ denotes the permittivity of the object, $d$ the
+size of the cubic meshsize and
+$a=\left(\frac{3}{4\pi}\right)^{\frac{1}{3}}d$ the radius of the
+sphere of the same volume than the cubic meshsize of the side
+$d$. Unfortunately, this relation does not keep the energy and, then,
+it is necessary to introduce a radiative reaction term that takes into
+account the fact that charges in movement lose energy, and the
+polarizability is, then, written as ~\cite{Draine_AJ_88}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm RR} & = & \frac{\alpha_{\rm CM}}{1-\frac{2}{3} i k_0^3
+  \alpha_{\rm CM}}. \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+After different forms of the polarizability have been established in
+order to improve the precision of the DDA and take into account the
+non-punctual character of the dipole, and we may quote, among the best
+known, the ones by Goedecke and O'Brien~\cite{Goedecke_AO_88},
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm GB} & = & \frac{\alpha_{\rm CM}}{1-\frac{2}{3} i k_0^3
+  \alpha_{\rm CM}-k_0^2 \alpha_{\rm CM}/a}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+by Lakhtakia~\cite{Lakhtakia_IJMPC_92}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm LA} & = & \frac{ \alpha_{\rm CM} }{1- 2
+  \frac{\varepsilon-1}{\varepsilon+2}\left[ (1-i k_0 a)e^{i k_0
+      a}-1\right] } \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and Draine and Goodman~\cite{Draine_AJ_93}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm LR} & = & \frac{ \alpha_{\rm CM}}{ 1 + \alpha_{\rm CM}
+  \left[ \frac{(b_1+\varepsilon b_2 +\varepsilon b_3
+      S)k_0^2}{d}-\frac{2}{3} i k_0^3 \right] }, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with $b_1=-1.891531$, $b_2=0.1618469$, $b_3=-1.7700004$ and $S=1/5$.
+
+Inside the code by default, it is $\alpha_{\rm RR}$ which is used. In
+the case when the permittivity is anisotropic only $\alpha_{\rm RR}$
+is going to be used.
+
+A last polarizability is introduced (PS) that only works for
+homogeneous spheres and is particularly precize for metals.  This
+consists of making a change of the polarizability of the elements on
+the edge of the sphere taking into account the factor of
+depolarization of the sphere.~\cite{Rahmani_AJ_04}
+
+
+\section{Correction to the tensor of susceptibility}
+
+The tensor of susceptibility (or dyadic Green function) of the field
+connects the dipole to the position $\ve{r}_j$ to the field radiated
+at the position $\ve{r}_i$ by the relation :
+$\ve{E}(\ve{r}_i)= \ve{T}(\ve{r}_i,\ve{r}_j)\ve{p}(\ve{r}_i)$. But
+inside the DDA, considering the fact that the dipoles are associated
+with a certain volume, the following integration should be
+written~\cite{Chaumet_PRE_04}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(\ve{r}_i)= \int_{V_j} \ve{T}(\ve{r}_i,\ve{r})\ve{p}(\ve{r})
+{\rm d} \ve{r} \approx \left[ \int_{V_j} \ve{T}(\ve{r}_i,\ve{r}) {\rm
+    d} \ve{r}\right] \ve{p}(\ve{r}_j), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+supposing the meshsize small enough to be able to consider the field
+as being uniform in it.  So, the tensor must be integrated upon the
+meshsize $V_j$. This integration is not analytic (it has to be done
+numerically and this takes time) and, in fact, it only serves for the
+dipoles which are the nearest to the observation, after that, the
+integration does not bring any more precision. So, in the code, we
+propose the possibility to integrate upon the nearest mesh sizes:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \int_{V_j} \ve{T}(\ve{r}_i,\ve{r}) {\rm d} \ve{r} & ~~~~~{\rm
+  if}~~~~~& \frac{\|\ve{r}_i-\ve{r}_j\|}{d} \le n \\
+\ve{T}(\ve{r}_i,\ve{r}_j) & ~~~~~{\rm if}~~~~~&
+\frac{\|\ve{r}_i-\ve{r}_j\|}{d} \gt n. \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+$n$ may take the value entire 0 (by default) until 5.
+
+\section{Solve the system of linear equation}
+
+In order to know the electric field in the object, {\it i.e.} the
+field at the position of the $N$ elements of discretization, we have
+to solve the following system of linear equation:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E} = \ve{E}_0 + \ve{A} D_\alpha \ve{E},\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $\ve{E}_0$ is a vector of size $3N$ which contains the incident
+field at the discretization elements. $\ve{A}$ is a matrix
+$3N\times 3N$ which contains all the field tensor susceptibility and
+$D_\alpha$ is a diagonal matrix $3N\times 3N$, if the object is
+isotropic, or diagonal block $3\times 3$ if the object is anisotropic.
+$\ve{E}$ is the vector $3N$ which contains the unknown electric local
+fields. The equation is solved by a non-linear iterative method. The
+code proposes numerous iterative methods, and the one used by default
+is GPBICG because it is the most efficient in most cases
+~\cite{Chaumet_OL_09}.  The code stops when the residue,
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be r & = & \frac{ \|\ve{E}-\ve{A} D_\alpha \ve{E} -\ve{E}_0\|} {
+  \|\ve{E}_0 \|}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+is under the tolerance given by the user. $10^{-4}$ is the tolerance
+used by default, because it is a good compromise between speed and
+precision. Please find below the different iterative method possible
+in the code:
+\begin{itemize}
+\item GPBICG1 : Ref.~\onlinecite{Thuthu_IMECS_09}
+\item GPBICG2 : Ref.~\onlinecite{Thuthu_IMECS_09}
+\item GPBICGsafe : Ref.~\onlinecite{Fujino_IMECS_12}
+\item GPBICGAR1 : Ref.~\onlinecite{Thuthu_IMECS_09}
+\item GPBICGAR2 : Ref.~\onlinecite{Thuthu_IMECS_09}
+\item QMRCLA : Ref.~\onlinecite{Cunha_ANM_95}
+\item TFQMR : Ref.~\onlinecite{Cunha_ANM_95}
+\item CG : Ref.~\onlinecite{Cunha_ANM_95}
+\item BICGSTAB : Ref.~\onlinecite{Cunha_ANM_95}
+\item QMRBICGSTAB1 : Ref.~\onlinecite{Chan_SIAMJSC_94}
+\item QMRBICGSTAB2 : Ref.~\onlinecite{Chan_SIAMJSC_94}
+\item GPBICOR : Ref.~\onlinecite{Zhao_CMA_13}
+\item CORS : Ref.~\onlinecite{Carpentieri_CEI_CEIW}
+\item BiCGstar-plus Ref.~\onlinecite{Fujino_WCE_15}
+\end{itemize}

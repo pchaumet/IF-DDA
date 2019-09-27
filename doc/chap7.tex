@@ -1,0 +1,145 @@
+\chapter{Fichiers de sortie pour matlab, octave,
+  scilab,...}\label{chap7}
+\markboth{\uppercase{Fichiers de sortie pour matlab, octave,
+    scilab,...}}{\uppercase{Fichiers de sortie pour matlab, octave,
+    scilab,...}}
+
+\minitoc
+
+\section{Introduction}
+
+Il n'est pas forcément nécessaire d'utiliser l'interface graphique du
+programme pour regarder les résultats.  Pour les sorties scalaires
+tous les résultats sont dans le fichier output et pour les images il
+est possible d'utiliser directement les fichiers de sortie en ascii ou
+en hdf5 et les lire à travers d'autres logiciels tels que Matlab,
+Octave, Scilab,...Dans le bin ifdda.m permet d'avoir une sortie matlab
+des figures.
+
+
+Quand l'option avancée est choisie, il est possible de choisir de
+sauvegader les données soit dans des fichiers .mat séparées, soit dans
+un seul fichier hdf5.
+
+\begin{itemize}
+
+\item Dans le cas du fichier en hdf5, il y a six groupes de créés:
+  option (les options choisies par l'utilisateur), near field (les
+  données de champ proche), microscopy (les données de la
+  microscopie), far field (les données du champ lointain), et dipole
+  (position des éléments de discrétisation et permittivité).
+
+\item Pour les fichier.mat toutes les sorties sont formatées sous la
+  forme d'un unique vecteur colonne ou deux vecteurs colonnes si le
+  nombre est un complexe (la partie réelle étant associée à la 
+première colonne et le partie imaginaire à la deuxième colonne).
+
+\item Dans le fichier hdf5 toutes les sorties sont formatées sous la
+  forme d'un unique vecteur colonne et avec deux tableaux séparés dans
+  le cas des nombres complexes.
+
+\item Dans le cas ou le fichier contient des données
+  tridimensionnelles, celles-ci sont toujours rangées de la manière
+  suivante:
+
+\hspace{5mm} {\bf do} i=1,nz
+
+  \hspace{10mm} {\bf do} j=1,ny
+
+ \hspace{15mm} {\bf do} k=1,nx
+
+      \hspace{20mm}  write(*,*) data(i,j,k)
+         
+   \hspace{15mm} {\bf enddo}
+
+  \hspace{10mm} {\bf enddo}
+
+ \hspace{5mm} {\bf enddo}
+
+ Les données tridimensionnelles seront repérées par (3D) en début de
+ ligne.
+
+\end{itemize}
+
+Un fichier matlab dans le bin est disponible. Son nom est ifdda.m et
+il permet de tracer toutes les courbes d'un coup à partir des options
+choisies dans le code. Si les fichiers tridimensionnels sont un peu
+gros (beaucoup de point de discrétisation), le chargement de ceux-ci
+peut prendre un peu de temps en .mat, le format hdf5 est alors plus
+rapide.
+
+\section{Liste de tous les fichiers de sortie}
+
+\begin{itemize}
+\item x,y,z représentent les différentes coordonnées utilisées.
+\item (3D) epsilon contient la permittivité de l'objet.
+\item (3D) xc,yc,zc contiennent les coordonnées de tous les points du
+  maillage.
+\item (3D) xwf,ywf,zwf contiennent les coordonnées de tous les points
+  du maillage dans lequel le champ proche est calculé quand l'option
+  champ large (wide field) est utilisée.
+\item (3D complexe) incidentfieldx (x,y) contient la composante x(y,z)
+  du champ incident dans l'objet uniquement.
+\item (3D) incidentfield contient le module du champ incident dans
+  l'objet uniquement.
+\item (3D complexe) macroscopicfieldx (x,y) contient la composante
+  x(y,z) du champ macroscopique dans l'objet uniquement.
+\item (3D) macroscopicfield contient le module du champ macroscopique
+  dans l'objet uniquement.
+\item (3D complexe) mlocalfieldx (x,y) contient la composante
+  x(y,z) du champ local dans l'objet uniquement.
+\item (3D) localfield contient le module du champ local dans l'objet
+  uniquement.
+\item (3D complexe) incidentfieldxwf (x,y) contient la composante
+  x(y,z) du champ incident dans la boite de champ proche en large
+  champ.
+\item (3D) incidentfieldwf contient le module du champ incident dans
+  la boite de champ proche en large champ.
+\item (3D complexe) macroscopicfieldxwf (x,y) contient la composante
+  x(y,z) du champ macroscopique dans la boite de champ proche en large
+  champ.
+\item (3D) macroscopicfieldwf contient le module du champ
+  macroscopique dans la boite de champ proche en large champ.
+\item (3D complexe) localfieldxwf (x,y) contient la composante
+  x(y,z) du champ local dans la boite de champ proche en large
+  champ.
+\item (3D) localfieldwf contient le module du champ local dans la
+  boite de champ proche en large champ.
+\item theta est un tableau qui contient tous les angles theta
+  correspondant à toutes les directions dans lesquelles le vecteur de
+  Poynting est calculé. Il est de taille (Ntheta+1)*Nphi.
+\item phi est un tableau qui contient tous les angles theta
+  correspondant à toutes les directions dans lesquelles le vecteur de
+  Poynting est calculé. Il est de taille (Ntheta+1)*Nphi.
+\item poynting contient le module du vecteur de poynting dans la
+  direction theta et phi de taille (Ntheta+1)*Nphi.
+\item (3D) forcex (y,z) contient la composante x de la force optique
+  dans l'objet uniquement.
+\item (3D) torquex (y,z) contient la composante x de la force optique
+  dans l'objet uniquement.
+\item (2D) fourier(x,y,z) contient le champ diffracté dans le plan
+  de fourier en module (x,y,z).
+\item (2D) fourierinc(x,y,z) contient le champ total dans le plan de
+  fourier en module (x,y,z).
+\item kxfourier contient les coordonnées du plan de Fourier.
+\item (2D) image(x,y,z) contient le champ diffracté dans le plan image
+  en module (x,y,z).
+\item (2D) imageinc(x,y,z) contient le champ total dans le plan image
+  en module (x,y,z).
+\item (2D) imagebf(x,y,z) contient le champ diffracté dans le plan
+  image en module (x,y,z) pour un microscope champ sombre.
+\item (2D) imageincbf(x,y,z) contient le champ total dans le plan
+  image en module (x,y,z) pour un microscope brightfield.
+\item (2D) imagedf(x,y,z) contient le champ diffracté dans le plan
+  image en module (x,y,z) pour un microscope champ sombre.
+\item (2D) imageincdf(x,y,z) contient le champ total dans le plan
+  image en module (x,y,z) pour un microscope de phase.
+\item Poynting contient le module de Ponyting dans la direction
+  $\theta$ et $\phi$.
+\item theta et phi contiennent la direction $\theta$ et $\phi$ pour
+  Poynting.
+\item poyntingneg et poyntingpos contiennent Poynting pour $k_z<0$ et
+  $k_z>0$ respectivement dans le plan $(k_x,k_y)$.
+\item kx et ky contiennent les coordonnées pour poyntingneg et
+  poyntingpos.
+\end{itemize}

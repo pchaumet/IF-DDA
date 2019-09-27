@@ -1,0 +1,242 @@
+\chapter{Méthodes approchées}\label{chapapprox}
+\markboth{\uppercase{Méthodes approchées}}{\uppercase{Méthodes approchées}}
+
+\minitoc
+
+\section{Introduction}
+
+Dans le chapitre précédent nous avons présenté la DDA par une approche
+simplifié où l'objet est un ensemble de petits dipôles rayonnant. Dans
+une approche plus rigoureuse nous partons des équations de Maxwell en
+unité Gaussienne:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \venab \times \ve{E}^{\rm m}(\ve{r}) & = & i \frac{\omega}{c}
+\ve{B}(\ve{r}) \\
+\venab \times \ve{B}(\ve{r}) & = & -i \frac{\omega}{c}
+\varepsilon(\ve{r}) \ve{E}^{\rm m}(\ve{r}), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+où $\varepsilon(\ve{r})$ est la permittivité relative de l'objet et
+$\ve{E}^{\rm m}$ le champ total dans l'objet. En dehors de l'objet
+nous avons la même relation avec $\varepsilon=1$. Ceci nous donne
+l'équation de propagation suivante pour le champ électrique:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \venab \times ( \venab \times \ve{E}^{\rm m}(\ve{r}) ) & = &
+\varepsilon(\ve{r}) k_0^2 \ve{E}^{\rm m}(\ve{r}), \ee 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec $k_0=\omega^2/c^2$. En utilisant la relation
+$\varepsilon=1+4\pi \chi$ avec $\chi$ la susceptibilité linéaire
+électrique nous avons:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \venab \times ( \venab \times \ve{E}^{\rm m}(\ve{r}) ) -k_0^2
+\ve{E}^{\rm m}(\ve{r}) & = & 4\pi \chi(\ve{r}) k_0^2 \ve{E}^{\rm
+  m}(\ve{r}) . \label{champref}\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+La solution de cette équation sans second membre est le champ incident
+et correspond donc au milieu de référence, c'est à dire le milieu en
+l'absence de l'objet étudié ($\chi=0$), dans notre cas le vide.  Pour
+résoudre cette équation avec second membre on cherche la fonction de
+Green solution de
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \venab \times ( \venab \times \ve{T}(\ve{r},\ve{r}') ) -k_0^2
+\ve{T}(\ve{r},\ve{r}') & = & 4\pi k_0^2 \ve{I}
+\delta(\ve{r}-\ve{r}'). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+La solution finale est donc:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm m}(\ve{r}) = \ve{E}_0(\ve{r}) +\int_{\Omega}
+\ve{T}(\ve{r},\ve{r}') \chi(\ve{r}') \ve{E}^{\rm m}(\ve{r}') {\rm d}
+(\ve{r}'),\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec $\ve{E}^0$ le champ incident solution de l'Eq.~(\ref{champref})
+sans second membre et $\Omega$ le volume correspondant au support de
+l'objet étudié. Quand on résout l'équation dans l'objet, le champ
+total correspond donc au champ macroscopique dans l'objet. Pour
+résoudre cette équation on discrétise l'objet en un ensemble de $N$
+éléments de forme cubique ayant une arête de taille $d$ et l'intégrale
+$\Omega$ sur l'objet est donc décomposée en une somme d'intégrale sur
+chacun des éléments de discrétisation de volume $V_j=d^3$:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm m}(\ve{r}_i) = \ve{E}^0(\ve{r}_i) +\sum_{j=1}^{N}
+\int_{V_j} \ve{T}(\ve{r}_i,\ve{r}') \chi(\ve{r}') \ve{E}^{\rm
+  m}(\ve{r}') {\rm d} \ve{r}',\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+En supposant le champ, la fonction Green et la permittivité constants
+dans la maille, nous obtenons:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm m}(\ve{r}_i) = \ve{E}^0(\ve{r}_i) +\sum_{j=1,}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \chi(\ve{r}_j) \ve{E}^{\rm m}(\ve{r}_j)
+d^3.\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+En utilisant, en première approximation (c'est à dire que la réaction
+de rayonnement est négligée, mais la prendre en compte ne changerait
+pas les raisonnements qui suivent), le fait que que
+$\int_{V_i}\ve{T}(\ve{r}_i,\ve{r}') {\rm d} \ve{r}'= -4\pi/3 $, voir
+Ref.~\onlinecite{Yaghjian_PIEEE_80}) pour plus de détails, nous avons:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm m}(\ve{r}_i) = \ve{E}^0(\ve{r}_i) +\sum_{j=1,i\neq j}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \chi(\ve{r}_j) d^3 \ve{E}^{\rm
+  m}(\ve{r}_j)-\frac{4\pi}{3}\chi(\ve{r}_i) \ve{E}^{\rm m}(\ve{r}_i)
+.\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+En passant toutes les dépendances en $i$ à gauche de la relation nous
+avons au final:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}(\ve{r}_i) & = & \ve{E}^0(\ve{r}_i) +\sum_{j=1,i\neq j}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \alpha_{\rm CM}(\ve{r}_j) \ve{E}(\ve{r}_j) \\
+{\rm avec} \phantom{000} \ve{E}(\ve{r}_i) & = &
+\frac{\varepsilon(\ve{r}_i)+2}{3}
+\ve{E}^{\rm m}(\ve{r}_i) \\
+\alpha_{\rm CM}(\ve{r}_j) & = & \frac{3}{4\pi} d^3
+\frac{\varepsilon(\ve{r}_i)-1}{\varepsilon(\ve{r}_i)+2} .\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Le champ $\ve{E}(\ve{r}_i)$ est le champ local, c'est à dire que c'est
+le champ dans la maille $i$ en l'absence de la maille elle même. En
+écrivant cette équation pour toutes les valeurs de $i$ nous avons un
+système d'équations linéaires que nous pouvons écrire symboliquement
+comme:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E} = \ve{E}^0 + \ve{A} \ve{D}_\alpha \ve{E},\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec $\ve{A}$ qui contient toutes les fonctions de Green et
+$\ve{D}_\alpha$ une matrice diagonale qui contient toutes les
+polarisabilités de chaque élément de discrétisation. Nous détaillons
+au chapitre suivant comment résoudre rigoureusement ce système
+d'équation linéaire, mais dans ce présent chapitre nous détaillons les
+différentes approches possibles pour éviter la résolution du système
+qui est très gourmande en temps de calcul.
+
+A noter que le champ diffracté par l'objet en dehors du support de
+l'objet s'écrit simplement comme:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm d}(\ve{r}) & = & \sum_{j=1}^N \ve{T}(\ve{r},\ve{r}_j)
+\alpha(\ve{r}_j) \ve{E}(\ve{r}_j). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{Les différentes méthodes approchées utilisées dans le code}
+
+
+\subsection{Born}
+
+
+Une approximation simple est l'approximation de Born, c'est à dire que
+le champ macroscopique dans l'objet est le champ incident. Nous avons
+donc :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}^{\rm m}(\ve{r}_i) = \ve{E}^0(\ve{r}_i), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+pour tous les éléments de discrétisation. Après il suffit de faire
+propager le champ. Il est évident que cette approximation tient si le
+contraste et la taille de l'objet sont petits.
+
+
+\subsection{Born renormalisé}
+
+Nous pouvons faire l'hypothèse à l'identique mais sur le champ local,
+c'est à dire que :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(\ve{r}_i) = \ve{E}^0(\ve{r}_i). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+En considérant la relation entre le champ local et le champ
+macroscopique nous avons alors:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}^{\rm m}(\ve{r}_i) = \frac{3}{\varepsilon(\ve{r}_i)+2}
+\ve{E}^0(\ve{r}_i). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+La phase est la même que dans le cas de l'approximation de Born mais
+l'amplitude est changée. Cette approximation est meilleure pour des
+permittivités plus fortes car fait une correction sur l'amplitude du
+champ macroscopique, nous avons appelé cette approximation Born
+renormalisé.
+
+
+\subsection{Born à l'ordre 1}
+
+Sans résoudre le système d'équations linéaires on peut faire un Born
+renormalisé à l'ordre 1, c'est à dire que l'on effectue:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}(\ve{r}_i) & = & \ve{E}^0(\ve{r}_i) +\sum_{j=1,i\neq j}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \alpha(\ve{r}_j) \ve{E}^0(\ve{r}_j). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Ceci permet de prendre en compte un peu la variation du champ dans
+l'objet et permet de traiter des objets plus grands mais toujours avec
+un contraste faible. Il est possible de développer Born à des ordres
+supérieurs mais quand le contraste devient fort la série ne converge
+plus...
+
+
+\subsection{Rytov}
+
+L'approximation de Rytov consiste à changer la phase du champ
+incident. Pour ce faire nous calculons :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm d}(\ve{r}_i) & = & \sum_{j=1}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \chi(\ve{r}_j) \ve{E}^0(\ve{r}_j), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+toujours avec $\ve{T}(\ve{r}_i,\ve{r}_j)=-\frac{4\pi}{3 d^3}$, puis le
+champ macroscopique dans l'objet est estimé par:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_\beta^{\rm m}(\ve{r}_i) & = & E_\beta^0(\ve{r}_i) e^{E^{\rm
+    d}_\beta(\ve{r}_i)/E^0_\beta(\ve{r}_i)}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec $\beta=x,y,z$.  Lorsque la composante du champ incidente est
+nulle alors $E_\beta^{\rm m}$ est aussi nulle.  Cette approximation
+permet de traiter des objets grands par rapport à la longueur d'onde,
+mais toujours avec un contraste faible. Comme pour Born cela demande
+de faire un produit matrice vecteur. A noter que l'amplitude utilisée
+c'est celle du champ incident.
+
+\subsection{Rytov renormalisé}
+
+
+L'approximation de Rytov renormalisée consiste à faire la même chose
+que Rytov mais en travaillant sur le champ local. Nous avons alors:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^{\rm d}(\ve{r}_i) & = & \sum_{j=1,i\neq j}^N
+\ve{T}(\ve{r}_i,\ve{r}_j) \alpha(\ve{r}_j) \ve{E}^0(\ve{r}_j), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+puis le champ local dans l'objet est estimé par:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_\beta(\ve{r}_i) & = & E_\beta^0(\ve{r}_i) e^{E_\beta^{\rm
+    d}(\ve{r}_i)/E_\beta^0(\ve{r}_i)}. \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Cela permet d'avoir un contraste un peu plus fort.
+
+
+\subsection{Méthode de propagation du faisceau (BPM)}
+
+
+Cette méthode est complètement différentes des précédentes car elle ne
+fait pas du tout appelle à la résolution d'un système d'équations
+linéaires, mais fait la propagation de l'onde en tenant compte de
+l'indice du milieu. Elle s'applique donc dans le cas d'objet pouvant
+être très grand mais présentant un contraste faible avec des chocs
+d'indices très faibles. Pour plus de détails sur la méthode voir
+Ref.~\onlinecite{Kamilov_IEEE_16} mais au final le champ dans l'objet
+s'écrit comme:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}^{\rm m}(x,y,z+d)= e^{i k_0 n(x,y,z+d) d } {\cal
+  F}^{-1}\left[ {\cal F} [\ve{E}^{\rm m}(x,y,z)] e^{-i(k_0-k_z) d}
+\right], \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+où le calcul du champ à la position $(x,y,z+d)$ se fait avec la valeur
+de l'indice optique à la même position et de la valeur du champ au
+plan précédent $z$. On propage ainsi de maille en maille dans la
+direction $z$ pour connaître le champ dans tout l'objet. Il est clair
+qu'avec cette méthode le champ ne se propage que dans la direction des
+$z$ positifs, il n'y a jamais de réflexion vers l'arrière.  A noter
+que la FFT utilisée à la taille définie par le menu déroulant sur la
+FFT et surtout pas la taille de l'objet qui pourrait être trop petite
+et manquée de précision. Le champ diffracté est calculé comme
+d'habitude, ce qui permet d'être bien meilleur que d'utiliser
+l'intégrale de Kirchhoff comme c'est souvent fait.
+
+\subsection{Méthode de propagation du faisceau renormalisée (BPM)}
+
+Nous pouvons faire la même hypothèse que précédemment mais sur le
+champ local, soit:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(x,y,z+d)= e^{i k_0 n(x,y,z+d) d } {\cal F}^{-1}\left[ {\cal
+    F} [\ve{E}(x,y,z)] e^{-i(k_0-k_z) d} \right]. \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

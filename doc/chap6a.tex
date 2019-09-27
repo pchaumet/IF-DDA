@@ -1,0 +1,169 @@
+\chapter{Representation of the results}\label{chap6}
+\markboth{\uppercase{Representation of the results}}{\uppercase{Representation of the results}}
+
+\minitoc
+
+\section{Introduction}
+
+Three windows enable us to manage and represent the requested results.
+The one on the top enables us to manage the different figures; the one
+at the bottom on the left present the digital values requested, and
+the one at the bottom on the right is kept for the graphic
+representations.
+
+\section{Digital exits}
+
+All the results are given in the SI system.
+
+\begin{itemize}
+
+\item {\it Object subunits}: Number of elements of discretization of
+  the  object under study.
+
+\item {\it Mesh subunits} : Number of elements of discretization of
+  the cuboid containing the object under study.
+
+\item {\it Mesh size} : Size of the element of discretization.
+
+\item $\lambda/(10|n|)$ : In order to obtain a good precision, it is
+  advised to have a discretization under the value of $\lambda/10$ in
+  the considered material of optical index $n$.
+
+\item $k_0$ :Wave number.
+
+\item {\it Irradiance}: Beam irradiance, for a Gaussian beam, it is
+  estimated at the center of the waist.
+
+\item {\it Field modulus}: Modulus of the field, for a Gaussian beam, it is 
+estimated at the center of the waist.
+
+\item {\it Tolerance obtained}: Tolerance obtained for the chosen iterative 
+method. Logically under the requested value.
+
+\item {\it Number of products Ax (iterations)}: Number of matrix
+  vector products completed by the iterative method. Between brackets
+  the iteration number of the iterative method.
+
+\item {\it Extinction cross section}: Value of the extinction cross
+  section.
+
+\item {\it Absorbing cross section}: Value of the absorbing cross
+  section.
+
+\item {\it Scattering cross section}: Value of the scattering cross
+  section obtained by = extinction cross section- absorbing cross
+  section.
+
+\item {\it Scattering cross section with integration}: Value of the
+  scattering cross section obtained by integration of the far field
+  field radiated by the object.
+
+\item {\it Scattering asymmetric parameter}: Asymmetric factor.
+
+\item {\it Optical force $x$}: Optical force according to the axis  $x$.
+
+\item {\it Optical force $y$}: Optical force according to the axis  $y$.
+
+\item {\it Optical force $z$}: Optical force according to the axis  $z$.
+
+\item {\it Optical force modulus}: Modulus of the optical force.
+
+\item {\it Optical torque $x$}:  Optical torque according to the axis  $x$.
+
+\item {\it Optical  torque $y$}: Optical torque according to the axis  $x$.
+
+\item {\it Optical  torque $z$}: Optical torque according to the axis  $x$.
+
+\item {\it Optical torque modulus} Modulus of the optical torque.
+
+\end{itemize}
+
+\section{Graphics}
+
+\subsection{Plot epsilon/dipoles}
+
+The button {\it Plot epsilon/dipoles} enables us to see the position
+of each element of discretization. The colour of each point is
+associated with the value of the permittivity of the considered
+meshsize.
+
+
+\subsection{Far field and microscopy}
+
+\subsubsection{Plot Poynting vector}
+
+{\it Plot Poynting}: enables us to draw the modulus of the Poynting
+vector in 3D.
+
+\subsubsection{Plot microscopy}
+
+{\it Plot microscopy} :enables us to draw the diffracted field in far
+field by the object may this be either of the modulus of the field or
+of the $x$, $y$ or $z$. Then, the vectorial field on the picture plane
+is represented by considering a magnification $G$ for the microscope.
+
+The diffracted field is represented upon a regular mesh in
+$\Delta k_x=\Delta k_y$ such as $\sqrt{k_x^2+k_y^2} \le k_0$ NA with
+the origin of the phase at the origin of the frame $(x,y,z)$. If the
+computation is done by radiation of the dipoles, then, the obtained
+picture has a size $k_0 NA$ and discretized as
+$\Delta k_x=2 k_0 NA/N$, and if this one is done with Fourier
+transform, then, the size of the picture is fixed by discretization of
+the object $\Delta x$ with the relation $\Delta x \Delta k=2\pi/N$.
+
+The field inside the picture plane is calculated with Fourier
+transform.  So, we have with the calculation by radiation of the
+dipoles:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be
+\Delta x \Delta k_x & = & \frac{2\pi}{N} \\
+\Delta x 2 k_0{\rm NA} & = & 2\pi \\
+\Delta x & = & \frac{\lambda}{2 {\rm NA}} \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The size of the picture is then $\lambda/(2 {\rm NA})$.
+
+If the calculation of the diffracted field has been made by FFT, then,
+the discretization is that of the mesh.
+
+For the holographic microscope we present the Fourier plane (with and
+without the incident field) and the image plane (with and without the
+incident field). For the brightfield options we present the image
+plane with the incident field (brightfield) and without the incident
+field (a kind of darkfield). For the darkfield \& phase option we
+present the image plane without the incident (darkfield) and with the
+incident pahse shifted of $\pi/2$ (phase).
+
+
+\subsection{Study of the near field}
+
+\begin{itemize}
+
+\item The first button {\it Field} enables us to choose to represent
+  the incident field, local field or macroscopic field.
+
+\item The button {\it Type} enables us to represent the modulus or the 
+component $x$, $y$ or $z$ of the studied field.
+
+\item The button {\it Cross section $x$} ($y$ or $z$) enables us to
+  choose the abscissa of the cut (ordinate or dimension). {\it Plot
+    $x$} ($y$ or $z$) draws the cut in plane $x$. {\it Plot all $x$}
+  draws all the cut at once.
+
+\end{itemize}
+
+\subsection{optical force and torque}
+
+\begin{itemize}
+
+\item The first button {\it Field} enables us to choose to represent
+  the optical force or the optical torque.
+
+\item The button {\it Type} enables us to choose to represent the
+  modulus or the component $x$, $y$ or $z$ of the studied field.
+
+\item The button {\it Cross section $x$} ($y$ or $z$) enables us to
+  choose the abscissa of the cut (ordinate or azimuth). {\it Plot $x$}
+  ($y$ or $z$) draws the cur. {\it Plot all $x$} draws all the cuts at
+  once.
+
+\end{itemize}

@@ -1,0 +1,1339 @@
+	version 0.5.9
+
+	1) en réflexion calcul a part pour holography car pas de speculaire.
+	2) ifdda.m z<0 et kz<0 pour reflexion
+
+
+
+--------------------------------------------------------------
+	version 0.5.8
+
+	1) Correction bug pour ecrire fichier pour objet arbitraire
+	2) correction bug dans ecriture hdf5 avec openmp
+
+
+--------------------------------------------------------------
+	version 0.5.7
+
+	1) dans relecture pour le faisceau met if
+	(.not.(lle(Beamtmp,Beam))) goto 1000 évite problemede relecture
+	pour la troisième fois!!!
+	2) correction bug sur kx pour afficher ls kxy dans l'interface
+	3) na =0.9 er r=100 au debut.
+
+	4) dans main.f erreur non sur fichier objet et manque declaration
+	ierror.
+	5) Dans main hdf5 file pas dans la liste d'argument de cdmlib
+	6) Supression de produitfftmatvect2.f
+	7) Supression de gaissiaudfft.f
+
+	dérivée faisceau gaussian avec fft
+
+--------------------------------------------------------------
+	version 0.5.6
+
+	1) Numerotation incidence pour bf et df.
+	2) améliore message erreur Meshsize too small
+	3) ajoutte arret pour tous les inhomo si lc=hc=0
+	4) random sphere arret si rayon < meshsize.
+	5) erreur longueur chaine character dans relecture pour
+	gfftwavecircular
+
+--------------------------------------------------------------
+	version 0.5.5
+
+	1) ajout unite cross section avec integration
+	2) correction unite force modulus
+	3) precise et ajoute qqs write
+	4) reread avec les differentes methodes pour resoudre pb direct
+	5) erreur sur relecture croisement nfft et nrig!
+
+	commit fait
+
+	6) enlever write dans writehdf5 a ne pas cherry pick.
+--------------------------------------------------------------
+	version 0.5.4
+
+	1) changement de Nproche de 0 à 1 dans c++ pour objet multiple car
+	sinon le plot est faux. (avant c'était de 1 à 2!!) et suppression
+	de la ligne nproche-1.
+	2) ajout de trim pour les chaines de caracteres.
+
+	3) rajout de sauvegarde hdf5 pour objectnspheres.f, objectpara.f,
+	objectparainhomo.f...
+	4) nseed=0 dans random sphere enleve.
+
+--------------------------------------------------------------
+	version 0.5.3
+
+	1) correction et ajout du calcul de temps
+	2) fonction de green quand relecture utilise ne la recalcul pas.
+
+--------------------------------------------------------------
+	version 0.5.2
+
+	1) changement de numerotation de ffts et fftw+ correction de ffts
+	ou singleton avait disparu.
+	2) pb pour wide field. Maintenant fait comme pour la surface on
+	cela fit exactement ce que demande l'operateur.
+
+	3) ajout routine calcul de temps.
+	4) ajout exclusion arbitrary si nnnr < 2.
+	5) nettoyage de write
+
+
+--------------------------------------------------------------
+	version 0.5.1 (hdf-fftw) 0.4.10 (fftw) 0.3.17 (ffts)
+
+1) refaire hdf5 pour fourier, et ne stocker que la partie non
+	nulle comme pour la surface.
+2) passage de bawkward a forward pour la FFT de fourier a image
+	pour tenir compte du grossissement negatif
+
+3) refait ifdda.m pour la version 0.5.1: titre en entier et
+	indique le cote observe en microscopie.
+4) ajout de figure et explication des différentes version dans la doc.
+5) correction polarisabiité de LR
+6) nsens ajouter ligne 2417
+7) rajoutte des chiffres après la virgule dans le plot
+8) Evite le gris de constant dans le plot
+9) ecris tout le temps inputmatlab mais arrete si option ecrit pas demande.
+10) erreur legende dans matlab pour composante image microscopie.
+11) rajoute si near field pas coche alors forcement nproche=0 dans
+	cdmRunwidget.cpp
+12) Erreur dans ifdda.m sur y et z.
+
+
+--------------------------------------------------------------
+	version 0.5.0 (fftw+hdf5)
+
+1) Ajout de sauvegarde hdf5 et modification de matlab en
+	consequence et de tres nombreuses routines et de l'interface.
+2) Ferme hdf5 quand option que dipole.
+
+------------------------------------------
+
+	version 0.4.8 (fftw) et cdm-0.3.15 (ffts)
+
+1) changement de nom pour la microscopy ds le menu deroulant.
+2) Ajout de l'option Save as.
+3) Correction bug en reflexion bf et df.
+
+
+------------------------------------------
+
+	version 0.4.7 (fftw) et cdm-0.3.14 (ffts)
+
+1) Ajoute option pour calculer l'image à travers un microscope en reflexion.
+2) Correction de ifdda.m pour voir titre en entier.
+3) Correction fourierimage2.f for ffts.
+4) Write un peu mieux écrit.
+5) correction matrice de roation avec gross.
+6) arbitrary ne passe pas par le test nnnr
+7) arbitrary saute definition epsilon
+8) correction facteur sqrt(gamma/gamma') pour holography et  microsansinc.
+9) correction facteur sqrt(gamma/gamma')+ rotation remis a neuf pour microbf
+	et microdf+ ajout tmp dans openmp pour cdmlib et microsansinc
+10) permutation fourierimage pour inverser les images et bien etre comme un microscope.
+11) nstop a zero des le debut
+12) rajoute pola modifiee pour les spheres.
+
+-------------------------------------------
+
+	version 0.4.6 (fftw) et cdm-0.3.13 (ffts)
+
+1) création d'une interface simple, sans fichier écrit avec calcul automatique
+	de la taille de la fft si necessaire.
+2)  -w dans gfortran pour ne pas avoir les warning.
+3) nettoyage du C++ pour avoir moins d'écrit (INFO en DEBUG).
+4) nettoyage du fortran et refait présentation sorties.
+5) verifier cette ligne:
+quickdiffractCheck == 1 || nprocheCheck > 0 || microscopyFFTCheck == 1 || nenergieCheck. changement fait.
+6) Correction sur QMRCLA ou les plans FFT etaient oublies.
+7) ajout zlens dans main.f
+8) création de deux branches fftw et ffts avec singleton pour
+	faire un chaneglog commum
+9) ajout arret dans matlab file si fichiers absents.
+10) GPBICGplus ajoute.
+11) ajout arret dans bf et df
+12) ajout grisage de l'onde incidente quand bf et df choisis.
+
+
+
+-------------------------------------------
+
+	27/07/18 : version	0.4.5
+
+
+1) bug dans cdmOptionsWindow pour cuboid meshsize
+2) bug OMP dans private pour le champ local.
+3) changer titre et mis version dans le nom a jour
+4) mis à jour doc en pdf.
+5) openmp dans les objets pour initialisation
+6) correction titre matlab microscopy.
+7) pour le calcul du champ local, remet la valeur incidente pour l'objet.
+8) ajout de la possibilite de regler la position du foyer de la lentille.
+9) élargissement des champs pour la microcopie.
+
+
+---------------------------------------------
+	27/06/18 : version 0.4.4
+
+1) Ajout de routine brightfield
+2) Mise de microscopie comme menu principale.
+3) Dans cdmlib ajout de numaperinc et ntype micro.
+4) ajoute de dark field et phase
+5) changement menu car pas de fourier pour df et bf.
+6) erreur init de FFT2D vectx au lieu de imagex.
+7) correction unite dans legende
+8) arret nnnr si ni cuboid2 et inhomocuboid2 et randomsphere2.
+9) ajoute critere arret si nxm,nym et nzm trop petit dans le cas
+	cuboid2 et inhomocuboid2 et randomsphere2.
+10) objet avec sphere arret si trop grosse et a/2 si trop petite.
+11) bf et df en openmp.
+12) dipole corrige pour l'interaction avec microscopy.
+13) mise option quick microscopy active par defaut.
+14) ifdda ajoute pour ntypemic.
+15) brightfield et darkfield deltak fixe aussi par la FFT.
+16) Correction ondeplanekxky mis en accord avec ondeplane
+17) creation ondeplanecirc en kx,ky
+18) diffract2dinc change pour les ondes planes. On prend au plus proche.
+19) Changement convention ondeplane pour theta et -theta comme
+	ondeplanekxky et changement pour les dérivées aussi
+20) bug sur wavelinearmulti corrigé.
+21) ajout et modif de main.f
+22) Correction bug : champ proche + brightfield oblige a
+	recalculer tenseur et pola.
+23) Correction bug. force + brightfield pb. Recalcul tenseur et force avant.
+24) Ajoute arret si pas assez de FFT pour dark bright field.
+25) change texte pour antenne
+26) correction pour que iffda prend en compte bf et df.
+27) correction dans microdf pour deltak avec nfft2d.
+28) rajoutte return pour nstop =1
+29) deltakroutine k0 au lieu de 1
+30) pour bf pour ne pas etre au dela de 1 pour AN deltakroutine
+
+	----------------------------------------------------------
+
+	7/05/18 : version 0.4.3
+
+
+1) suprression du factor235 partout car FFTW s'en moque.
+2) Changement nxm, nym, nzm base sur nxm=nnnr+2*nxmp.
+3) bouton rouge pour start.
+4) mis en gras des titres pour plus de visibilité et des sous titres.
+5) Rajoute des unites de nm.
+6) Supression de la routine factor235
+7) Changement nom pour le menu microsocpy.
+8) Beam liste  avec des noms explicits.
+9) Object Liste noms explicits.
+10) Passe nxmp,nymp et nzmp en argument.
+11) cuboid2 objet fait.
+12) enleve signe moins de xy() car marche pas pour le plot et
+	decalle le zero.
+13) cuboid2 ajoute dans relecture.
+14) si arbitrary object alors utilise le fichier pour definir taille max.
+15) rajoute random spheres en reglant meshsize en QT et fortran
+	(nouvelle routine+cdmlib.f + relecture changes).
+16) rajoute cube inhomo en nxnynz dans le fortran (routine+cdmlib et relecture).
+17) rajoute cube inhomo dans le QT.
+
+
+----------------------------------------------------------
+
+	12/03/18 : version 0.4.2
+
+1) Ameliore le README.
+
+
+----------------------------------------------------------
+
+	12/03/18 : version 0.4.1
+
+1) suppression 	 des lignes avec fac=1
+2) Correction bug sur gaussian fft avec fac mal mis.
+3) suppression bug dans appel fftw pour boite wf
+4) termes plus explicites dans interface graphique.
+5) correction fftw le 1/n oublie pour beampropagation
+6) interpolation poynting refaite.
+7) Correction calcul lent prepresentation du champ
+8) ajout du grossissement dans le calcul de l'image.
+9) correction dans openmp sur calcul champ diffracte
+
+----------------------------------------------------------
+
+	14/01/18 : version 0.4.0
+1) RAF: passe toutes les FFT avec FFTW sauf gaussianchampdfft
+2) supression de zfft 2d et 3d et kernel et produitfftmatvect2.f
+	dans cdmlib.pro
+3) Parallelisation de gaussian et gaussiand
+4) correction sur objets inhomogènes pour FFTW.
+
+
+----------------------------------------------------------
+	10/01/18 : version 0.3.7
+1) RAF: RUN_TBL "table run_tbl has 32 columns but 33 values were
+	supplied Unable to execute statement: corrige.
+2) RAF: nstop passe dans inverserig et son opt.
+3) Correction sur calcul lentille pour les options.
+4) parallelisation de force et couple.
+5) Correction bug dans openmp pour loop sur force
+6) Rajoutte intensity pour plot sur microscopie dans Qt et ifdda
+7) Supression d'une erreur sur cdmPlot.cpp
+8) Oublie de k0 carré dans FFT Poynting.
+9) openmp pour computegcfft2d.
+10) nettoyage write
+
+
+----------------------------------------------------------
+
+	19/12/17 : version 0.3.6
+
+1) Ajoute option pour ne pas ecrire les fichiers .mat et aller
+	plus vite sans stocker. Du coup changement de beaucoup d'appel.
+2) Passage du calcul image par Fourier en routine. Plus de FFT
+	dans cdmlib.f.
+	liste routines qui contiennent FFT:
+	beampropagation
+	beampropagationmacro
+	calculforcefft
+	calculforcefftopt
+	calculgreenfft
+	calculgreenquadfft
+	derivativefield2
+	diffractefft2denergie
+	diffractefft2d
+	diffractefft2dinc
+	diffractefft2dlens
+	fouriertoimage
+	gaussiandfft
+	gaussianfft
+	objectinhomo
+	objectparainhomo
+	produitfftmatvect2
+	produitfftmatvect3
+	produitfftmatvectopt
+
+
+---------------------------------------------------------
+	18/12/17 : version 0.3.5
+
+1) Création de deux sous routine inverserig et inverserigopt pour
+	faire l'inversion rigoureuse hors cdmlib.f et optimiser ou non
+	suivant l'option nproche.
+2) produitfft passe en OMP propre inverserig.f et inverserigopt.f,
+	ainsi que gpbicg.f, gpbicg2.f, gpbicgar.f, gpbicgar2.f,
+	gpbicgsafe.f, gpbicor.f, BICGSTARPLUS, CORS, TFQMR, CG,
+	QMRBICGSTAB, QMRCLA, BICGSTAB, beampropagation.f,
+	beampropagationmacro.f, derivativefield2.f,
+	diffractefft2denergie.f, diffractefft2d.f, diffractefft2dinc.f,
+	diffractefft2dlens.f, gaussiandfft.f, gaussianfft.f
+3) Changement appel qmrpim pour pouvoir paralleliser.
+4) Erreur dans diffracte2energie sur la verification si il y a
+	beaucoup d'energie en dehors de l'ouverture numerique
+5) cdmlib.f passer en parallel sur certains passages
+6) grossissement pour les pixel images avec signe -.
+7) Prise en compte de l'ouverture numerique pour la lentille quand
+	calcul deja fait pour section efficace.
+8) Mise a zero dans cdmlib.f pour mise en forme de boucle pour paralleliser.
+9) parallelisation du calcul des fonctions de Green dans cdmlib.f
+10) mise en routine calcul fonction de Green et sa FFT en fonction
+	de nquad.
+11) Evite d'utiliser vectx,y,z (remplace par DFFTENSORxx,yy,zz
+	dans derivativefield) et du coup fait le calcul qu'une fois de
+	vectx,y,z.
+12) Mise du calcul de la FFT du champ pour calcul de force en
+	routine avec optimise et non optimiser suivant na proche.
+13) Ameliore affichage section efficace si pas absorbtion.
+14) Incidents passes en parallele sauf gaussian à cause des commons.
+
+
+--------------------------------------------------------- 11/12/17
+	: version 0.3.4
+
+
+1) Ajout d'une condition manquante pour ne pas refaire le champ
+	diffracte.
+2) Ajout et mise a jour userguide francais.
+3) cdmOptionsWidget.cpp pour ternir compte quand emissivity est
+	choisie et la retenir: if (crosssection->isChecked() ||
+	crosssectionpoynting->isChecked() || microscopy->isChecked() ||
+	nenergie->isChecked() )
+4) Rajoute methode Bicgstarplus.
+5) Transforme la position du faisceau gaussien en metre
+6) Nettoyage fortran
+
+
+	grossissement pour les pixel images avec signe -?
+
+---------------------------------------------------------
+
+	7/11/17 : version 0.3.3
+
+1) diffractefft2denergie : ne refait pas le calcul si c'est deja
+	fait par diffracted2d.f stocke le champ incident dans Eloin.
+2) Dans cdmlib.f pour la lentille. Ne refait pas les calculs déjà
+	faits.
+3) Ajout de gfft pour calculer avec le champ diffracte avec le
+	champ incident.
+
+
+---------------------------------------------------------
+
+
+	30/10/17 : version 0.3.2
+
+1) suppression de l'écriture disque pour la dérivée
+	du champ pour les anciens faisceaux gaussiens
+	pour mise en mémoire dans wrk.
+2) Dans gaussianchampfft pour champ large remplace FF0 par xr.
+3) Dans gaussianfft erreur argument sur circ.
+4) routine derivechamp ajouter.
+5) ajout de calcul force pour gfftwave.
+6) ajout de beam gfft dans relecture.f
+7) ajout arret pour fft gaussian si theta trop fort.
+8) cdmRunWidget.cpp supprimer les égalites entre double
+	precision.
+
+
+---------------------------------------------------------
+
+	16/10/17 : version 0.3.1
+
+1) Supprimé beampropagation.fsv2
+2) Gaussian beam avec fft ajoutée, y compris dans les menus et
+	dans la doc.
+3) Changement epsilon initial pour etre sous Born.
+4) Standard deviation et coherent length declarer en entier quand
+	on faisait un load. Passer en double!!
+5) Bug dans gfftwave sur la premiere couche.
+6) Ajout dans gaussian rigoureux d'un test pour ne pas calculer si
+	le champ est tres faible. Test base sur le faisceau paraxial
+	analytique.
+7) Large boite avec fftgaussian geree.
+
+---------------------------------------------------------
+28/09/17 : version 0.2.39=version 0.3.0
+
+
+1) Arrete bpm si paraxiale utilisé.
+2) supression de Open file et Save file qui ne servaient pas.
+3) ajout de inhomogeneous cuboid dans le userguide.
+4) supprime doc/cmd-0.2.7-FR.pdf
+5) changement initial RR, ntheta, nphi,na,gross et nquad=0
+
+
+---------------------------------------------------------
+26/09/17 : version 0.2.38
+
+
+1) relecture.f un format faux sur wavelinearmulti
+2) rajoute objet randomsphere dans relecture.f
+3) rajoute methode de calcul du champ dans relecture.f
+4) ajout arret si multiwavelength pas d'amplitude.
+5) relecture.f pour arbitrary object et beam
+6) Correction bug sur concentric sphere relecture.
+7) Ajout de détails dans la doc et des choses oubliées ajoutées.
+8) Ajout menu pour la version anglaise de la doc.
+9) ajoute routine objet cuboid inhomogene et cdmlib.pro
+10) Ajout des menus du a inhomocuboid.
+11) relecture.f ajout de inhomocuboid.
+12) correction de sphere seed en cuboid seed.
+
+
+	---------------------------------------------------------
+12/06/2017: version 0.2.37
+
+1) RAF: passe BPM champ macro et champ local ajout des deux routines.
+2) RAF: ajoute arret si nnnr > nxm,nym,nzm
+3) RAF: dans inhomogenous dble sur entier.
+4) RAF: density ou nombre de sphere, les deux sont admis.
+5) RAF: ajout d'une methode iterative CORS+openmp
+6) RAF: correction parallelisation openmp pour gpbicg.f
+7) RAF: supression de cdmRunThread.cpp qui ne servait pas.
+8) RAF: correction character mal faits pour pola.
+
+
+------------------------------------------------------
+12/06/2017: version 0.2.36
+
+
+1) RAF: refait les closes juste après ecriture au lieu de tout à la
+	fin : evite de reeecire et de passer deux foix dans le tableau.
+2) RAF: Taille FFT mini a mettre pour lentille et inc avec FFT:
+	retour erreur.
+3) RAF: rangement xy refait pour methode lente.
+4) RAF: ajout approximation de Born, Rytov, rytov normalisé, Born
+	ordre 1 et BPM.
+
+------------------------------------------------------
+
+03/02/2017: version 0.2.35
+
+1) RAF: main.f retire les tableaux de force et couple.
+2) RAF: changement de place calcul par Mie pour etre cohérent avec la demande.
+3) RAF: réarrange texte de sortie sur la fenetre interactive.
+4) RAF: comparaison à Mie pour force et couple
+5) AV: aniso (anisotrope) passé en ani pour etre a 3 caractères comme iso.
+	Sinon j'avais un core qui se créait et un plantage du code.
+6) AF: ani ne marche pas (anisotrope). Quand on rempli tout le tableau
+	(les 9 lignes) seule la première ligne est sauvée. Les autres sont
+	mises à zéro. - OK bug of array correspondence between c and
+	fortran corrected; new arrangement epsani(3,3,numberobjet)
+	cdmlib.f,objectnsphere.f,objectsphereconcentric.f,relecture.f and
+	main.f adjusted with new arrangement - To be checked
+------------------------------------------------------
+
+19/01/2017: version 0.2.34
+
+1) RAF: modification de la boite de Dialog sur Beam. enlever ssm
+
+
+------------------------------------------------------
+
+19/01/2017: version 0.2.33
+
+
+1) RAF : manque k0 carré dans le poynting pour Emod dans cdmlib.f
+2) RAF: k=0 au ieu de k=1 pour définir deltakx dans cdmlib.f
+3) RAF:  ctmp1=-cdexp(-icomp*kz*zs(kk))*cdexp(-icomp*(var1
+	$ *dble(i)+var2*dble(j)))/(-2.d0*pi*icomp*kz)
+enlever le signe - pour ctmp1 dans diffractefft2dlens.f
+
+
+------------------------------------------------------
+19/01/2017: version 0.2.32
+
+1) AV: rajouter dans cdmlib/Makefile les deux routines
+	ondeplanemulti.f et ondeplanedmulti.f qui manquaient. - OK rajouté dans cdmlib.pro
+2) AV: query.exec("insert into wavemulti_tbl values ('new',0,0,0,0,0,0,0)"); - OK
+	mis à la place de ('new',0,0,0,0,0,0)"); il manquait un zéro a priori.
+3) Q: pourquoi MAX_OBJECT_NUMBER est défini dans cdmRun.h et pas
+	MAX_WAVEMULTI_NUMBER? - OK retiré dans cdmRun.h (doublon)
+4) AF: lorsque l'on fait New, les valeurs ne sont pas
+	initialisées à ce qui est marqué dans le code...je n'ai pas vu
+	d'autres problème que celui d'haut dessus: point 2.
+5) AF:  Le bouton save ne marche pas. Ca marque "Enter a valid name".
+
+	-------------------------------------------------------
+18/01/2017: version 0.2.31
+
+1) RAF: supprimé les tableaux force et couple dans cdmlib.f
+	cdmlib.h et les tous les autres: gain de taille mémoire.
+2) RAF: arret ajouté pour section efficace avec onde plane.
+3) RAF: Change QMR en QMRCLA
+4) RAF: rajouté valeurs dans menu FFT
+5) RAF: modification des noms: module en modulus, etc
+6) RAF: Correction phase dans fichier matlab.
+7) RAF: correction facteur 2 i pi gamma toujours positif
+	quelque soit le sens de propagation dans diffractefft2denergie.f
+8) RAF: ajoute la possibilité de faire un éclairement en onde multiple.
+	ajout de ondeplanemulti.f et ondeplanedmulti.f et change cdmlib.f
+	en conséquence avec modification de relecture.f, diffracte2dinc.f
+	et diffracte2denergie.f et main.f.
+9) AF: J'ai rajouté un faisceau qui est constitué de multiples
+	ondes planes appelé wavelinearmulti. Dans cdmlib/Makefile j'ai
+	rajouté ondeplanemulti.f et ondeplanedmulti.f. Après c'est un peu
+	compliqué pour moi.
+
+Dans cdmlib l'appel est changé en ajoutant une ligne insérée entre
+les données de l'onde plane et infostr comme suit:
+	....
+c     planewavecircular.in / planewavelinear.in files
+	$ theta, phi, pp, ss, P0, w0, xgaus, ygaus, zgaus,namefileinc,
+c     ondeplane multiple
+     $     thetam, phim, ppm, ssm,E0m,nbinc,
+c     return info stringf
+	$     infostr, nstop,
+	....
+
+	Il faut donc, quand dans le menu faisceau, on choisi
+	wavelinearmutli avoir la possibilité de rentrer le nombre d'ondes
+	planes voulu
+	(entre 1 et 10) avec leur angle theta et phi, polarisation pp et
+	ss, (comme wavelinear) ainsi que l'amplitude complexe de chacune
+	des ondes.
+	A noter que thetam, phim, ppm, ssm, E0m sont de tailles 10 dans le
+	code, et c'est fixé en dur. Il faut donc faire de même dans ta
+	partie.	thetam, phim, ppm, ssm double precision et E0m double complexe. --OK
+
+-------------------------------------------------------
+16/12/2016: version 0.2.30
+
+1) RAF: changé main.f pour mettre l'efficacité.
+2) RAF: changement nproche si nenergie demandée pour pouvoir utiliser FFT.
+3) RAF: corrige nstop après FFT diffracte.
+4) RAF: rajoute arret emissivité et lentille si beam antenna ou arbitraire.
+5) RAF: arrets faits pour les options nenergie et nlentille si mauvais coté.
+6) RAF: arrets ajoutés si calcul avec integration FFT fait avec
+	angle trop fort car imprécis (section efficace et nenergie).
+7) RAF: resolu le pb de calcul beam gaussien pour z=0 pour les
+	FFT. Plus rapide maintenant.
+8) RAF: rajouté calcul par Mie series si sphere et erreur en pour cent.
+9) RAF: rajoute arret, si trop d'energie en dehors de l'ouverture
+	numérique, alors on ne calcule pas l'emissivité.
+
+
+-------------------------------------------------------
+13/12/2016: version 0.2.29
+
+1) RAF : nnnr descendu pour etre facteur de 2, 3, 5 dans objetnspheres.f
+2) RAF : nzm a la place de nz dans calcul fonction de Green, boite champproche.
+3) RAF : changé le main.f correspondant pour nombre objet max égale
+	à nombre objet.
+4) RAF : cdmlib.f: nenergie =1 supprimé et rajouté dans le
+	"No calculation requested"
+5) AF: Quand l'option nenergie est cochée, dans le fortran
+	nenergie reste toujours à zéro. Pas vu d'erreur dans le C à part
+	la ligne options->setNenergie(nenergie->isChecked()); dans
+	cdmOptionsWidget.cpp qui est doublée trois lignes plus bas.  Par
+	contre quand l'option nenergie est mise c'est nquicklens qui est
+	mis à 1 et quand nquicklens est cochée cela ne fait rien... -- Corrigé
+
+6) AF: nproche changé au lieu de -1, 0 et 1 on a un shift sur 0,
+	1, 2, c'est à dire plus 1 sur chacun. --OK
+
+7) Q: il faut que nxm, nym et nzm soient mutliples de 2,3 et
+	5. Quand je le fait dans le code (en décrémentant), ça marche bien
+	mais dans le cas de la représentation du wide field en champ
+	proche y a un truc qui déconne. Par exemple si je mets nxm=11,
+	dans le code fortran je passe à 10 (avec une variable
+	intermédiaire) mais dans le wide field il me garde 11 pour
+	représenter le champ pour 11 coupes avec une vide et je ne vois
+	pas trop pourquoi. On a bien xcwf associed au champ en wf avec la
+	même taille.
+
+
+-------------------------------------------------------
+13/12/2016: version 0.2.28
+
+1) AF: Sphere inhomogene: ne sauve pas la deviation standard quand on
+	sauve dans un fichier. -- OK
+2) AV: Dans cdmRunWidget.cpp j'ai changé : char polarizability[2], char
+	methodeit[12], char anisotropy[3] pour être en accord avec la
+	taille déclarée dans cdmlib.f. --OK
+3) AV: Dans cdmRun.cpp j'ai changé malloc et déclaration de la
+	taille des variables pour: forcexmulti, forceymulti, forcezmulti,
+	torquexmulti, torqueymulti, torquezmulti. Taille de nombre_objet
+	et non de nombre_objet*nmax (nmax était le nombre de maille
+	maximum, il y avait donc un fort désaccord de taille). Maintenant
+	en accord avec cdmlib.f et beaucoup moins de core. -- OK
+4) RAF: ajout pour le calcul du champ diffracté avec champ incident:
+Changement de calcul pour Eimage + incident. C'est maintenant juste...
+5) AV: ajout dans cdmlib/Makefile et cdmlib.pro de la
+	routine diffractefft2dinc.f.   -Ok only cdmlib.pro is sufficient
+6) AV: ajout du plot du champ diffracté + incident pour l'option microscopie
+	dans la représentation avec modification de : cdmlib/cdmlib.h,
+	cdm/cdmRunWidget.cpp, cdm/cdmRun.h, cdm/cdmRun.cpp,
+	cdm/cdmlib.f. ça rajoute une ligne dans le menu microscopie pour
+	les plots après scattered field et avant image et image +
+	incident. J'ai du rajouté les tableaux dans le passage des
+	arguments de cdmlib.f ainsi que dans cdmlib.h et changer le menu. -- OK
+7) RAF: Changement de main.f pour mettre fourier avec incident en
+	accord avec point 6.
+8) RAF: Correction du rangement de la FFT dans diffracte2dfftinc.f
+9) RAF: rajout du champ incident au diffracte quand le calcul est fait  par
+	la methode lente.
+10) Q: Dans les plots des forces et couples la longueur des flèches n'est
+	pas linéaires avec les valeurs. Là il faudra surement se
+ 	télephoner pour se comprendre, mais j'ai l'impression que la
+	longueur des flèches ne respecte pas toujours la valeur des
+	nombres dans le fichier comme si il y a avait un auto scale?
+        -- Oui, il y a un facteur grossissant pour voir les fleches, sinon on verrait des points.
+11) AV : diffractefft2denergie.f rajouté dans Makefile et cdmlib.pro --Ok only cdmlib.pro is sufficient
+12) Q : Quand on relance le code plusieurs fois de suite est ce
+	que la RAM s'accumule?
+        -- Non il y a une fonction cleanVectorsMemory a chaque appel de nouveau calcul
+13) RAF: oublie k0 carré dans diffracte2d energie et lens.
+14) AF : j'ai rajouté un calcul d'efficacité.
+	option nenergie (0 ou 1) si 1 alors on ressort les variables associées:
+	efficacite,efficaciteref,efficacitetrans. Il faut créér une box
+	entre section efficace et microscopie avec pour titre Emissivity:
+	Pour la sortie il faut écrire sous les sections efficaces:
+	reflectivity (valeur de efficaciteref)
+	transmitivity  (valeur de efficacitetrans)
+	Absorptivity (1-efficacite) -- OK
+
+	du coup cdmlib.f est changé comme:
+
+cdmlib(
+c     input file cdm.in
+     $     lambda,beam,object,trope,
+     $     materiaumulti,nnnr,tolinit,methodeit,polarizability,
+     $     nquad,nlecture,filereread,
+c     output file cdm.out
+     $     nlocal,nmacro,nsection,nsectionsca,nquickdiffracte,nrig,
+     $     nforce,nforced,ntorque,ntorqued,nproche,nlentille,nquicklens,
+     $     nenergie,nobjet, !!!!!!!!!!!!! nenergie est placée ici !!!!!!!!!!!!!
+c     cube, sphere (includes multiple)
+     $     side, sidex, sidey, sidez, hauteur,
+     $     numberobjet, rayonmulti, xgmulti, ygmulti, zgmulti,
+     $     epsmulti, epsanimulti,lc,hc,ng,
+c     ellipsoid+arbitrary
+     $     demiaxea,demiaxeb,demiaxec,thetaobj,phiobj,psiobj,
+     $     namefileobj,
+c     planewavecircular.in / planewavelinear.in files
+     $     theta, phi, pp, ss, P0, w0, xgaus, ygaus, zgaus,namefileinc,
+c     return info stringf
+     $     infostr, nstop,
+c     return scalar results
+     $     nbsphere, ndipole, aretecube,
+     $     lambda10n, k0, tol1, ncompte, nloop,
+     $     efficacite,efficaciteref,efficacitetrans, !!!!!!!!!!!!! efficacite !!!!!!!!!!!!!
+     $     Cext, Cabs, Csca, Cscai, gasym, irra, E0,
+     $     forcet, forcem,
+     $     couplet, couplem,
+     $     nxm, nym, nzm,
+     $     incidentfield, localfield, macroscopicfield,
+     $     xs, ys, zs, xswf, yswf, zswf,
+     $     ntheta, nphi, thetafield, phifield, poyntingfield,
+     $     forcex,forcey,forcez,forcexmulti,forceymulti,forcezmulti,
+     $     torquex,torquey,torquez,torquexmulti,torqueymulti,
+     $     torquezmulti,
+     $     incidentfieldx, incidentfieldy, incidentfieldz,
+     $     localfieldx, localfieldy, localfieldz,
+     $     macroscopicfieldx, macroscopicfieldy, macroscopicfieldz,
+     $     polarisa,epsilon,
+     $     nfft2d,Eimagex,Eimagey,Eimagez,Eimageincx,Eimageincy,
+     $     Eimageincz,Efourierx,Efouriery,Efourierz,Efourierincx,
+     $     Efourierincy,Efourierincz,kxy,xy,numaper,gross, !!!!!!Efourier + inc  point avant !!!!
+c****************************************************
+c     tableaux utilises que dans cdmlib
+c****************************************************
+c     taille double complex (3*nxm*nym*nzm)
+     $     FF,FF0,FFloc,xr,xi,
+c     taille double complex (3*nxm*nym*nzm,12)
+     $     wrk,
+c     taille double real (nxm*nym*nzm,3)
+     $     force,couple,
+c     taille double complex (8*nxm*nym*nzm)
+     $     FFTTENSORxx, FFTTENSORxy,FFTTENSORxz,FFTTENSORyy,FFTTENSORyz,
+     $     FFTTENSORzz,vectx,vecty,vectz,
+c     taille double complex (nfft2d,nfft2d,3)
+     $     Ediffkzpos,Ediffkzneg,
+c     taille entier (nxm*nym*nzm)
+	$     Tabdip,Tabmulti)
+
+15) RAF: changement des tableaux forcexmulti, forceymulti, forcezmulti,
+	torquexmulti, torqueymulti, torquezmulti dans cdmlib.f pour etre
+	en accord avec le C.
+16) RAF: rajouté stop si éclairement du mauvais côté pour lentille et énergie.
+17) AV: pourquoi nread et gross pas initialisés dans cdmOptions.cpp? je l'ai fait.
+	Des fois les valeurs étaient excentriques au demarrage. -- OK
+18) AV: j'ai rajouté un menu pour pouvoir choisir la taille de la
+	FFT pour l'option champ lointain et microscopie.  La variable
+	s'appelle logiquement nfft2d et j'ai rajouté le menu
+	associé. C'est là que j'ai le plus modifié, ça compile et ça
+	marche mais j'ai pu faire des erreurs. -- OK
+19) AF: Quand on choisit QMR dans les méthodes iteratives (avec le
+	menu déroulant) est ce possible d'associer à ce choix QMRCLA sinon
+	on change QMR pour QMRCLA. -- Prendre l'option QMR --> QMRCLA (faire simple)
+20) RAF: si nfft2d petit (delta k trop grand) problème de
+	représentation pour Poyting car trop peu de point: ajout d'un
+	arrêt. -- Pour nfft2d= 128 ou 256, il n' y a pas de representation des resultats (est-ce lie a ca ?)
+
+
+A faire:- corriger le dipole pour le champ lointain: moi+ Anne.
+	- point 15+3 changer le main correspondant pour nombre objet
+	max:moi.
+	- nxm,nym et nzm si non multiple de 2, 3 5 à faire dans
+	cdmlib.f : moi
+
+
+-------------------------------------------------------
+30/11/2016: version 0.2.25
+
+1) RAF: Nettoyage des routines des variables muettes.
+2) RAF: supprimer produitfftmatvect2.f dans cdmlib.pro
+3) RAF: Ajout d'un arret dans les routines qui utilisent tabfft2
+4) RAF: mis a jour de relecture.f pour prendre en compte le nouvel objet
+et eclairement antenne.
+5) RAF: correction bug dans cuboid.
+6) RAF: ajout d'un arret sur nx, ny et nz si inférieur ou égal à 1.
+7) RAF: oubli d'une iteration pour certaines methodes iteratives.
+8) RAF: Change pour relecture pour mettre dipole et champ local.
+9) RAF: Correction bug sur test pola anisotrope.
+10) RAF: correction bug sur CR au lieu de RR dans routine pola.
+11) RAF: ajoute un arret si epsilon anisotrope pour sphere inhomogene.
+12) RAF: rajout calcul de l'intensité I0 à la position de l'objet
+	quand l'éclairement est en antenne.
+13) RAF: Changement de qqs noms dans le cdmRunWidget.cpp pour être
+	plus clair.
+14) RAF: changement tabdip
+15) FAIT : Attention problem.opt ne sauve pas correctement le nspheres, il
+	faut le passer à 2 objets, car par défaut il est sauvé à 1 même si
+	les paramètres des deux sont sauvés: Ca on en a discuté ensemble,
+	c'est le nombre d'objet qui n'est pas passé correctement
+16) RAF: création d'un fichier pour charger les options prises sous matlab.
+17) RAF: modification de l'ecriture pour de nombreux fichiers
+	matlab pour rendre le tout cohérent et plus simple.
+18) RAF: changement tabdip aussi pour force et couple.
+19) RAF: rajout de fichier de sortie matlab pour l'image et fourier et
+optimisation de la taille de fourier pour aller plus vite sous matlab.
+20) RAF: bug dans objetnspheres sur test.
+21) RAF: création d'un fichier matlab ifdda.m pour tracer les fichiers .mat
+22) RAF: Changement de incidentfield et ses composantes pour etre en accord
+	avec le fait de ne plus utiliser tabdip dans la representation des
+	champs.
+23) RAF: Correction bug dans ecriture de epsilon.mat
+24) RAF: bug sur initialisation de yg pour le couple.
+25) RAF: rajout antenna pour la calcul des forces.
+26) RAF: correction facteur 1/(4 pi) qui manquait dans routine dipoleincder.
+27) RAF: correction bug sur BICGSTAB
+28) RAF: correction sur TFQMR
+29) corriger QMRCLA
+30) RAF: change le cas avec lentille slow method pour comme la
+	FFT, sauf si pas assez de points ou l'on augmente d'un facteur 2
+	jusqu'a valeur suffisante pour etre assez discretisee.
+31) RAF: rajoute un arret si grossissement plus petit que 1.
+32) RAF: ajoute un arret si tolerance trop petite ou trop grande.
+33) RAF: changement message si probleme lors du reread d'un fichier.
+34) RAF: arret si nxm, nym ou nzm pas multiples de 2, 3, 5. peut etre a remodifier.
+35) RAF: modification de objet para, ellipse et cylindre
+	pour optimiser au mieux la place et ne faire qu'autour de l'objet
+	+ ajout arret si nx,ny nz au dela de la limite.
+36) RAF: fait en sorte que les .mat marchent pour matlab et pour
+	la représenation graphique dans le C.
+37) RAF: modification de kxy pour faire matlab et le C++ pour
+	représenter fourier.
+
+--------------------------------------------------------------------------
+11/10/2016  : version 0.2.24
+
+1) RAF: Correction dans certains objets pour verifier si la
+	discretisation est bien multiple de 2, 3, 5.
+
+2) RAF: corriger x1,y1 z1 initialisation mour min et max
+
+3) RAF: Correction quand nnnr est change en le decrementant au
+	lien de l'incrementer
+
+4) Pour la discrétisation on a un bouton check Epsilon/dipoles.
+	Serait il possible de faire deux boutons séparés cote a
+	cote. Check dipoles on ne change rien, et check epsilon par contre
+	le changer en proposant différentes coupes comme pour le champ
+	macro et local (ça a la même taille). Comme c'est un tenseur, on
+	pourrait avant demander la composante du tenseur. Ca permettrait
+	de voir comment c'est inhomogène pour le epsilon.
+
+--------------------------------------------------------------------------
+05/09/2016  : version 0.2.24
+
+1) Rajouté une nouvelle routine d'incidence nommée dipoleinc.f,
+avec comme entrée la position de l'émetteur xdip,ydip,zdip et son
+orientation theta et phi. Rajout aussi de la routine dipoleincder.f
+xdip,ydip,zdip passent par xgaus, ygaus et zgaus pour ne pas
+augmenter le nombre d'arguments -- OK added antenna in beam menu
+
+2) rajout d'un objet, sphere non homogene objectinhomo.f avec comme arguments:
+hc, lc, epsback pris sur xg,yg,zg pour ne pas augmenter le nombre
+d'argument. ng est un entier, qu'il faudrait pouvoir choisir (ca
+definit la graine) -- OK  added inhomo sphere object with seed, hc, lc
+properties
+
+3) rajout de random.f -- OK
+
+--------------------------------------------------------------------------
+27/04/2016  : version 0.2.23
+
+1) RAF: rajoute un arret si pas assez de point pour la FFT de la lentille.
+2) RAF: rajoute un arret si pas assez de point pour la FFT de Poynting.
+3) RAF: si champ incident par au dessus alors on ne le prend pas
+	pour la lentille.
+4) RAF: open MP pour produitmatvect3.f diffractefft2d.f diffractefft2dlens.f
+plus nettoyage des routines.
+5) RAF: openMP  cdmlib.f en partie, gpbicg.f, derivativefield2.f
+6) RAF: correction signe sur diffracte lens par FFT pour le facteur d'apodisation.
+7) RAF: correction sur decallage de 1 pour la FFT dans l'espace image.
+8) RAF: correction bug dans epsilon de objet arbitraire.
+9) RAF: correction bug dans calcul du champ à travers la lentille: erreur de sens dans la FFT.
+10) RAF: rajouter dans la doc que arbitrary beam est suppose se propager dans les z positifs pour la lentille et contenir le plan z=0.
+11) Rajouté produitfftmatvectopt.f pour aller plus vite dans le cas de la boite wf. permet de supprimer le tableau tabdipwf.
+12) Suppression de derivativefield.f qui ne sert plus (remplace
+	par la version 2)
+13) Rajout d'une methode iterative GPBICOR: ajouter a la cimpilation gpbicor.f
+	et dans la liste des methodes proposees  GPBICOR.
+14) RAF: Correction bug sur QMR qui ne prennait pas le QMRSTAB...
+--------------------------------------------------------------------------
+20/04/2016  : version 0.2.22
+
+1) lib fortran with openmp sections added
+2) Add openmp flags in cdmlib.pro and cdm.pro
+--------------------------------------------------------------------------
+16/03/2016  : version 0.2.21
+
+1) RAF: modification de relecture pour prendre en compte les
+nouvelles variables.
+2) RAF: modification de relecture pour corriger un probleme sur les chaines
+de caracteres.
+3) Quand on trace le champ incident est que celui-ci est constant (onde plane)
+alors le plot ne donne rien...probleme de bornes identiques je pense.
+4) RAF: qqs close (Poynting) oublies a la fin de cdmlib.f.
+5) RAF: Update routine FFT, gain 10% en temps.
+--------------------------------------------------------------------------
+22/10/2015  : version 0.2.20
+
+1) RAF : Changement dans cdmlib pour eviter la redondance d'appel
+pour la fonction de Green
+2) RAF: changement dans cdmlib  pour le choix de la fonction Green, pour
+travailler sur des entiers car plus rapide.
+3) RAF: modif dans la liste de quad pour rajouter le zero dans cdmOption.cpp
+4) RAF: modif dans main.f: ninteg en nquad
+5) RAF: changement dans la liste des polas  de cdmOptions.cpp pour mettre
+RR en premier.
+6) qqs warning en compilant:
+	src/qwt3d_lighting.cpp:178:48: attention : narrowing conversion of
+	attention : variable ‘beg’ set but not used
+-OK
+7) Upgrade qwtplot3d ver.0.3.1 (special patch for colorlegend & POINTS display)
+8) Upgrade qwt ver.6.1.2
+-----------------------------------------------------------------------------
+21/10/2015  : version 0.2.19
+
+1)  ajouter la possibilité de choisir sa polarisabilite.
+L'appel de cdmlib est change avec methode,integ de rajouter.
+SUBROUTINE cdmlib(
+c     input file cdm.in
+     $     lambda,beam,object,trope,
+     $     materiaumulti,nnnr,tolinit,methodeit,methode,integ,nlecture
+Il faut rajoutter un menu deroulant après Nxm,Nym,Nzm,
+Le menu deroulant, s'appelle, polarizability, et doit comporter:
+'CM'
+'GB'
+'LA'
+'RR'
+'LR'
+- OK
+2) rajoutter a cote un autre menu deroulant qui s'appele quad. T
+et qui renvoie sur un entier 0,1,2,3,4,5.- OK
+3) RAF: corrections sur la routine de polarisabilité.
+4) RAF: modification du calcul de l'espace libre pour pouvoir l'integrer,
+relatif au choix sur la quadrature dans cdmlib.f
+5) rajout de la routine suivante pour integrer l'espace libre:
+	propaespacelibreint.f -OK
+6) RAF: suppression de la routine cdmlibsurf.f qui n'a rien a faire ici.
+-----------------------------------------------------------------------------
+09/09/2015 : version 0.2.18
+
+1) RAF: correction du grossissement dans le champ incident
+2) RAF: un bug dans Efourier sur la lentille
+3) RAF: nettoyage de difracte2dlens.f
+4) RAF: bug dans objet arbitrary corrige!
+-----------------------------------------------------------------------------
+21/04/2015 : version 0.2.17
+
+Modify to allow compilation on CentOS 6.6
+-----------------------------------------------------------------------------
+02/02/2015 : version 0.2.16
+
+1) RAF: un bug du a une verif qui trainait dans la FFT.
+2) RAF: nettoyage de cdmlib avec mise en forme des sorties en *,*.
+3) RAF: rajoutte un test pour voir si objet en vide ou valeur de epsilon
+pas rentree.
+4) RAF: Rajout dans le guide utilisateur et d'un fichier de sortie.
+5) RAF: Changement de calcul de l'image pour la microscopie pour inclure le
+grossissement.
+call cdmlib(....,kxy,xy,numaper,gross,...). OK
+6) A cote de NA il faudrait rajoutter une case Grossissement ("magnification")
+et a la place de Fourier plane: scattered field in far field et dans
+le menu deroulant a la place de Fourier plutot Scattered field. OK
+7) Correct few bugs related to DB save and load configurations.
+-----------------------------------------------------------------------------
+12/01/2015 : version 0.2.15
+
+1) RAF: nettoyage et mise en forme de main.f
+2) RAF: nettoyage de cdmlib.f
+3)  j'ai rajoute une routine diffractefft2dlens.f pour calculer avec
+FFT le champ a travers la lentille pour aller plus vite pour les gros objets.
+il faut donc ajoutter une boite comme pour  Cross section+Poynting
+pour le calcul rapide: variable associee nquicklens. L'appel de cdmlib a
+donc changer:nquicklens=0 calcul lent si 1 calcul rapide avec FFT.
+      call cdmlib(...
+c     output file cdm.out
+     $     nlocal,nmacro,nsection,nsectionsca,nquickdiffracte,nrig,
+     $     nforce,nforced,ntorque,ntorqued,nproche,nlentille,nquicklens
+     $     ,nobjet,....
+OK- Correct a bug (remove FFTmp...)
+
+4) j'ai rajoute une nouvelle methode iterative GPBICGsafe.f
+nom: GPBICGsafe a mettre entre GPBICG2 et GPBICGAR dans le menu deroulant. OK
+5) RAF: gpbicg.f un peu change pour accelerer
+6) Correct bug in generating new option widget (refreshing default data)
+-----------------------------------------------------------------------------
+18/12/2014 : version 0.2.14
+
+Memory optimization:
+- remove Ederive(x,y,z)
+- remove IncidentFieldwf(x,y,z), LocalFieldwf(x,y,z), MacroscopicFieldwf(x,y,z)
+- Correct bug in plotting dipoles3D
+
+-----------------------------------------------------------------------------
+16/12/2014 : version 0.2.13
+
+1) RAF: correction mineure de la RR de la polarisabilite si le background n'est
+pas le vide. Pas utilisee pour l'instant mais necessaire si background
+different de un plus tard.
+
+2) Changement pour ameliorer la dimension de la RAM.
+les vecteurs vectbx,vectby,vecbtz,b disparraissent.
+produitfftmatvect3 remplace 	produitfftmatvect2 (gagne un peu de temps)
+derivativefield2 remplace 	derivativefield (perd un peu de temps)
+La taille maintenant en RAM est de 202*N: on gagne 10%!
+OK. Removed vectbx,vectby,vecbtz,b and update cdmRun accordingly.
+In addition: - add memset for each malloc to reserve memory
+             - cleanup plot memory when leaving tab widgets
+For now memory tests takes about 430MB for nmax=50
+-----------------------------------------------------------------------------
+15/12/2014 : version 0.2.12
+
+1) cdmRun.cpp, cmdRunWidget.cpp:Move allocation of cdmlib internal
+   variables in the C++ code (heap).
+2) cdmRun.cpp: Calculate system available memory and calculate needed memory.
+   if mem_available * 0.9 < mem_needed, abort calculation. To be tested.
+-----------------------------------------------------------------------------
+21/11/2014 : version 0.2.11
+
+1) cmdRunWidget.cpp: copy ntheta, nphi, nxm, nym, nzm internally
+2) Update INSTALL process to have compatibility with qt_version <> 5
+   and for Windows and Linux
+-----------------------------------------------------------------------------
+18/11/2014 : version 0.2.10
+
+1) RAF: Pour le champ diffracte par le calcul rapide. Pour la representation
+	graphique, interpolation bilineaire pour garder la meme facon de
+	faire que dans le cas non rapide. Du coup on defini aussi ntheta
+	et nphi dans ce cas.
+2) RAF: Correction sur les routines de polarisabilite. Pas d'influence.
+3) RAF: Ajouts sur calcul du champ diffracté par FFT et corrections de
+	quelques fautes d'orthographe...
+-----------------------------------------------------------------------------
+07/11/2014 : version 0.2.9
+
+1) RAF: Changement de dimension de thetafield,phifield,poyntingfield
+	a cause de la possibilite de faire la fft. Dans la routine et le
+	main. Mise a jour de l'allocation mémoire dans la partie C++. OK
+2) RAF: Changement ordre de declaration pour declarer nfft2d
+	avant son utilisation
+-----------------------------------------------------------------------------
+06/11/2014 : version 0.2.8
+
+1) RAF: Refonte totale du calcul de l'image par la lentille, juste maintenant....
+2) Bouton documentation en html 2 versions : francais anglais? TBD ...
+3) Ajout d'une option pour calculer juste le champ diffracte par des FFT
+	nquickdiffracte=0 bourrin et nquickdiffracte=1 par FFT.
+	Il faut donc rajouter une petite boite a cocher a cote de la
+	partie Cross section + Poynting (quick computation). OK
+4) RAF: Correction d'un bug sur les arguments de main.f
+5) RAF: Correction de très nombreux bugs dans gausskronrodpatterson
+6) Ajout un choix multiple juste au dessus read local field file
+	avec rigourous or renormalized Born.
+	La variable est nrig=0, 1. OK
+TBD:	non lineaire?
+-----------------------------------------------------------------------------
+23/03/2014 : version 0.2.7
+1) Documentation en pdf appelée via le menu principal (Help)
+TBD:    non lineaire?
+        Born et Born renormalise?
+-----------------------------------------------------------------------------
+09/01/2014 : version 0.2.6
+
+1) RAF: Message d'erreur dimension problem of the box quelque soit l'objet.
+Rajout d'une ligne avec nstop dans le code pour plus de clarte dans le message.
+2) RAF: Changement du calcul du champ diffracte dans section efficace de
+diffusion et champ lointain lentille.
+3) RAF: Prise en compte du champ incident a travers le microscope moyenant
+certaines approximations, notamment que le champ incident au niveau de
+l'observation est celui au plan de fourier objet de la lentille. Du coup
+il y a maintenant trois images en sorti sur le microscope: Efourier, Eimage,
+Eimageinc.
+4) Rajouter une troisieme option image+incident en plus de fourier
+et image dans le cadre de la microscopie. L'appel de la routine a ete change:
+
+	Eimagex,Eimagey,Eimagez,Eimageincx,Eimageincy
+	,Eimageincz,Efourierx,Efouriery,Efourierz,kxy,xy,numaper) -- OK
+5) RAF: Correction sur l'origine de la frequence nulle pour la FFT et sa
+normalisation pour obtenir l'image a travers la lentille.
+6) Il manque quasiment toutes les legendes sur les axes des
+plots.
+	Far field
+	image: x(m) et y(m)
+	Fourier: k_x/k_0 et k_y/k_0
+
+	Near field
+	plot x: y(m) et z(m)
+	plot y: x(m) et z(m)
+	plot z: x(m) et y(m)
+
+	Optical force and torque
+	plot x: y(m) et z(m)
+	plot y: x(m) et z(m)
+	plot z: x(m) et y(m) -- OK
+
+7) Peut etre un bouton close all window pour fermer d'un seul coup
+toutes les fenetres ouvertes par les differents plots. -- Il existe un 
+	Clear dans le menu Plot pour cela.
+8) RAF: Premier jet de la version francaise du manuel en pdf.
+TBD:	non lineaire?
+	Born et Born renormalise?
+-----------------------------------------------------------------------------
+28/11/2013 : version 0.2.5
+
+Make clearer the code to manage options configuration from main menu and 
+	options widget.
+1) In the main window menu Calculation it is now possible to trigger:
+New : opens a new calculation widget with default values
+Load : opens the configuration window
+Save : saves the currently accessible calculation
+Start : starts the currently accessible calculation
+2) In each calculation widget it is now possible to:
+Start calculation : as before
+Save Configuration : saves the current configuration.
+If it is New, a windows popup to insert a name and (optional) 
+	a description text.
+3) In the Configuration window it is possible to delete or load several
+configurations at once by making a multiple selection. It is possible to update
+the description of a given configuration, and to save a current 
+	configuration by filling
+the name and (optional) description of the last empty line.
+---------------------------------------------------------------------
+25/11/2013 : version 0.2.4
+
+1) RAF: Ajout dans relecture.f pour le fichier lisible de sortie.
+2) RAF: quand on reli par defaut choix na=0 fixe.
+3) Je n'arrive toujours pas a creer une config comme tu le fais.
+Un truc simple du genre New configuration et apres un save et ca demande le nom,
+est ce que c'est possible a implementer? --Ok j'ai amélioré la fenetre de configuration:
+a) Seules les colonnes nom,description sont modifiable lorsque l'on clicque dessus.
+b) Pour loader une nouvelle config, il faut selectionner la ligne vide a la fin de la liste.
+TBD:	non lineaire?
+	Born et Born renormalise?
+---------------------------------------------------------------------
+15/11/2013 : version 0.2.3
+
+1) RAF: Changement pour la lecture des fichiers .data
+Tout est mis dans le code. On peut supprimer les .data. Comme ca,
+c'est independant de la config de l OS.
+2) RAF: bug corrige quand multiobjet choisi et en plus materiau choisi
+dans des .data.	Tout passe dans le fortran...
+3) RAF: Bug de dimensionement de variable corrige pour les variables multis.
+4) RAF: Bug dans main.f sur multi corrige aussi.
+5) RAF: A la demande des utilisateurs, j'ai rajoute un systeme qui peut ecrire
+le champ local et le relire si necessaire. Cette routine est deja mis dans
+le Makefile. Le premier coup le programme calcule le champ local et le stock,
+puis le second coup il relis le champ local. On peut meme stocker different
+champ local avec different nom. Pour des configs lourdes ca peut etre tres
+utile.
+6) Il faut donc pour la relecture et creation de ce fichier ajoutter une option.
+Je propose de pouvoir cocher a cote de la commande start (nlecture=1, 0 sinon)
+une case reread qui demande alors un nom de fichier (stocke dans filereread).
+La subroutine est maintenant:
+	SUBROUTINE cdmlib(
+c     	input file cdm.in
+     $     lambda,beam,object,trope,
+     $     materiaumulti,nnnr,tolinit,methodeit,nlecture,filereread,
+
+--OK pass new variables nread with checkbox and filereread with editline in cdmOptions and update
+options database in table run_tbl and update cdmOptionsWidget for user input.
+7) Remove unused configuration variables and functions in cdmRun (used by cdmOptions)
+TBD:	non lineaire?
+	Born et Born renormalise?
+---------------------------------------------------------------------
+05/11/2013 : version 0.2.2
+
+1) RAF: Correction du bug sur le probleme de dimensionnement de nxm,nym et nzm.
+2) RAF: Rajoutte des arrets au milieu de la boucle iterative.
+3) RAF: Rajoutte un arret sur ntheta et nphi si un des deux egal a zero.
+4) RAF: Gros changement sur la facon de rentrer les objets inclines pour etre
+coherent entre les differents objets et base sur quelque chose de connu:
+les angles d'Euler, dans la convention ZXZ avec psi, theta, phi dans cet ordre.
+Ceci a permis de  corriger le bug pour que tout tienne avec un decoupage
+en nnnr.
+5) Il faut donc changer cuboid, elliposid et cylinder, pour mettre dans cet
+ordre pour les trois objets psi (Z), theta (X) ,phi (Z). Attention il me
+semble que tu as  croise phi et psi entre ce que tu as ecris sur l'interface
+et ce que fait le code. -- OK
+6) Par defaut quand on discretise un objet en N couches prendre
+nxm=nym=nzm=N. Du coup cette option disparait du bas et ne reapparait que quand
+on choisi l'option champ proche avec la valeur par defaut N. On arrive
+a ce que demandait Anne. -- OK
+Bug: cuboid,ellipsoid lx=10,ly=20,lz=40, dans le plot epsilon/dipole, lx ne correspond pas a ly/2
+TBD:	non lineaire?
+	Born et Born renormalise?
+----------------------------------------------------------------------------
+17/10/2013 : version 0.2.1
+
+1) Quand on represente en 3D le module du Poynting, la courbe est rose marbree
+de bleue. Est ce voulue? Non et c'est corrigé
+Pour quoi pas tout en rose, ou une couleur qui depend du module? --Ok
+2) RAF: test d'erreur sur nmax des le debut.
+3) Probleme representation du Plot/epsilon/dipoles: quand l'option wide field
+ou  cube around the object est choisie alors le plot de la sphere
+par exemple n'est pas bon sur les couleurs. La couleur rose qui est associee
+a la sphere (eps=2.25) ne correspond pas a la forme de la sphere. --Ok corrigé
+remarque: il n'y a pas calcul de wide field pour epsilon  (pas de epsilonwf.mat)
+4) RAF: Normalisation de kxy a k0 pour etre en sin(theta).
+5) Quand seule l'option dipole with epsilon est choisi, n'afficher dans les
+donnees	que les 4 premieres lignes. -- OK
+6) RAF: correction sur un test avec epsilon (lambda10n).
+7) Quand on trace la densite de force, avant en dehors de l'objet il y avait
+des points a la place des fleche, car pas de force. Maintenant il y a en dehors
+de l'objet: toujours des petites fleches horizontales (cas ou l'option
+champ proche est choisie differente de -1)? -- OK corrigé
+8) Quand on est dans le cas de deux spheres et l'option pour tracer le champ
+que dans l'objet. Il y a un probleme de representation du champ proche.
+Je pense que cela vient du fait que la carte de champ dans cette configuration
+est sur un ensemble discontinu (deux spheres disjointes). Soit forcer dans
+ce cas l'option na=0 ou arriver a representer le champ sur des ensembles
+disjoints. --Ok on met nproche=1 si nproche=0 c'est le plus simple.
+9) Add Export to file options button in OptionsWindow
+Bugs: 1) case discretization = 20, nxm=nym=nzm=10 for all objects : crash
+      2) case aniso with epsilon_i = real(i)=i (for example), no convergence
+of the code, impossible to cancel the calculation (RESIDU calculation running)
+TBD:	non lineaire?
+	Born et Born renormalise?
+----------------------------------------------------------------------------
+09/10/2013 : version 0.2.0
+
+1) lambda en minuscule dans la presentation des resultats -- OK
+2) k_0 avec k en minuscule -- OK
+3) Irradiance en W/m^2 (j'ai oublie le carre) -- OK
+4) Mesh Size [m] (oublie de l'unite...) -- OK
+5) RAF: Corrige l'erreur sur l'irradiance.
+6) RAF: corrige erreur sur le faisceau Gaussien.
+7) Changement complet de la presentation par Anne (si tu veux crier
+tu peux le faire mais ca reste en famille...): presen.eps
+Les choses non tracees au dessus de Object properties ne sont pas changees -- OK
+En fait sur le tableau de gauche dans study il y aurait trois choix;
+far field, near field, optical force. L'ideal serait qu'en
+cliquant sur un des choix, que le sous menu (decalle sur l'image
+apparaisse et que en meme temps l encadre associe a droite qui permet de
+visualiser apparaisse aussi). -- OK
+En dessous on laisse numerical parameters.
+Dans object properties on met maintenant la discretisation -- OK
+plus une icone pour tracer le epsilon en 3D ou la couleur du epsilon serait liee a sa valeur.
+En fait c'est ce qu'on fait quand on trace dipole, mais on le
+remplace par ce truc qui permet en meme temps de visualiser les
+dipoles et la valeur du epsilon. -- A discuter:  possibilite du plot epsilon en mode farfield et inside cube only; n'est pas un setting a priori (panel de droite) -- OK
+8) on rajoute dans far field, un truc de microscopie (nlentille=1).
+Dans ce cas on rentre NA (qui est numerical aperture:numaper). -- OK
+On sort Eimage avec trois composantes et Efourier avec trois composantes.
+En abscisse et ordonnee on utilise kxy pour Efourier et xy pour Eimage.
+La taille est de nfft2d qu'on peut mettre par defaut a 256 pour l'instant. -- OK
+variables ajoutées:
+integer nlentille,ndisnumaper,nfft2d,nfft2d2
+double precision kx,ky,kz,deltakx,deltaky,numaper,matrot(3
+$     ,3),ux,uy,deltax
+ double precision kxy(nfft2d),xy(nfft2d)
+ double complex Eimagex(nfft2d*nfft2d),Eimagey(nfft2d*nfft2d)
+$     ,Eimagez(nfft2d*nfft2d),Efourierx(nfft2d*nfft2d)
+$     ,Efouriery(nfft2d*nfft2d),Efourierz(nfft2d*nfft2d)
+variables transmises dans cdmlib :
+nlentille,Eimage,Efourier,numaper,kxy,xy,nft2d
+TBD:	non lineaire?
+	Born et Born renormalise?
+----------------------------------------------------------------------------
+02/09/2013 : version 0.1.10
+
+1) RAF: ajout d'arrets du code apres les forces et couples.
+2) RAF: correction bugs de creation et relecture fichier faisceau gaussian
+paraxial.
+3) RAF: correction bug de relecture fichier faisceau gaussian rigoureux.
+4) RAF: passage de l'ecriture ascii en binaire pour aller plus vite pour
+tous les faisceaux gaussians.
+5) RAF: Bug corrige dans la derivee du faisceau gaussian paraxial.
+6) Petites modifications de présentation des resultats
+(peut tu faire les exposants ou lettres Grecques? Je prends la convention
+Latex en supposant que tu connais!).
+	\Lambda/(10|n|) [m]
+	k_0 [m^{-1}]
+	Irradiance [W/m]
+	Field Modulus [V/m]
+	Number of products Ax (iterations):	8(2) par exemple
+	Extinction cross section [m^2]
+	Absorbing cross section [m^2]
+	Scattering cross section [m^2]
+	Optical force x [N]: pour les 3 lignes suivantes meme unite
+	Optical torque [N/m]: pour les 3 lignes suivantes meme unite
+TBD: A faire apres correction sur irradiance faisceau gaussian rigoureux,
+puis verif faisceau rigoureux.
+----------------------------------------------------------------------------
+27/08/2013 : version 0.1.9
+
+1) Dans le cas d'objets multiples on a dans le tableau resultat object 1 2 3
+mais dans props et Epsilon on a object 0 1 2. Il faudrait mettre aussi 1 2 3
+pour etre coherent. --OK
+2) Changer dans les faisceaux circular (plane et gaussian) postive negative
+en polarization right et left. --OK
+3) RAF: bug corrige dans E0 du faisceau gaussian.
+4) RAF: bug corrige dans E0 de l'onde plane.
+5) RAF: bug corrige dans irradiance de l'onde plane.
+6) Mise en place d'un faisceau gaussian approximation paraxial analytique.
+Meme appel que le faisceau Gaussian rigoureux avec les memes
+arguments et variables.
+nom: gparawavelinear et  gparawavecircular --OK
+7) RAF: bugs dans test de securite sur P0 et w0 corriges.
+8) Crash when COMPLETED after cancelled solved
+TBD: A faire apres correction sur irradiance faisceau gaussian rigoureux,
+puis verif de tous les faiceaux gaussians.
+--------------------------------------------------------------------------
+22/08/2013 : version 0.1.8
+
+1) RAF: bug corrige dans incidentarbitrary
+2) RAF: infostr rajoutte pour w0 et P0=0
+3) RAF: Bug I0 et E0 corriges
+4) RAF: concentricsphere: bugs corriges positionnement+rayon
+5) RAF: test si sphere=concentricsphere=ellipse=nspheres:OK
+6) ondecirc et gaussiancirc s.ge.0 alors right et s.lt.0 alors left:
+evite le probleme du zero ou des arrondis. changer le menu pour mettre
+positif ou negatif et non plus -1 +1 --OK
+7) RAF: Bug dans TFQMR et BICGSTAB corriges
+8) Bug dans nom de methode iterative. Changer dans le menu deroulant
+le premier nom de GPBICG en GPBICG1 --OK
+9) RAF: objectpara bug corriges na et positionnement
+10) RAF: objectellipsoide nombreux bugs corriges....
+11) RAF: rajoutte test nstop apres calcul object si probleme
+12) RAF: objectcylindre nombreux bugs corriges notamment qd na=1 pas
+cube inscrit
+13) Pour multiobjets: spheres concentriques ou nspheres il faudrait
+pouvoir choisir par exemple Au pour l'un et Ag pour l'autre
+objet. Pour l'instant seul le choix dans le epsilon (option xx) est
+offert, il faut pouvoir aller prendre dans les fichiers de data des
+metaux.... --OK
+14) RAF: anisotrope corrige pour spheres concentric
+15) RAF: anisotrope corrige pour nspheres
+16) RAF: rajoutter des arrets en cours de route
+17) Probleme representation champ macro et local pour cylindre et
+ellipsoide quand na=-1 et que les orientations (angles) sont
+differentes de zero. Par exemple pour le champ macro le champ ne
+parait pas bien range et on ne retrouve pas la forme de l'objet alors
+que la force est bien ordonnee.  Contrairement quand na=0. Les valeurs
+numeriques sont identiques entre les deux cas na=0 et na=-1 donc je
+penche pour un probleme de representation du champ, meme si je ne suis
+pas archi sur.
+exemple:
+ellipsoid a=30 b=20 c=10
+discretization 20
+Des que theta psi differents zero (par exemple 45) les coupes sont
+dementes...dans le sens que les elements nuls ne sont pas au bon
+endroit alors que pour la force c'est juste.
+--OK
+18) objetpara change pour introduire phiobj,thetaobj,psiobj comme dans
+ellipsoide. Il faut donc changer le menu deroulant en consequence. On
+reutilise les meme variables. Il y aura surement la meme erreur qu'au
+17). --OK
+19) ondeplane change: pwavelinear. Dans le menu deroulant on proposait
+TM ou TE sur deux lignes. Plus simple et plus complet maintenant une
+seule ligne avec TM (1) et TE (0) et cela permet le melange des
+deux.... --OK
+20) meme modif a faire sur gwavelinear : une seule ligne avec TM (1)
+et TE (0) --OK
+21) Quand il y a N objets tu ecris optical force (qui est la force
+totale sur le systeme) et apres optical force 0, 1,2,...J'aurais
+prefere 1,2,3,4 mais ca n'est pas tres grave.  -- OK
+Par contre quand il y a un seul objet tu mets optical force qui est la
+force totale et aussi la force sur l'objet puisqu'il est unique. Mais
+dans ce cas tu ecris aussi la force (objet 0) avec des nombres
+etranges (en fait du non calcule surement): Est ce possible de
+supprimer ca quand il y a un seul objet? A l'identique pour le couple.
+--OK
+---------------------------------------------------------------------

@@ -1,0 +1,364 @@
+\chapter{Définition de l'objet}\label{chap4}
+\markboth{\uppercase{Définition de l'objet}}{\uppercase{Définition de
+    l'objet}}
+
+\minitoc
+
+\section{Introduction}
+
+Le code propose plusieurs objets prédéfinis et nous allons dans cette
+section préciser comment rentrer leurs caractéristiques
+opto-géométriques. A noter que toutes les distances sont à entrer en
+nanomètre. Le code fera la conversion en mètre.
+
+
+
+\section{Type d'objet}
+
+
+La liste des objets prédéfinis est la suivante:
+
+sphère, cube, parallélépipède, ellipsoïde, plusieurs sphères
+distinctes, cylindre, sphères concentriques, sphère inhomogène et
+objet arbitraire.
+
+Quand les objets, comme le cube ou le parallélépipède, ont leurs
+arrêtes tournées par rapport aux axes du système de coordonnées, les
+angles d'Euler sont utilisés comme définis Fig.~\ref{euler}. Le centre
+de rotation étant le centre d'inertie de l'objet. La matrice de
+passage s'écrit alors:
+%%%%%%%%%%%%%%%%%%%%%
+\be \ve{A} & = & \begin{pmatrix}\cos(\psi )\cos(\varphi )-\sin(\psi
+  )\cos(\theta )\sin(\varphi )& -\cos(\psi )\sin(\varphi )-\sin(\psi
+  )\cos(\theta )\cos(\varphi )& \sin(\psi )\sin(\theta )\\ \sin(\psi
+  )\cos(\varphi )+\cos(\psi )\cos(\theta )\sin(\varphi )& -\sin(\psi
+  )\sin(\varphi )+\cos(\psi )\cos(\theta )\cos(\varphi )& -\cos(\psi
+  )\sin(\theta )\\ \sin(\theta )\sin(\varphi )& \sin(\theta
+  )\cos(\varphi )& \cos(\theta )\end{pmatrix} \nn \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=8.0cm,draft=false]{euler.eps}
+\end{center}
+  \caption{Définition des angles d'Euler selon la convention
+    $Z-X-Z$. Schéma pris sur wikipédia.}
+\label{euler}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sphère}
+
+Pour la sphère il y a 4 champs à remplir:
+
+\begin{itemize}
+\item Le rayon de la sphère en nanomètre
+\item L'abscisse du centre de la sphère en nanomètre
+\item L'ordonnée du centre de la sphère en nanomètre
+\item La cote du centre de la sphère en nanomètre
+\end{itemize}
+
+\subsection{Sphère inhomogène}
+
+
+La sphère est constitué avec une permittivité avec un bruit Gaussien
+avec une longueur de corrélation $l_c$ et une amplitude $A$ et une
+moyenne $\varepsilon_r$.
+
+Pour la sphère inhomogène il y a 7 champs à remplir:
+
+\begin{itemize}
+\item Le rayon de la sphère en nanomètre
+\item L'abscisse du centre de la sphère en nanomètre
+\item L'ordonnée du centre de la sphère en nanomètre
+\item La cote du centre de la sphère en nanomètre
+\item la graine du tirage aléatoire
+\item La longueur de corrélation $l_c$
+\item L'amplitude d'oscillation $A$
+\end{itemize}
+
+
+
+\subsection{Sphères aléatoires (longueur)}
+
+Toutes les sphères sont constituées de la même permittivité et ont le
+même rayon et sont distribuées aléatoirement dans un parallélépipède:
+
+
+\begin{itemize}
+\item L'arête du cube en nanomètre suivant l'axe $x$
+\item L'arête du cube en nanomètre suivant l'axe $y$
+\item L'arête du cube en nanomètre suivant l'axe $z$
+\item L'abscisse du centre du parallélépipède en nanomètre
+\item L'ordonnée du centre du parallélépipède en nanomètre
+\item La cote du centre du parallélépipède en nanomètre
+\item la graine du tirage aléatoire
+\item le rayon des sphères
+\item La densité de sphère, soit $d=$volume des sphères divisé par le
+  volume du parallélépipède donc entre 0 et 0.5. Si la valeur dépasse
+  les deux alors cela correspond au nombre de sphères distribuées
+  aléatoirement dans la boite.
+\end{itemize}
+
+
+\subsection{Sphères aléatoires (maillage)}
+
+Toutes les sphères sont constituées de la même permittivité et ont le
+même rayon et sont distribuées aléatoirement dans un parallélépipède:
+
+
+\begin{itemize}
+\item L'abscisse du centre du parallélépipède en nanomètre
+\item L'ordonnée du centre du parallélépipède en nanomètre
+\item La cote du centre du parallélépipède en nanomètre
+\item Nombre de maille dans la direction $x$
+\item Nombre de maille dans la direction $y$
+\item Nombre de maille dans la direction $z$
+\item longueur de la maille en nanomètre
+\item le rayon des sphères
+\item la graine du tirage aléatoire  
+\item La densité de sphère, soit $d=$volume des sphères divisé par le
+  volume du parallélépipède donc entre 0 et 0.5. Si la valeur dépasse
+  les deux alors cela correspond au nombre de sphères distribuées
+  aléatoirement dans la boite.
+\end{itemize}
+
+
+\subsection{Cube}
+
+Pour le cube il y a 4 champs à remplir:
+
+\begin{itemize}
+\item L'arête du cube en nanomètre
+\item L'abscisse du centre de la sphère en nanomètre
+\item L'ordonnée du centre de la sphère en nanomètre
+\item La cote du centre de la sphère en nanomètre
+\end{itemize}
+
+\subsection{Parallélépipède (longueur)}
+
+Pour le parallélépipède il y a 9 champs à remplir:
+
+\begin{itemize}
+\item L'arête du cube en nanomètre suivant l'axe $x$
+\item L'arête du cube en nanomètre suivant l'axe $y$
+\item L'arête du cube en nanomètre suivant l'axe $z$
+\item L'abscisse du centre du parallélépipède en nanomètre
+\item L'ordonnée du centre du parallélépipède en nanomètre
+\item La cote du centre du parallélépipède en nanomètre
+\item Premier angle d'Euler $\psi$ par rotation autour de l'axe $z$
+\item Deuxième angle d'Euler $\theta$ par rotation autour de l'axe $x$
+\item Troisième angle d'Euler $\varphi$ par rotation autour de l'axe $z$
+\end{itemize}
+
+
+\subsection{Parallélépipède (maille)}
+
+Pour le parallélépipède il y a 7 champs à remplir:
+
+\begin{itemize}
+\item L'abscisse du centre du parallélépipède en nanomètre
+\item L'ordonnée du centre du parallélépipède en nanomètre
+\item La cote du centre du parallélépipède en nanomètre
+\item Nombre de maille dans la direction $x$
+\item Nombre de maille dans la direction $y$
+\item Nombre de maille dans la direction $z$
+\item longueur de la maille en nanomètre
+\end{itemize}
+
+
+\subsection{Parallélépipède inhomogène (longueur)}
+
+
+Pour le parallélépipède inhomogène il y a 9 champs à remplir:
+
+\begin{itemize}
+\item L'arête du cube en nanomètre suivant l'axe $x$
+\item L'arête du cube en nanomètre suivant l'axe $y$
+\item L'arête du cube en nanomètre suivant l'axe $z$
+\item L'abscisse du centre du parallélépipède en nanomètre
+\item L'ordonnée du centre du parallélépipède en nanomètre
+\item La cote du centre du parallélépipède en nanomètre
+\item la graine du tirage aléatoire
+\item La longueur de corrélation $l_c$
+\item L'amplitude d'oscillation $A$
+\end{itemize}
+
+\subsection{Parallélépipède inhomogène (maille)}
+
+
+Pour le parallélépipède inhomogène il y a 9 champs à remplir:
+
+\begin{itemize}
+\item L'abscisse du centre du parallélépipède en nanomètre
+\item L'ordonnée du centre du parallélépipède en nanomètre
+\item La cote du centre du parallélépipède en nanomètre
+\item Nombre de maille dans la direction $x$
+\item Nombre de maille dans la direction $y$
+\item Nombre de maille dans la direction $z$
+\item longueur de la maille en nanomètre
+\item la graine du tirage aléatoire
+\item La longueur de corrélation $l_c$
+\item L'amplitude d'oscillation $A$
+\end{itemize}
+
+\subsection{Ellipse}
+
+Pour l'ellipse il y a 9 champs à remplir:
+
+\begin{itemize}
+\item Le demi axe en nanomètre suivant l'axe $x$
+\item Le demi axe en nanomètre suivant l'axe $y$
+\item Le demi axe en nanomètre suivant l'axe $z$
+\item L'abscisse du centre de l'ellipse en nanomètre
+\item L'ordonnée du centre de l'ellipse en nanomètre
+\item La cote du centre de l'ellipse en nanomètre
+\item Premier angle d'Euler $\psi$ par rotation autour de l'axe $z$
+\item Deuxième angle d'Euler $\theta$ par rotation autour de l'axe $x$
+\item Troisième angle d'Euler $\varphi$ par rotation autour de l'axe $z$
+\end{itemize}
+
+
+\subsection{Plusieurs sphères}
+
+Pour de sphères multiples il convient d'abord de choisir avec la ligne
+du dessous {\it number of objects} le nombre $N$ de sphères
+désirées. Après quand on clique sur {\it Props} il apparaît $N$
+fenêtres que l'on rempli comme pour la sphère unique. Attention les
+sphères doivent être disjointes, sinon le code s'arrête et signale
+l'erreur.
+
+\subsection{Cylindre}
+
+Pour l'ellipse il y a 8 champs à remplir:
+
+\begin{itemize}
+\item Le rayon du cylindre en nanomètre
+\item La longueur du cylindre en nanomètre
+\item L'abscisse du centre du cylindre en nanomètre
+\item L'ordonnée du centre du cylindre en nanomètre
+\item La cote du centre du cylindre en nanomètre
+\item Premier angle d'Euler $\psi$ par rotation autour de l'axe $z$
+\item Deuxième angle d'Euler $\theta$ par rotation autour de l'axe $x$
+\item Troisième angle d'Euler $\varphi$ par rotation autour de l'axe $z$
+\end{itemize}
+
+
+\subsection{Sphères concentriques}
+
+Pour des sphères concentriques il convient d'abord de choisir avec la
+ligne du dessous {\it number of objects} le nombre $N$ de sphères
+concentriques. Après quand on clique sur {\it Props} il apparaît $N$
+fenêtres. La première fenêtre se rempli comme pour la sphère, et pour
+les fenêtres suivantes il suffit de rentrer le rayon en nanomètre.
+Les rayons doivent être rentrés dans l'ordre croissants, sinon le code
+signale l'erreur.
+
+\subsection{Objet arbitraire}
+
+Dans le cas d'un objet arbitraire celui-ci est défini par
+l'utilisateur. C'est à dire que celui-ci doit créer lui même l'objet,
+et il convient alors de faire ce fichier d'entrée en respectant les
+conventions choisies par le code. {\it namefile} est le nom du fichier
+contenant l'objet arbitraire et est demandé quand on choisi objet
+arbitraire. Celui-ci est codé en séquentiel et en ascii et est
+forcément décrit dans une boîte parallélépipèdique. Ci dessous sont
+données les lignes de code permettant de créer ce fichier:
+
+\hspace{5mm} open(15,file=namefile,status='old',iostat=ierror)
+
+\hspace{5mm} write(15,*) nx,ny,nz
+
+\hspace{5mm} write(15,*) aretecube
+
+
+\hspace{5mm} {\bf do} i=1,nz
+
+  \hspace{10mm} {\bf do} j=1,ny
+
+ \hspace{15mm} {\bf do} k=1,nx
+  
+
+      \hspace{20mm}  write(15,*) xs(i,j,k),ys(i,j,k),zs(i,j,k)     
+         
+   \hspace{15mm} {\bf enddo}
+
+  \hspace{10mm} {\bf enddo}
+
+ \hspace{5mm} {\bf enddo}
+
+\hspace{5mm} {\bf do} i=1,nz
+
+  \hspace{10mm} {\bf do} j=1,ny
+
+ \hspace{15mm} {\bf do} k=1,nx
+
+ \hspace{20mm} {\bf if}  objet isotrope 
+
+         \hspace{25mm}    write(15,*)  eps(i,j,k)
+                    
+    \hspace{20mm} {\bf elseif}  objet anisotrope
+
+       \hspace{25mm}  {\bf do} ii=1,3
+ 
+              \hspace{30mm}  {\bf do} jj=1,3
+
+                \hspace{35mm} write(15,*) epsani(ii,jj,i,j,k)
+
+   \hspace{30mm} {\bf enddo}
+
+  \hspace{25mm} {\bf enddo}
+
+       \hspace{20mm} {\bf endif}
+
+    \hspace{15mm} {\bf enddo}
+
+  \hspace{10mm} {\bf enddo}
+
+ \hspace{5mm} {\bf enddo}
+
+
+\vspace{10mm}
+
+\begin{itemize}
+\item nx : taille du parallélépipède suivant l'axe $x$.
+\item ny : taille du parallélépipède suivant l'axe $y$.
+\item nz : taille du parallélépipède suivant l'axe $z$.
+\item aretecube : taille de la maille de discrétisation 
+\item x : abscisse des mailles de discrétisation suivant l'axe $x$.
+\item y : ordonnée des mailles de discrétisation suivant l'axe $y$.
+\item z : cote des mailles de discrétisation suivant l'axe $z$.
+\item eps : epsilon de l'objet si isotrope
+\item epsani : epsilon de l'objet si anisotrope
+\end{itemize}
+
+\section{Choisir la permittivité relative}
+
+Quand le ou les objets sont choisis il convient alors de rentrer la
+permittivité relative. A part l'objet arbitraire, tous les objets
+définis par défaut dans le code sont considérés comme étant
+homogènes. Ils peuvent être isotropes ou anisotrope. On choisit donc
+{\it iso} ou {\it aniso} et on clique sur {\it Epsilon}.
+
+\begin{itemize} 
+\item {\it iso}: Apparaît un tableau, ou soit on rentre la
+  permittivité relative à la main (partie réelle et partie imaginaire)
+  ou on choisi un matériau dans la base de donnée.
+\item {\it aniso}: Apparaît un tableau où on rentre la permittivité
+  relative à la main (partie réelle et partie imaginaire) pour toutes
+  les composantes du tenseur anisotrope.
+\end{itemize}
+
+\section{Choisir la discrétisation}
+
+Le nombre $N_c$ rentré dans le champ de la discrétisation correspond
+au nombre de couche formant l'objet dans sa plus grande direction.
+
+Quelques exemples:
+
+
+\begin{itemize} 
+\item Pour une ellipse de demi axe $(a,b,c)$, ce sera le plus grand
+  demi axe $a$ qui sera choisi et l'arête de discrétisation sera de
+  $2a/N_c$.
+\item Pour un cube le nombre de maille sera donc de $N=N_c^3$.
+\end{itemize}

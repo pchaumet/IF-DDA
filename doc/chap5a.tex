@@ -1,0 +1,294 @@
+\chapter{Possible study with the code}\label{chap5}
+\markboth{\uppercase{Possible study with the
+    code}}{\uppercase{Possible study with the code}}
+
+\minitoc
+
+\section{Introduction}
+
+To determine the object with the appropriate orientation is not an
+easy task.  That is why the first option {\it Only dipoles with
+  epsilon}, enables us to check quickly if the object entered is well
+the one intended without any calculation being launched. Once this has
+been done, there are three great fields: the study in far field, the
+study in near field and the optical forces.
+
+\vskip10mm
+
+{\underline{Important}}: Note that in the DDA the computation that
+takes the longest time is the calculation of the local field due to
+the necessity to solve the system of linear equations.  One option has
+been added which consists in reading again the local field starting
+with a file. When this option is selected, the name of a file is asked
+for; either we enter an old file or a new name:
+
+\begin{itemize}
+\item If this is a new name, the calculation of the local field is
+  going to be accomplished, then, stored together with the chosen
+  configuration.
+\item - If this is an old name, the local field is going to be read
+  again with a checking that the configuration has not been changed
+  between the writing and the second reading. This makes it easier to
+  relaunch calculations very quickly for the same configuration but
+  for different studies.
+\end{itemize}
+
+
+Note also that if the calculation asked has a large number of
+discretization and that we are not interested by the output files in
+.mat (needs to use matlab), then we have the option ``Do not write mat
+file''. This requires the code to write no .mat file, and allows the
+code to go faster, less fill the hard drive and be better
+parallelized.
+
+
+\section{Study in far field}
+
+When the option far field is selected, three possibilities appear:
+
+\begin{itemize}
+
+\item {\it Cross section}: This option enables us to calculate the
+  extinction ($C_{\rm ext}$), absorbing ($C_{\rm abs}$) and scattering
+  cross section ($C_{\rm sca}$). The scattering cross section is
+  obtained through $C_{\rm sca}=C_{\rm ext}-C_{\rm abs}$. The
+  extinction and absorption cross sections may be evaluated as:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \be C_{\rm ext} & = & \frac{4\pi k_0}{\|\ve{E}_0\|^2} \sum_{j=1}^{N}
+  {\rm Im} \left[ \ve{E}^*_0(\ve{r}_j).  \ve{p}(\ve{r}_j) \right] \\
+  C_{\rm abs} & = & \frac{4\pi k_0}{\|\ve{E}_0\|^2} \sum_{j=1}^{N}
+  \left[ {\rm Im} \left[ \ve{p}(\ve{r}_j). (\alpha^{-1}(\ve{r}_j))^*
+      \ve{p}^*(\ve{r}_j) \right] -\frac{2}{3} k_0^3
+    \| \ve{p}^*(\ve{r}_j) \|^2 \right] \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item {\it Cross section+Poynting}: This option calculates also the
+  scattering cross section from the integration of the far field
+  diffracted by the object upon 4$\pi$ stéradians, the asymmetric
+  factor and calculates differential cross section, {\it i.e.}
+  $\left< \ve{S} \right> .\ve{n} R^2$ with $\ve{S}$ the Poynting
+  vector, $\ve{n}$ the direction of observation, which is going to be
+  represented in 3D. The values {\it Ntheta} and {\it Nphi} enable us
+  to give the number of points used in order to calculate the
+  scattering cross and to represent the Poynting vector. The larger
+  the object is, the larger {\it Ntheta} and {\it Nphi} must be, which
+  leads to time consuming calculations for objects of several
+  wavelengths.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \be C_{\rm sca} & = & \frac{k_0^4}{\|\ve{E}_0\|^2} \int \left\|
+    \sum_{j=1}^N \left[ \ve{p}(\ve{r}_j)-\ve{n}(\ve{n}.
+      \ve{p}(\ve{r}_j)) \right] e^{-i k_0 \ve{n}.\ve{r}_j} \right\|^2
+  {\rm d}\Omega \\ g & = & \frac{k_0^3}{C_{\rm sca} \|\ve{E}_0\|^2}
+  \int \ve{n}.\ve{k}_0 \left\| \sum_{j=1}^N \left[
+      \ve{p}(\ve{r}_j)-\ve{n}(\ve{n}.  \ve{p}(\ve{r}_j)) \right] e^{-i
+      k_0 \ve{n}.\ve{r}_j} \right\|^2 {\rm d}\Omega \\
+  \left< \ve{S} \right> .\ve{n} R^2 & = & \frac{c k_0^4}{8\pi }
+  \left\| \sum_{j=1}^N \left[ \ve{p}(\ve{r}_j)-\ve{n}(\ve{n}.
+      \ve{p}(\ve{r}_j)) \right] e^{-i k_0 \ve{n}.\ve{r}_j} \right\|^2
+  \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+
+  Another solution in order to go faster (option {\it quick
+    computation}) and to pass by FFT for the calculation of the
+  diffracted field.  In this case, of course, it is convenient to
+  discretize keeping in mind that the relation
+  $\Delta x \Delta k=2\pi/N$ connects the mesh size of the
+  discretization with the size of the FFT. The $N$ chosen for the
+  moment is $N=256$. This is convenient for objects larger than the
+  wavelength. Indeed, $L=N\Delta x$ corresponds to the size of the
+  object which gives $\Delta k=2\pi/L$, and if the size of the object
+  is too small, then, the $\Delta k$ is too large, and the quadrature
+  is imprecise. Note that since the integration is performed on two
+  planes parallel to the plane $(x,y)$, is not convenient if the
+  incident makes an angle more than 70 degrees with the $z$ axis. The
+  3D representation of the vector of Poynting is done as previously,
+  i.e. with {\it Ntheta} and {\it Nphi} starting with an interpolation
+  upon the calculated points with the FFT.
+
+\item {\it Energy Conservation}. This study computes the reflectance,
+  transmittance and absorptance. If the object under study is no
+  absorbing then the absorptance should be zero. Then it traduces the
+  level of energy conservation of our solver. It can depend of the
+  precision of the iterative method and of the polarizability chosen.
+
+\end{itemize}
+  
+\section{Microscopy}
+  
+This option permits to compute the image obtained for different
+microscope (holographic, brightfield, darkfield and phase). It asks
+for the numerical aperture of the objective lens (necessarily between
+0 and 1), then, calculates the field diffracted by the object and the
+picture obtained through the microscope. By default, the lenses are
+placed parallel to the plane $(x,y)$ and at the side of the positive
+$z$. The focus of the microscope is placed to the origin of the frame
+but can be chaned via the field ``Position of the focal plane''.
+(Fig.~\ref{lentille}). The magnification of the microscope is $G$ and
+should be above 1.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics*[draft=false,width=150mm]{lentille.eps}
+\caption{Simplified figure of the microscope. The object focus of the
+  objective lens is at the origin of the frame. The axis of the lens
+  is confounded with the $z$ axis and at the side of the positive
+  $z$.}
+\label{lentille}
+\end{center}
+\end{figure}
+
+
+The calculation for the diffracted field may be completed starting
+with the sum of the radiation of the dipoles (very long when the
+object has a lot of dipoles) or with FFT (option {\it quick
+  computation}) with a value $N=128$ by default here as well. In this
+case, $\Delta x \Delta k=2\pi/N$ with $\Delta x$ the mesh size of
+discretization of the object which corresponds also to the
+discretization of the picture plane. Consequently, this one has a size
+of $L=N \Delta x$.
+
+The diffracted field in far field at a distance $r$ of the origin can
+written as
+$\ve{E}= \ve{S}(k_x,k_y,\ve{r}_{\rm object}) \frac{e^{i k r}}{r}$. The
+field after the first lens is then defined as:
+$\ve{E}^f=\frac{\ve{S}(k_x,k_y,\ve{r}_{\rm object})}{-2 i \pi \gamma}$
+with $\gamma=\sqrt{k_0^2-k_x^2-k_y^2}$ and the image through the
+microscope is given by its Fourier transform,
+$\ve{E}^i= {\cal F}(\ve{E}^f)$.
+
+To take into account the magnification of the microscope in the image
+we perform a rotation of the vector $\ve{E}^f$ before its Fourier
+transform as:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be\ve{E}^i & = & {\cal F}(R(\theta) \ve{E}^f) \\
+{\rm with~} R(\theta) & = & \left( \begin{matrix} u_x^2
+    +\cos\theta(1-u_x^2) & u_x u_y (1-\cos\theta) & u_y \sin\theta \\
+    u_x u_y (1-\cos\theta) & u_y^2 +\cos\theta(1-u_y^2) & -u_x
+    \sin\theta \\ -u_y \sin\theta
+    & u_x \sin\theta & \cos\theta  \end{matrix} \right) \\
+\theta & = & \sin^{-1} [  \sin(-\beta)/G] - \beta \\
+\beta & = & \cos^{-1}(k_z/k_0) \\
+u_x & = & -k_y/k_{\parallel}\\
+u_y & = & k_x/k_{\parallel} . \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Note that we can simulate a microscope in tansmission $(k_z>0)$ or un
+reflexion $(k_z<0)$.  We can notice, for a microscope in transmission,
+that when the total field is computed in the Fourier plane (scattered
+plus incident filed {\it i.e.} specular), in the case of the plane
+wave, a Dirac in the Fourier space is placed at the pixel the closest
+of the incident wave vector.
+
+
+\begin{itemize}
+
+\item {\it Holographic}: This option computes the diffracted field
+  (Fourier plane) with the incident field defined in the section
+  illumination properties. It computes the image plane with or without
+  the presence of the incident field.
+
+
+  
+\item {\it Brightfield}: This microscope uses a condenser lens, which
+  focuses light from the light source onto the sample with a numerical
+  aperture defined below the magnification. It consists to sum many
+  incident field inside this numerical aperture with different
+  polarizations, hence it can take time as it needs to solve many
+  direct problem. The result is given in the image plane with the
+  incident field (a kind of dark field) and with the incident field
+  (brightfield).
+
+\item {\it Darkfield \& phase}: In darkfield microscopy the condenser
+  is designed to form a hollow cone of light with a numerical aperture
+  equal to the condenser lens, as apposed to brightfield microscopy
+  that illuminates the sample with a full cone of light. The result is
+  given in the image plane (scattered field). In the phase microscopy
+  the ring-shaped illuminating light that passes the condenser annulus
+  is focused on the specimen by the condenser exactly as in the dark
+  field microscope and then the incident field with a phase shifted of
+  $\pi/2$ is added to the scattered field.
+  
+\end{itemize}
+
+\section{Study in near field}
+
+When the option near field is selected, two possibilities appear:
+
+\begin{itemize}
+
+\item {\it Local field}: This option enables us to draw the local
+  field to the position of each element of discretization. The local
+  field being the field at the position of each element of
+  discretization in absence of itself. 
+
+\item {\it Macroscopic field}: This option enables us to draw the
+  macroscopic field to the position of each element of
+  discretization. The connection between the local field and the
+  macroscopic field is given Ref.~\cite{Chaumet_PRE_04} :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \be \ve{E}_{\rm macro} & = & 3 \left( \varepsilon+2 -i \frac{k_0^3
+      d^3 }{2 \pi} (\varepsilon-1)\right)^{-1} \ve{E}_{\rm local} \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{itemize}
+
+The last option enables us to choose the mesh in which the local and
+macroscopic fields are represented.
+
+\begin{itemize}
+
+\item {\it Object}: Only the field in the object is
+  represented. Notice that when FFT is used for the beam or for the
+  computation of the diffracted field then this options is passed in
+  the option {\it Cube}. This is same for the computation of the
+  emissivity, teh reread option and the use of the BPM(R).
+
+\item {\it Cube}: The field is represented within a cube containing
+  the object.
+
+\item {\it Wide field}: The field is represented within a box greater
+  than the object.  The size of the box correspond to the size of the
+  object plus the Additional sideband ($x$, $y$ ou $z$) on each
+  side. For example for a sphere with a radius $r=100$~nm and
+  discretization of 10, {\it i.e.} a meshsize of 10 nm, with an
+  Additional sideband $x$ of 2, 3 for $y$ and 4 for $z$, we get a box
+  of size:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \be l_x & = & 100 + 2\times 2 \times 10 = 140~{\rm nm} \\
+  l_y & = & 100 + 2\times 3 \times 10 = 160~{\rm nm} \\
+  l_z & = & 100 + 2\times 4 \times 10 = 180~{\rm nm} \\
+  \ee
+\end{itemize}
+
+\section{Optical force and torque}
+
+When the force option is selected, four possibilities appear:
+\begin{itemize}
+
+\item {\it Optical force}: Calculation of the optical force exerting
+  on one or more objects.
+
+\item {\it Optical force density}: Enables us to draw the density of
+  the optical force.
+
+\item {\it Optical torque}: Calculation of the optical torque exerting
+  on one or more objects.  The torque is computed for an origin placed
+  in the gravity center of the object.
+
+\item {\it Optical torque density}: Enables us to draw the density of
+  the optical force torque.
+\end{itemize}
+The net optical force and troque experienced by the object are
+computed with~\cite{Chaumet_OL_00,Chaumet_JAP_07a}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{F} & = & (1/2) \sum_{j=1}^N {\rm Re}\left(\sum_{v=1}^{3}
+  p_v(\ve{r}_j) \frac{\partial (E_v(\ve{r}_j))^*}{\partial u}\right) \\
+\ve{\Gamma} & = & \sum_{j=1}^N \left[ \ve{r}_{j} \times
+  \ve{F}(\ve{r}^g_{j})+ \frac{1}{2} {\rm Re} \left\{ \ve{p}(\ve{r}_{j})
+    \times \left[ \ve{p}(\ve{r}_{j})/{\alpha_{\rm
+          CM}}(\ve{r}_{j})\right]^* \right\} \right].  \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $u$ or $v$, stand for either $x$ ,$y$, or $z$. The symbol $*$
+denotes the complex conjugate. $\ve{r}^g_{j}$ is the vector bewteen
+$j$ and the center of masse of the object.

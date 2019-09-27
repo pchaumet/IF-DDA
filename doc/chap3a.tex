@@ -1,0 +1,285 @@
+\chapter{Properties of the illumination }\label{chap3}
+\markboth{\uppercase{Properties of the illumination}}{\uppercase
+{Properties of the illumination}}
+
+\minitoc
+
+\section{Introduction}
+
+In the section properties of the illumination, the field {\it
+  Wavelength} enables us to enter the using wavelength. This one is
+entered in nanometer. The field $P_0$ enables to enter the power of
+the laser beam in Watt. The field $W_0$ in nanometer enables to enter
+for a plane wave the radius of the laser beam and for a Gaussian beam,
+the waist of the beam.
+
+\section{Beam}
+
+\subsection{Introduction}
+
+There are six beams predefined, their propagation direction is always
+defined in the same way, with two angles $\theta$ and $\varphi$.  They
+are connected to the given direction by the wave vector as follows:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be k_x & = & k_0 \sin \theta \cos\varphi \\
+k_y & = & k_0 \sin \theta \sin\varphi \\
+k_z & = & k_0 \cos \theta \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $\ve{k}_0=(k_x,k_y,k_z)$ is the wave vector parallel to the direction
+of the incident beam and $k_0$ the wave number, see
+Fig.~\ref{faisceau}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+  \includegraphics*[width=8.0cm,draft=false]{faisceau.eps}
+\end{center}
+\caption{Definition of the beam's direction}
+\label{faisceau}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+For the polarization, we use the plane $(x,y)$ as referential surface.
+Then, we can determine a polarization TM ($p$) and TE ($s$) with the
+presence of a surface, see Fig.~\ref{pola}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+  \includegraphics*[width=8.0cm,draft=false]{pola.eps}
+\end{center}
+\caption{Definition of the beam's polarization.}
+\label{pola}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The frame $(x,y,z)$ is used as an absolute referential.
+
+\subsection{Linear plane wave }
+
+{\it Linear plane wave} is a plane wave linearly polarized. The first line
+is relative to $\theta$ and the second to $\varphi$. The third line is
+connected to the polarization, pola=1 en TM and pola=0 in TE.  Note
+that the polarization is not necessarily purely in TE or TM:
+${\rm pola}\in[0~1]$ such as $E^2_{\rm TM}={\rm pola}^2E^2$ and
+$E^2_{\rm TE}=(1-{\rm pola}^2)E^2$.
+
+Note that the phase is always taken null at the origin of the frame:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(\ve{r})= \ve{E}_0 e^{i\ve{k}.\ve{r}}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with ${\rm Irradiance}=P_0/S$ where $S=\pi w_0^2$ is the surface of
+the beam and $E_0=\sqrt{2 {\rm Irradiance}/c/\varepsilon_0}$.
+
+
+\subsection{Circular plane wave }
+
+{\it pwavecircular } is a plane wave circularly polarized. The first
+line is relative to $\theta$ and the second to $\varphi$. The third
+line is connected to the polarization that we can choose right (1) or
+left (-1) circular.
+
+Note that the phase is taken null at the origin of the frame.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(\ve{r})= \ve{E}_0 e^{i\ve{k}.\ve{r}}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with ${\rm Irradiance}=P_0/S$ where $S=\pi w_0^2$ is the surface of
+the beam and $E_0=\sqrt{2 {\rm Irradiance}/c/\varepsilon_0}$.
+
+
+\subsection{Multiplane wave}
+
+{\it Multiplane wave} consists to take many planes waves. The first
+thing to do is to choose the number of plane wave, and then for each
+plane wave we choose $\theta$ and $\varphi$ and the polarization. We
+have to write also the complex magnitude of each plane wave. The sum
+of the power of all the plane wave is equal to $P_0$.
+
+
+\subsection{Antenna}
+
+The incident beam can be a dipole where the user defines the position
+and orientation. Notice that the antenna can be inside or outside the
+object. The magnitude is chosen such that the power radiated by the
+dipole is equal to $P_0$:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be P_0 & = & \frac{1}{4\pi\varepsilon_0} \frac{k^4 c}{3} \| \ve{p}
+\|^2 . \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Linear Gaussian}
+
+{\it Linear Gaussian} is a Gaussian wave polarized linearly. The first
+line is relative to $\theta$ and the second to $\varphi$. The third
+line is connected to the polarization pola=1 in TM and pola=0 in TE.
+Note that the polarization is not necessarily in TE or TM:
+${\rm pola}\in[0~1]$ such as $E^2_{\rm TM}={\rm pola}^2E^2$ and
+$E^2_{\rm TE}=(1-{\rm pola}^2)E^2$.
+
+The three following lines help to fix the position of the centre of
+the waist in nanometers in the frame $(x,y,z)$.
+
+Note that this Gaussian beam may have a very weak waist, because it is
+calculated without any approximation through an angular spectrum
+representation.  The definition of the waist, for a beam propagating
+along the $z$ axis is :\cite{Agrawal_JOSA_79}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E(x,y,0)= E_0 e^{-\rho^2/(2 w_0^2)}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with $\rho=\sqrt{x^2+y^2}$. From this definition of the beam at $z=0$,
+for a beam polarized along the $x$ axis we get
+:\cite{Chaumet_JOSAA_06}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_x & = & E_0 \int_{0}^{k_0} w_0^2
+\exp\left(-\frac{w_0^2(k_0^2-k_z^2)}{2}\right) \exp(ik_z z)
+J_0\left(\rho\sqrt{k_0^2-k_z^2}\right) k_z {\rm d}k_z \\ E_z & = & -i
+E_0 \frac{x}{\rho} \int_{0}^{k_0} w_0^2
+\exp\left(-\frac{w_0^2(k_0^2-k_z^2)}{2}\right) \exp(ik_z z)
+J_1\left(\rho\sqrt{k_0^2-k_z^2}\right)\sqrt{k_0^2-k_z^2} {\rm d}k_z,
+\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with $J_1$ and $J_0$ the Bessel's function. The irradiance is computed
+at the center of the Gaussian beam and the relationship between the
+power and the magnitude $E_0$ is:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be P_0 & = & \frac{\pi w_0^2}{ 4 } c\varepsilon_0 E_0^2\left(
+  1+\frac{(k_0 w_0)^2-1}{k_0 w_0} \frac{\sqrt{\pi}}{2} {\rm Im}[
+  w(k_0w_0)] \right) \\
+{\rm Irradiance} & = & \frac{E_0^2}{ 4 } c\varepsilon_0 \left(
+  1+\frac{(k_0 w_0)^2-1}{k_0 w_0} \frac{\sqrt{\pi}}{2} {\rm Im}\left[
+    w(k_0w_0/\sqrt{2})\right]  \right) , \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $w()$ denotes the Faddeeva's function. If we suppose
+$w()\approx 0$, we obtain $P_0=\pi w_0^2 {\rm Irradiance}$ and we find
+the relation given for a plane wave.
+
+
+\subsection{Circular Gaussian}
+
+{\it Circular Gaussian} is a Gaussian wave circularly polarized. The
+first line is relative to $\theta$ and the second to $\varphi$. The
+third line is connected to the polarization that we can choose right
+(1) or left (-1) circular.
+
+
+The next three lines enable us to fix the position of the centre of the waist
+in nanometers in the frame $(x,y,z)$.
+
+Note that this Gaussian wave may have a very weak waist, because it is 
+calculated without any approximation through a plane wave spectrum.
+
+\subsection{Circular and linear Gaussian (FFT)}
+
+{\it Circular and linear Gaussian (FFT)} is a Gaussian wave based on
+the previous computation for the Circular and linear Gaussian,
+respectively. In this case, the incident wave is computed at the
+bottom of the object and then the beam is propaged with FFT as for the
+beam propagation method. This computation is quicker than the
+rigourous one. However, one needs to choose the number of points for
+the FFT enough large to not troncate the Gaussian beam and avoid
+periodicity problem.
+
+\subsection{Linear Guaussian (para)}
+
+
+{\it Linear Guaussian (para)} is a Gaussian wave polarized
+linearly. The first line is relative to $\theta$ and the second to
+$\varphi$. The third line is connected to the polarization, pola=1
+with TM and pola=0 with TE.  Note that the polarization is not
+necessarily purely in TE or TM: ${\rm pola}\in[0~1]$ such as
+$E^2_{\rm TM}={\rm pola}^2E^2$ and $E^2_{\rm TE}=(1-{\rm pola}^2)E^2$.
+
+The next three lines enables us to fix the position of the centre of
+the waist in nanometers in the frame $(x,y,z)$.
+
+Note that this Gaussian wave is calculated in accordance with the
+paraxial approximation and as such does not satisfy rigorously the
+Maxwell's equations. For a wave propagating along the $z$ direction
+and polarized along the $x$ axis we have:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_x & = & E_0 \sqrt{2}\frac{w_0}{w}e^{-\rho^2/w^2}e^{i k_0 \rho^2
+  R(z)/2 }e^{i(k_0 z+\eta)} \\
+w & = & \sqrt{2} w_0 \sqrt{1+\frac{z^2}{z_0^2} } \\
+z_0 & = & k_0 w_0^2 \\
+R(z) & = & \frac{z}{z^2+z_0^2} \\
+\eta & = & \tan^{-1}(z/z_0). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We remark that for $z=0$ the Gaussian beam has the same magnitude that
+those computed rigorously. The field and the irradiance at the center
+of the waist are computed through
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be E_0 & = & \sqrt{\frac{2 P_0}{\pi c \varepsilon_0 w_0^2} } \\
+{\rm irradiance} & = & c \varepsilon_0 E_0^2/2 = \frac{P_0}{\pi w_0^2}
+.\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Circular Gaussian (para)}
+
+{\it Circular Gaussian (para)} is a Gaussian wave polarized
+circularly.  The first line is relative to $\theta$ and the second to
+$\varphi$.  The third line is connected to the polarization that we
+may choose right or left.
+
+
+The next three lines enable us to fix the position of the centre of
+the waist in nanometers in the frame $(x,y,z)$.
+
+Note that this Gaussian wave is calculated in accordance with the
+paraxial approximation and as such does not satisfy rigorously the
+Maxwell's equations.
+
+\subsection{Arbitrary wave}
+
+In the case of an arbitrary field, the characteristic are determined
+by the user.  In other words, he has to create the field himself, and
+it is mandatory to create these files respecting the chosen
+conventions by the code.
+
+
+The description of the discretization of the incident field is done 
+within a file which is asked for when we click on {\it Props}.
+For example, for the real part of the component $x$ of the field, 
+it has to be constructed as follows:
+
+nx,ny,nz 
+
+dx,dy,dz
+
+xmin,ymin,zmin
+
+\begin{itemize}
+\item  nx is the number of meshsize according to the axis $x$
+\item  ny is the number of meshsize according to the axis $y$
+\item  nz is the number of meshsize according to the axis $z$
+\item  dx is the step according to the axis $x$
+\item  dy is the step according to the axis $y$
+\item  dz is the step according to the axis $z$
+\item xmin the smallest abscissa
+\item ymin the smallest ordinate
+\item zmin the smallest azimuth
+\end{itemize}
+
+Then, the files of the electric field are created as follows for 
+each of the components of the real part and separated imaginary field:
+
+\vspace{10mm}
+
+open(11, file='Exr.mat', status='new', form='formatted', access='direct', recl=22)
+
+{\bf do} k=1,nz
+
+\hspace{5mm} {\bf do} j=1,ny
+
+\hspace{10mm} {\bf do} i=1,nx 
+
+\hspace{15mm} ii=i+nx*(j-1)+nx*ny*(k-1)
+
+\hspace{15mm} write(11,FMT='(D22.15)',rec=ii) dreal(Ex)
+
+\hspace{10mm} {\bf enddo}
+
+\hspace{5mm} {\bf enddo}
+
+{\bf enddo}
+
+\vspace{10mm}
+
+Be careful, the mesh size of the discretization of the object has to
+be larger than the meshsize of the discretization of the field.

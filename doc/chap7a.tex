@@ -1,0 +1,134 @@
+\chapter{Ouput files for matlab, octave,
+  scilab,...}\label{chap7}
+\markboth{\uppercase{Ouput files for matlab, octave,
+    scilab,...}}{\uppercase{Ouput files for matlab, octave,
+    scilab,...}}
+
+\minitoc
+
+\section{Introduction}
+
+It is not necessary to use the graphic interface of the program to
+watch the results. For the scalar, all the results are in the output
+file and for the pictures, it is possible to use directly the exit
+files in ascii and to read them through other softwares such as
+Matlab, Octave, Siclab,...For example in the directory bin the field
+ifdda.m uses matlab to represent the different data.
+
+
+When the advanced option is chosen, it is possible to choose to save
+the data either in separate .mat files or in a single hdf5 file.
+
+\begin{itemize}
+
+\item In the case of the hdf5 file, there are six created groups:
+  option (the options chosen by the user), near field (the near field
+  data), microscopy (data from the microscopy), far field (data from
+  the far field option), and dipole (position of the elements of
+  discretization and permittivity).
+
+\item In the case of .mat file, all the output are formatted in the
+  form of a unique column vector or two column vectors if the number
+  is a complex (the real part being associated with the first column
+  and the imaginary part with the second column).
+
+\item In the hdf5 file all the data are formatted under the form of a
+  single column vector and with two separate tables in the case of
+  complex numbers.
+
+\item In the case where the file contains three-dimensional data,
+  these ones are always stored as follows:
+
+\hspace{5mm} {\bf do} i=1,nz
+
+  \hspace{10mm} {\bf do} j=1,ny
+
+ \hspace{15mm} {\bf do} k=1,nx
+
+      \hspace{20mm}  write(*,*) data(i,j,k)
+         
+   \hspace{15mm} {\bf enddo}
+
+  \hspace{10mm} {\bf enddo}
+
+ \hspace{5mm} {\bf enddo}
+
+ Three-dimensional data are going to be recognized by 3D at the
+ beginning of the line.
+\end{itemize}
+
+\section{List of all exit files}
+
+
+\begin{itemize}
+\item x,y,z represent the different used coordinates.
+\item (3D) epsilon contain the permittivity of the object.
+\item (3D) xc,yc,zc contain the coordinates of all the points of the
+  mesh.
+\item (3D) xwf,ywf,zwf contain the coordinates of all the points of
+  the mesh in which the near field is calculated when the wide field
+  option (wide field) is used.
+\item (3D complex) incidentfieldx (x,y) contains the component x(y,z)
+  of the incidental field only inside the object.
+\item (3D) incidentfield contains the modulus of the incident field
+  only inside the object.
+\item (3D complexe) macroscopicfieldx (x,y) contains the component
+  x(y,z) of the macroscopic field only inside the object.
+\item (3D) contains the modulus of the macroscopic field only inside the object.
+\item (3D complexe) mlocalfieldx (x,y) contains the component x(y,z)
+  of the local field only inside the object.
+\item (3D) localfield contains the modulus of the local field only
+  inside the object.
+\item (3D complexe) incidentfieldxwf (x,y) contains the component
+  x(y,z) of the incident field inside the box of near field in wide
+  field.
+\item (3D) incidentfieldwf contains the modulus of the incidental
+  field inside the box of near field in wide field.
+\item (3D complexe) macroscopicfieldxwf (x,y) contains the component
+  x(y,z) of the macroscopic field inside the box of near field in wide
+  field.
+\item (3D) macroscopicfieldwf contains the modulus of the macroscopic
+  field inside the box of near field in wide field.
+\item (3D complexe) localfieldxwf (x,y) contains the component x(y,z)
+  of the local field inside the box of near field in wide field.
+\item (3D) localfieldwf contains the modulus of the local field inside
+  the box of near field in wide field.
+\item theta is a board which contains all the theta angles
+  corresponding to all the directions in which the vector of Poynting
+  is calculated. Its size is (Ntheta+1)*Nphi.
+\item phi is a board which contains all the theta angles corresponding
+  to all the directions in which the vector of Poynting is
+  calculated. Its size is (Ntheta+1)*Nphi.
+\item poynting pointing contains the modulus of the vector of Poynting
+  in theta and phi direction of size (Ntheta+1)*Nphi.
+\item (3D) forcex (y,z) contains the  $x$ component of the optical force
+  only inside the object.
+\item (3D) torquex (y,z) contains the $x$ component of the optical
+  torque force only inside the object.
+\item (2D) fourier(x,y,z) contains the diffracted field in the fourier
+  plane in modulus (x,y,z).
+\item (2D) fourierinc(x,y,z) contains the total field in the fourier
+  plane in modulus (x,y,z).
+\item kxfourier contains the coordinates of the Fourier plane.
+\item (2D) image(x,y,z) contains the diffracted field in the image
+  plane in modulus (x,y,z).
+\item (2D) imageinc(x,y,z) contains the total field in the image plane
+  in modulus (x,y,z).
+\item (2D) imagebf(x,y,z) contains the diffracted field in the image
+  plane in modulus (x,y,z) for a dark field.
+\item (2D) imageincbf(x,y,z) contains the total field in the image
+  plane in modulus (x,y,z) for a brightfield microscope.
+\item (2D) imagedf(x,y,z) contains the diffracted field in the image
+  plane in modulus (x,y,z) for a dark field.
+\item (2D) imageincdf(x,y,z)contains the total field in the image
+  plane in modulus (x,y,z) for a phase microscope.
+\item Poynting contains the Ponyting modulus fo the direction $\theta$
+  and $\phi$.
+\item theta and phi contains the direction $\theta$ and $\phi$ for
+  Poynting.
+\item poyntingneg and poyntingpos contain the Poynting modulus for
+  $k_z<0$ and $k_z>0$ respectively in the plane $(k_x,k_y)$.
+\item kx and ky contain the coordinates for poyntingneg and
+  poyntingpos.
+\end{itemize}
+

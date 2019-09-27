@@ -1,0 +1,264 @@
+\chapter{Généralités}\label{chap1}
+\markboth{\uppercase{Généralités}}{\uppercase{Généralités}}
+
+\minitoc
+
+\section{Introduction}
+
+
+Ce logiciel permet de calculer la diffraction d'une onde
+électromagnétique par un objet tridimensionnel. Cette interaction est
+prise en compte rigoureusement par la résolution des équations de
+Maxwell, mais peut aussi le faire par des méthodes approchees telles
+que l'approximation de Born, Rytov ou la BPM. Le code par une
+interface conviviale permet de choisir des objets canoniques (sphère,
+cube,...) ainsi que des ondes incidentes prédéfinies (onde plane,
+faisceau Gaussien,...) ainsi que des objets et incidents
+aribitraires. Après par des menus déroulants, il est facile d'étudier
+les sections efficaces, les forces et couples optiques, la diffraction
+champ proche et champ lointain ainsi que la microsocopie.
+
+
+A noter qu'il existe de nombreuses méthodes permettant d'étudier la
+diffraction d'une onde électromagnétique par un objet de forme et de
+permittivité relative arbitraires. Nous n'allons par faire ici une
+liste exhaustive de ces méthodes, mais le lecteur intéressé peut se
+reporter à l'article de F. M. Kahnert qui détaille les forces et les
+faiblesses des méthodes les plus usuelles.~\cite{Kahnert_JQSRT_03}
+
+La méthode que nous utilisons s'appelle la méthode des dipôles couplés
+(CDM) ou dipôle discret approximation (DDA). Cette méthode, dite
+volumique car le champ diffracté est obtenu à partir d'une intégrale
+dont le support est le volume de l'objet considéré, a été introduite
+par E. M. Purcell et C. R. Pennypacker en 1973 pour étudier la
+diffusion de la lumière par des grains dans le milieu
+interstellaire.~\cite{Purcell_AJ_73} La DDA a été par la suite étendue
+à des objets en présence d'un substrat plan ou dans un système
+multicouche, voir par exemple Ref.~[\onlinecite{Rahmani_PRA_97}]. Nous
+nous sommes attachés ces dernières années, à d'une part étendre la DDA
+à des géométries plus complexes (réseaux avec ou sans défaut), et
+d'autre part à augmenter sa précision. Ces améliorations confèrent à
+ce chapitre un côté un peu technique, mais elles voient leurs
+applications dans les chapitres suivants.  Mais avant d'étudier plus
+en détails les dernières avancées de la DDA, rappelons d'abord son
+principe.
+
+\section{Le principe de la DDA}\label{paprincipecdm}
+
+Nous présentons dans ce paragraphe la DDA d'une manière volontairement
+simpliste. Soit un objet de forme et de permittivité relative
+arbitraires dans un espace homogène, que nous supposerons ici être le
+vide. Cet objet est soumis à une onde électromagnétique incidente de
+longueur d'onde $\lambda$ ($k_0=2\pi/\lambda$). Le principe de la DDA
+consiste à représenter l'objet en un ensemble de $N$ petits cubes
+d'arête $a$ [par petits, nous entendons plus petits que la longueur
+  d'onde dans l'objet : $a\ll \lambda/\sqrt{\varepsilon}$
+  (Fig.~\ref{discretisation})].
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+\begin{center}
+\includegraphics*[draft=false,width=150mm]{discretisation.eps}
+\caption{Principe de la DDA : l'objet à étudier (à gauche) est
+ discrétisé en un ensemble de petits dipôles (à droite).}
+\label{discretisation}
+\end{center}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Chacun des petits cubes sous l'action de l'onde incidente va se
+polariser, et donc acquérir un moment dipolaire, dont la valeur va
+dépendre du champ incident et de son interaction avec ses voisins. Le
+champ local à la position d'un dipôle localisé en $\ve{r}_i$,
+$\ve{E}(\ve{r}_i)$, est, en l'absence de lui-même, la somme de l'onde
+incidente et du champ rayonné par les $N-1$ autres dipôles :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \label{cdms} \ve{E}(\ve{r}_i)=\ve{E}_0(\ve{r}_i)+\sum_{j=1,i\neq
+j}^{N} \ve{T}(\ve{r}_i,\ve{r}_j)\alpha(\ve{r}_j)\ve{E}(\ve{r}_j). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+$\ve{E}_0$ est le champ incident, $\ve{T}$ la susceptibilité linéaire
+du champ en espace
+homogène:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{T}(\ve{r}_i,\ve{r}_j)=e^{ik_0 r}
+\left[\left(3\frac{\ve{r}\bigotimes\ve{r}}{r^2}- \ve{I}\right)
+  \left(\frac{1}{r^3}-\frac{ik_0}{r^2}\right) +
+  \left(\ve{I}-\frac{\ve{r}\bigotimes\ve{r}}{r^2}\right)
+  \frac{k_0^2}{r}\right] \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec $\ve{I}$ la matrice unité et $\ve{r}=\ve{r}_i-\ve{r}_j$. $\alpha$
+est la polarisabilité de chaque élément de discrétisation obtenue à
+partir de la relation de Claussius-Mossotti. Notons que la
+polarisabilité $\alpha$, pour respecter le théorème optique, se doit
+de contenir un terme dit de réaction de
+rayonnement.~\cite{Draine_AJ_88} L'Eq.~(\ref{cdms}) est
+vraie pour $i=1,\cdots,N$, et représente donc un système de $3N$
+équations linéaires à résoudre, les champs locaux, $\ve{E}(\ve{r}_i)$,
+étant les inconnus. Une fois le système d'équations linéaires résolu,
+le champ diffusé par l'objet à une position $\ve{r}$ arbitraire, est
+obtenu en faisant la somme de tous les champs rayonnés par chacun des
+dipôles :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \label{cdmd} \ve{E}(\ve{r})=\sum_{j=1}^{N} \ve{T}(\ve{r},\ve{r}_j)
+\alpha(\ve{r}_j) \ve{E}(\ve{r}_j). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Quand l'objet est en présence d'un substrat plan, ou dans un
+multicouche, il suffit de remplacer $\ve{T}$, par la susceptibilité
+linéaire du champ du système de référence.
+
+Nous venons de présenter la DDA telle que l'ont présentée E. M.
+Purcell and C. R. Pennypacker.~\cite{Purcell_AJ_73} Notons qu'une
+autre méthode très proche de la DDA existe. Cette méthode, dite
+méthode des moments, part de l'équation intégrale de Lippman
+Schwinger, est, moyennant quelques hypothèses, strictement identique à
+la DDA. La démonstration de l'équivalence entre ces deux méthodes
+étant un peu technique, elle est explicitée dans la
+Ref.~\onlinecite{Chaumet_PRE_04}.
+
+Les avantages de la DDA sont qu'elle est applicable à des objets de
+forme arbitraire, inhomogène (chose difficilement réalisable dans le
+cas de méthode surfacique), et anisotrope (la polarisabilité associée
+aux éléments de discrétisation devient alors tensorielle). La
+condition d'onde sortante est automatiquement satisfaite à travers la
+susceptibilité linéaire du champ. Notons enfin, que seul l'objet est
+discrétisé, contrairement aux méthodes de différences finies et
+éléments finis.~\cite{Kahnert_JQSRT_03}
+
+L'inconvénient majeur de la DDA consiste en une croissance rapide du
+temps de calcul avec l'augmentation du nombre d'éléments de
+discrétisation, {\it i.e.}, l'augmentation de la taille du système
+d'équations linéaires à résoudre. Il existe des moyens pour accélérer
+la résolution d'un système d'équations linéaires de très grande
+taille, telle que la méthode des gradients conjugués, mais malgré
+tout, des valeurs de $N>10^6$ en espace homogène sont difficiles à
+traiter.
+
+
+\section{Un mot sur le code}
+
+Le code est pensé pour avoir une interface conviviale afin que tout le
+monde puisse l'utiliser sans problème y compris des non
+spécialistes. Ceci permet alors à des étudiants de premier cycle
+d'étudier par exemple les bases de la microscopie (critère de
+Rayleigh, notion d'ouverture numérique,...) ou de la diffraction sans
+aucun problème; et à des chercheurs, typiquement des biologistes,
+n'ayant aucune notion des équations de Maxwell de simuler ce que donne
+un microscope (brightfield, microscope de phase, champ sombre,...) en
+fonction des paramètres usuels et de l'objet. Néanmoins, ce code peut
+aussi servir à des physiciens spécialistes de l'électromagnétisme à
+travers, par exemple, de calculs de forces optiques, de diffraction,
+de sections efficaces, de champ proche et ceci avec de nombreux types
+de faisceaux incidents et différentes méthodes de calculs du champ
+électromagnétique.
+
+Le code présente donc par défaut une interface simple ou tous les
+détails numériques sont cachés et où de nombreuses options sont alors
+choisies par défaut. Mais il est facile d'accéder à tous les
+possibilités de code en cochant l'option interface avancée. Ce guide
+utilisateur explique le fonctionnement de l'interface avancée en
+commençant par les différents approches utilisées par le code pour
+résoudre les équations de Maxwell.
+
+A noter que la convivialité du code est faite au détriment de
+l'optimisation de la RAM et le code peut donc être gourmand en mémoire
+pour les gros objets.
+
+
+\section{Comment compiler le code}
+
+Pour faire tourner le code sur un système linux il est nécessaire
+d'avoir installé les paquets suivants: qt, qt-devel, gcc-c++ et
+gfortran. Pour le compiler faire:
+\begin{itemize}
+\item qmake-qt4
+\item make
+\item make install
+\end{itemize}
+
+Puis pour lancer le code, taper, cd bin, puis ./cdm.
+
+Noter qu'il y a trois versions du code, la première en séquentielle
+qui utilise FFT singleton, la deuxième en parallèle et qui utilise
+FFTW (Fast Fourier Transform in the west) et qui nécessite openmp
+version 4.5 minimum, et la troisième qui utilse en plus le format HDF5
+pour sauvegarder les données dans un seul fichier binaire.
+
+Sur linux la version avec FFTW nécessite d'installer les packages FFTW
+avec par exemple ``dnf install *fftw*''. Pour la version qui utilise
+en plus HDF5 il faut installer en plus les packages suivant ``dnf
+install hdf hdf5 hdf5-static hdf5-devel''.
+
+
+
+Le code s'installe aussi sur windows, mais la version parallèle
+nécessite évidemment d'installer FFTW sur windows.
+
+
+\section{Un mot sur les auteurs}
+
+\begin{itemize}
+\item P. C. Chaumet est professeur des universités à l'Institut
+  Fresnel de l'Université d'Aix-Marseille et s'occupe du développement
+  du code source fortran et de l'interface.
+\item D. Sentenac développe l'interface conviviale du code.
+\item A. Sentenac est directrice de recherche au CNRS et travaille à
+  l'Institut Fresnel de l'Université d'Aix-Marseille et participe au
+  développement du code sur ce qui est lié à la diffraction champ
+  lointain et la microscopie.
+\end{itemize}
+
+\section{Un mot sur la licence}
+
+
+La licence est non commerciale : ShareAlike 4.0 International 4.0
+International (CC BY-NC-SA 4.0)
+
+Vous êtes libre de:
+
+\begin{itemize}
+\item partager, copier et redistribuer.
+\item adapter, changer et construire dessus.
+\end{itemize}
+
+
+Vous devez sous cette licence suivre les conditions suivantes:
+\begin{itemize}
+\item Attribution - Vous devez citer les auteurs en cas d'utilisation
+  du code et indiquer si des changements ont été faits.
+\item NonCommercial - Vous ne pouvez pas utiliser le code dans un but
+  commercial.
+\item ShareAlike - Si vous transformer le code ou l'utilisez dans
+  d'autres codes vous devez citer les auteurs et distribuez votre
+  contribution sous la même licence que l'original.
+\end{itemize}
+
+\section{Comment citer le code}
+
+\begin{itemize}
+
+\item Si seuls les fonctions de base du code sont utilisées:
+
+P. C. {\textsc{Chaumet}}, A. {\textsc{Sentenac}}, and
+A. {\textsc{Rahmani}}, \\{\it Coupled dipole method for scatterers
+  with large permittivity.}\\
+Phys. Rev. E {\bf 70}, 036606 (2004).
+
+\item Si le calcul des forces optiques est utilisé alors:
+
+P.C. {\textsc{Chaumet}}, A. {\textsc{Rahmani}},
+A. {\textsc{Sentenac}}, and G. W. {\textsc{Bryant}},\\ {\it Efficient
+  computation of optical forces with the coupled dipole method.}\\
+Phys. Rev. E {\bf 72}, 046708 (2005).
+
+\item Si le calcul des couples optique est utilisé:
+
+P. C. {\textsc{Chaumet}} and C. {\textsc{Billaudeau}},\\ {\it Coupled
+  dipole method to compute optical torque: Application to a
+  micropropeller.}\\
+J. Appl. Phys. {\bf 101}, 023106 (2007).
+
+\item Si le faisceau Gaussien rigoureux est utilisé:
+
+P. C. {\textsc{Chaumet}},\\ {\it Fully vectorial highly non
+  paraxial beam close to the waist.}\\
+J. Opt. Soc. Am. A {\bf 23}, 3197 (2006).
+
+\end{itemize}

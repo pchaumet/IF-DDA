@@ -1,0 +1,373 @@
+\chapter{Definition of the object}\label{chap4}
+\markboth{\uppercase{Definition of the object}}{\uppercase{Definition 
+of the object}}
+
+\minitoc
+
+\section{Introduction}
+
+The code proposes several predefined objects, and we are going to
+precise in this section how to enter their optogeometrical
+characteristics.  Note that all the distances have to be entered in
+nanometers. The code is doing the conversion in meters.
+
+
+\section{Type of the object}
+
+
+The list of the predefined objects is the following: 
+
+sphere, cube, cuboid, ellipsoid, several distinct spheres, cylinder,
+concentric spheres, inhomogeneous sphere and arbitrary object.
+
+When the objects as the cube or the cuboid have their edges turned
+with respect to the axes of the system of coordinates, the angles of
+Euler are used as defined in Fig.~\ref{euler}. The rotation centre
+being the inertia centre of the object and the matrix of rotation
+reads:
+%%%%%%%%%%%%%%%%%%%%%
+\be \ve{A} & = & \begin{pmatrix}\cos(\psi )\cos(\varphi )-\sin(\psi
+  )\cos(\theta )\sin(\varphi )& -\cos(\psi )\sin(\varphi )-\sin(\psi
+  )\cos(\theta )\cos(\varphi )& \sin(\psi )\sin(\theta )\\ \sin(\psi
+  )\cos(\varphi )+\cos(\psi )\cos(\theta )\sin(\varphi )& -\sin(\psi
+  )\sin(\varphi )+\cos(\psi )\cos(\theta )\cos(\varphi )& -\cos(\psi
+  )\sin(\theta )\\ \sin(\theta )\sin(\varphi )& \sin(\theta
+  )\cos(\varphi )& \cos(\theta )\end{pmatrix} \nn \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+  \includegraphics*[width=8.0cm,draft=false]{euler.eps}
+\end{center}
+\caption{Definition of the angles of Euler according to the convention
+  $Z-X-Z$. Scheme taken from Wikipedia}
+\label{euler}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sphere}
+
+For the sphere, there are four fields to be filled:
+
+\begin{itemize}
+\item The radius of the sphere in nanometer
+\item The abscissa of the centre of the sphere in nanometer
+\item The ordinate of the centre of the sphere in nanometer
+\item The azimuth of the centre of the sphere in nanometer
+\end{itemize}
+
+\subsection{Inhomogeneous sphere }
+
+
+The permittivity of the sphere have a Gaussian noise with a
+correlation length $l_c$, standard deviation, $A$ and an average
+$\varepsilon_r$.
+
+For the inhomogeneous sphere there are seven fields to be filled:
+
+\begin{itemize}
+\item The radius of the sphere in nanometer
+\item The abscissa of the centre of the sphere in nanometer
+\item The ordinate of the centre of the sphere in nanometer
+\item The azimuth of the centre of the sphere in nanometer
+\item The seed
+\item The correlation length $l_c$
+\item The magnitude of oscillation $A$
+\end{itemize}
+
+
+\subsection{Random sphere (length)}
+
+All the spheres are constituted with the same permittivity and the
+same radius but are distributed randomly in cuboid. There are nine
+fields to be filled:
+
+\begin{itemize}
+\item The edge of the cube in nanometer according to the axis $x$
+\item The edge of the cube in nanometer according to the axis $y$
+\item The edge of the cube in nanometer according to the axis $z$
+\item The abscissa of the centre of the cuboid in nanometer
+\item The ordinate of the centre of the cuboid in nanometer
+\item The azimuth of the centre of the sphere in nanometer
+\item The seed
+\item The radius of the spheres
+\item The density of sphere, {\it i.e.}  $d=$volume of the sphere
+  divided by the volume of the cuboid. $d$ should satisfy the inequality
+  $0<d<0.5$. If $d$ is above 2, then it corresponds to the number of
+  sphere in the box.
+\end{itemize}
+
+\subsection{Random sphere (meshsize)}
+
+All the spheres are constituted with the same permittivity and the
+same radius but are distributed randomly in cuboid. There are ten
+fields to be filled:
+
+\begin{itemize}
+\item The abscissa of the centre of the cuboid in nanometer
+\item The ordinate of the centre of the cuboid in nanometer
+\item The azimuth of the centre of the sphere in nanometer
+\item Number of meshsize long $x$
+\item Number of meshsize long $y$
+\item Number of meshsize long $z$
+\item meshsize in nanometer
+\item The radius of the spheres
+\item The seed
+\item The density of sphere, {\it i.e.}  $d=$volume of the sphere
+  divided by the volume of the cuboid. $d$ should satisfy the inequality
+  $0<d<0.5$. If $d$ is above 2, then it corresponds to the number of
+  sphere in the box.
+\end{itemize}
+
+\subsection{Cube}
+
+For the cube, there are seven fields to be filled:
+
+\begin{itemize}
+\item The edge of the cube in nanometer
+\item The abscissa of the centre of the sphere in nanometer
+\item The ordinate of the centre of the sphere in nanometer
+\item The azimuth of the centre of the sphere in nanometer
+\item First angle of Euler $\psi$ by rotation around the axis $z$
+\item Second angle of Euler $\theta$ by rotation around the axis $x$
+\item Third angle of Euler $\varphi$ by rotation around the axis $z$
+\end{itemize}
+
+\subsection{Cuboid (length)}
+
+For the cuboid, there are nine fields to be filled:
+
+\begin{itemize}
+\item The edge of the cube in nanometer according to the axis $x$
+\item The edge of the cube in nanometer according to the axis $y$
+\item The edge of the cube in nanometer according to the axis $z$
+\item The abscissa of the centre of the cuboid in nanometer
+\item The ordinate of the centre of the cuboid in nanometer
+\item The azimuth of the centre of the sphere in nanometer
+\item First angle of Euler $\psi$ by rotation around the axis $z$
+\item Second angle of Euler $\theta$ by rotation around the axis $x$
+\item Third angle of Euler $\varphi$ by rotation around the axis $z$
+\end{itemize}
+
+\subsection{Cuboid (meshsize)}
+
+For the cuboid, there are seven fields to be filled:
+
+\begin{itemize}
+\item The abscissa of the centre of the cuboid in nanometer
+\item The ordinate of the centre of the cuboid in nanometer
+\item The azimuth of the centre of the sphere in nanometer
+\item Number of meshsize long $x$
+\item Number of meshsize long $y$
+\item Number of meshsize long $z$
+\item Meshsize in nanometer
+\end{itemize}
+
+
+\subsection{Inhomogeneous Cuboid (length)}
+
+
+The permittivity of the cuboid have a Gaussian noise with a
+correlation length $l_c$, standard devaition $A$ and an average
+$\varepsilon_r$.  For the cuboid, there are nine fields to be filled:
+
+\begin{itemize}
+\item The edge of the cube in nanometer according to the axis $x$
+\item The edge of the cube in nanometer according to the axis $y$
+\item The edge of the cube in nanometer according to the axis $z$
+\item The abscissa of the centre of the cuboid in nanometer
+\item The ordinate of the centre of the cuboid in nanometer
+\item The azimuth of the centre of the sphere in nanometer
+\item The seed
+\item The correlation length $l_c$
+\item The magnitude of oscillation $A$
+
+\end{itemize}
+
+
+\subsection{Inhomogeneous Cuboid (meshsize)}
+
+
+The permittivity of the cuboid have a Gaussian noise with a
+correlation length $l_c$, standard devaition $A$ and an average
+$\varepsilon_r$.  For the cuboid, there are nine fields to be filled:
+
+\begin{itemize}
+\item The abscissa of the centre of the cuboid in nanometer
+\item The ordinate of the centre of the cuboid in nanometer
+\item The azimuth of the centre of the sphere in nanometer
+\item Number of meshsize long $x$
+\item Number of meshsize long $y$
+\item Number of meshsize long $z$
+\item Meshsize in nanometer
+\item The seed
+\item The correlation length $l_c$
+\item The magnitude of oscillation $A$
+
+\end{itemize}
+
+
+\subsection{Ellipsoid}
+
+For the ellipsoid, there are nine fields to be fulfilled:
+
+\begin{itemize}
+\item The half axis in nanometer according to the axis $x$
+\item The half axis in nanometer according to the axis $y$
+\item The half axis in nanometer according to the axis $z$
+\item The abscissa of the centre of the ellipse in nanometer
+\item The ordinate of the centre of the ellipse in nanometer
+\item The azimuth of the centre of the ellipse in nanometer
+\item First angle of Euler $\psi$ by rotation around the axis $z$
+\item Second angle of Euler $\theta$ by rotation around the axis $x$
+\item Third angle of Euler $\varphi$ by rotation around the axis $z$
+\end{itemize}
+
+
+\subsection{Several spheres}
+
+For multiple spheres, it is convenient first to choose with the line 
+from the under {\it number of objects} the number $N$ of the expected
+spheres. Then, when we click on {\it Props} $N$ windows, that we fill 
+in the same way as for the unique sphere, appear. 
+Beware, the spheres must be disconnected, otherwise, the code stops 
+and shows error. 
+
+\subsection{Cylinder}
+
+For the cylinder, there are eight fields to be fulfilled:
+
+\begin{itemize}
+\item The radius of the cylinder in nanometers
+\item The length of the cylinder in nanometer
+\item The abscissa of the centre of the cylinder in nanometer
+\item The ordinate of the centre of the cylinder in nanometer
+\item The azimuth of the centre of the cylinder in nanometer
+\item First angle of Euler $\psi$ by rotation around the axis $z$
+\item Second angle of Euler $\theta$ by rotation around the axis $x$
+\item Third angle of Euler $\varphi$ by rotation around the axis $z$
+\end{itemize}
+
+
+\subsection{concentric spheres}
+
+For concentric spheres, it is convenient first to choose with the
+under line {\it number of objects} the number $N$ of concentric
+spheres. Then, when we click on {\it Props} $N$ windows appear. The
+first window is filled the same way as for the sphere, and for the
+next windows, it is enough to enter the radius in nanometer.  The
+radii must be entered in increasing order, otherwise, the code
+shows the error.
+
+\subsection{Arbitrary object}
+
+In the case of an arbitrary object, it is defined by the user. In
+other words, he has to create the object himself, and then, it is
+convenient to create this entry file by respecting the conventions
+chosen by the code. {\it namefile} is the name of the file containing
+the arbitrary object and it is asked for when we choose the arbitrary
+object. It is coded in sequential and in ascii, and is necessarily
+described inside a cuboid box. Below are given the lines of
+the code enabling to create this file:
+
+\hspace{5mm} open(15,file=namefile,status='old',iostat=ierror)
+
+\hspace{5mm} write(15,*) nx,ny,nz
+
+\hspace{5mm} write(15,*) aretecube
+
+
+\hspace{5mm} {\bf do} i=1,nz
+
+  \hspace{10mm} {\bf do} j=1,ny
+
+ \hspace{15mm} {\bf do} k=1,nx
+  
+
+      \hspace{20mm}  write(15,*) xs(i,j,k),ys(i,j,k),zs(i,j,k)     
+         
+   \hspace{15mm} {\bf enddo}
+
+  \hspace{10mm} {\bf enddo}
+
+ \hspace{5mm} {\bf enddo}
+
+\hspace{5mm} {\bf do} i=1,nz
+
+  \hspace{10mm} {\bf do} j=1,ny
+
+ \hspace{15mm} {\bf do} k=1,nx
+
+ \hspace{20mm} {\bf if}  objet isotrope 
+
+         \hspace{25mm}    write(15,*)  eps(i,j,k)
+                    
+    \hspace{20mm} {\bf elseif}  objet anisotrope
+
+       \hspace{25mm}  {\bf do} ii=1,3
+ 
+              \hspace{30mm}  {\bf do} jj=1,3
+
+                \hspace{35mm} write(15,*) epsani(ii,jj,i,j,k)
+
+   \hspace{30mm} {\bf enddo}
+
+  \hspace{25mm} {\bf enddo}
+
+       \hspace{20mm} {\bf endif}
+
+    \hspace{15mm} {\bf enddo}
+
+  \hspace{10mm} {\bf enddo}
+
+ \hspace{5mm} {\bf enddo}
+
+
+\vspace{10mm}
+
+\begin{itemize}
+\item nx : size of the cuboid according to the axis $x$.
+\item ny : size of the cuboid according to the axis $y$.
+\item nz : size of the cuboid according to the axis $z$.
+\item aretecube : size of the meshsize of discretization. 
+\item x : abscissa of the mesh of discretization according the axis
+  $x$.
+\item y : ordinate of the mesh of discretization according the axis
+  $y$.
+\item z : azimuth of the mesh of discretization according the axis
+  $z$.
+\item eps : epsilon of the object if isotropic
+\item epsani : epsilon of the object if anisotropic
+\end{itemize}
+
+\section{Choose the relative permittivity}
+
+When the object or objects are chosen, it is then convenient to enter
+the relative permittivity. Apart from the arbitrary object, all the
+defined objects by default in the code are considered as being
+homogeneous. They may be isotropic or anisotropic. So, we choose {\it
+  iso} or {\it aniso} and we click on {\it Epsilon}.
+
+\begin{itemize} 
+\item {\it iso}: A board appears, where either we enter the relative
+  permittivity by hand (real and imaginary part) or we choose a
+  material in the data base.
+\item {\it aniso}: A board appears where we enter the relative
+  permittivity by hand (real and imaginary part) for all the
+  components of anisotropic tensor.
+\end{itemize}
+
+\section{Choose the discretization}
+
+The number $N_c$ entered in the field of the discretization
+corresponds to the number of layers forming the object in its largest
+direction.
+
+A few examples:
+
+\begin{itemize} 
+\item For an ellipse of half axis $(a,b,c)$, it is going to be the
+  greatest half axis $a$ that is going to be selected and the edge of
+  discretization is going to be of $2a/N_c$.
+\item For a cube the number of meshsize is so going to be of
+  $N=N_c^3$.
+\end{itemize}

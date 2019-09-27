@@ -1,0 +1,171 @@
+\chapter{Représentation des résultats}\label{chap6}
+\markboth{\uppercase{Représentation des
+    résultats}}{\uppercase{Représentation des résultats}}
+
+\minitoc
+
+\section{Introduction}
+
+Trois fenêtres permettent de gérer et représenter les résultats
+demandés. Celle du haut permet de générer les différentes figures,
+celle en bas à gauche présente les valeurs numériques demandées et
+celle en bas à droite est réservée aux représentations graphiques.
+
+\section{Sorties numériques}
+
+Tous les résultats sont donnés dans le système SI.
+
+\begin{itemize}
+
+\item {\it Object subunits}: Nombre d'éléments de discrétisation de
+  l'objet étudié.
+
+\item {\it Mesh subunits} : Nombre d'éléments de discrétisation du
+  parallélépipède contenant l'objet étudié.
+
+\item {\it Mesh size} : Taille de l'élément de discrétisation.
+
+\item $\lambda/(10|n|)$: Pour avoir une bonne précision, il est
+  conseillé d'avoir une discrétisation en dessous de la valeur de
+  $\lambda/10$ dans le matériau considéré d'indice optique $n$.
+
+\item $k_0$ : Nombre d'onde.
+
+\item {\it Irradiance}: Irradiance du faisceau, pour un faisceau
+  Gaussien, elle est estimée au centre du col.
+
+\item {\it Field modulus}: Module du champ, pour un faisceau Gaussien,
+  il est estimé au centre du col.
+
+\item {\it Tolerance obtained}: Tolérance obtenue pour la méthode
+  itérative choisie. Logiquement en dessous de la valeur demandée.
+
+\item {\it Number of products Ax (iterations)}: Nombre de produits
+  matrice vecteur effectué par la méthode itérative. Entre parenthèse
+  le nombre d'itération de la méthode itérative.
+
+\item {\it Extinction cross section}: Valeur de la section efficace
+  d'extinction.
+
+\item {\it Absorbing cross section}: Valeur de la section efficace
+  d'absorption.
+
+\item {\it Scattering cross section}: Valeur de la section efficace de
+  diffusion obtenue par = section efficace d'extinction- section
+  efficace d'absorption.
+
+\item {\it Scattering cross section with integration}: Valeur de la
+  section efficace de diffusion obtenue par intégration du champ
+  lointain rayonné par l'objet.
+
+\item {\it Scattering assymetric parameter}: Facteur asymétrique.
+
+\item {\it Optical force $x$}: Force optique suivant l'axe $x$.
+
+\item {\it Optical force $y$}: Force optique suivant l'axe $y$.
+
+\item {\it Optical force $z$}: Force optique suivant l'axe $z$.
+
+\item {\it Optical force modulus}: Module de la force optique.
+
+\item {\it Optical torque $x$}:  Couple optique suivant l'axe $x$.
+
+\item {\it Optical  torque $y$}: Couple optique suivant l'axe $x$.
+
+\item {\it Optical  torque $z$}: Couple optique suivant l'axe $x$.
+
+\item {\it Optical torque modulus} Module du Couple optique.
+
+\end{itemize}
+
+\section{Graphiques}
+
+\subsection{Plot epsilon/dipoles}
+
+Le bouton {\it Plot epsilon/dipoles} permet de voir la position de
+chaque élément de discrétisation. La couleur de chaque point est
+associée à la valeur de la permittivité de la maille considérée.
+
+\subsection{Champ lointain et microscopie}
+
+\subsubsection{Plot Poynting}
+
+{\it Plot Poynting}: permet de tracer le module du vecteur de Poynting
+en 3D. Attention quand la calcul rapide est utilisé il peut y avoir
+des effets de discrétisation, dans ce cas il faut augmenter le nombre
+de maille pour la FFT.
+
+\subsubsection{Plot microscopy}
+
+
+
+
+{\it Plot microscopy} : permet de tracer le champ diffracté en champ
+lointain par l'objet que ce soit le module du champ ou de la
+composante $x$, $y$ ou $z$. Puis le champ vectoriel sur la plan image
+est représenté en considérant un grossissement $G$ pour le
+microscope. La focalisatin est faite sur le plan $z=0$ et ne peut pas
+être changée. Pour défocaliser il convient donc de jouer sur la
+position de l'objet.
+
+Le champ diffracté est représenté sur un maillage régulier en
+$\Delta k_x=\Delta k_y$ tel que $\sqrt{k_x^2+k_y^2} \le k_0$ NA avec
+origine des phases à l'origine du repère $(x,y,z)$. Si le calcul est
+fait par rayonnement des dipôles alors l'image obtenue à pour taille
+$k_0 NA$ et est discrétisé tel que $\Delta k_x=2 k_0 NA/N$, et si
+celui-ci est fait par transformée de Fourier alors la taille de
+l'image est fixée par la discrétisation de l'objet $\Delta x$ avec la
+relation $\Delta x \Delta k=2\pi/N$.
+
+Le champ dans le plan image est calculé avec la transformée de Fourier
+inverse. Nous avons donc avec le calcul par rayonnement des dipôles:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be
+\Delta x \Delta k_x & = & \frac{2\pi}{N} \\
+\Delta x 2 k_0{\rm NA} & = & 2\pi \\
+\Delta x & = & \frac{\lambda}{2 {\rm NA}} \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+La taille du pixel de l'image est donc de $\lambda/(2 {\rm NA})$.
+
+Si le calcul du champ diffracté a été fait par transformée de Fourier
+alors la discrétisation c'est celle du maillage.
+
+Notons que si le champ arbitraire est utilisé pour le calcul à travers
+le microscope, l'utilisateur devra rentré un champ qui se propage dans
+la direction des $z$ positifs et de plus le champ défini devra
+comprendre le valeur $z=0$.
+
+
+\subsection{Etude du Champ proche}
+
+\begin{itemize}
+
+\item Le premier bouton {\it Field} permet de choisir de représenter
+  le champ incident, le champ local ou le champ macroscopique.
+
+\item Le bouton {\it Type} permet de choisir de représenter le module
+  ou la composante $x$, $y$ ou $z$ du champ étudié.
+
+\item Le bouton {\it Cross section $x$} ($y$ ou $z$) permet de choisir
+  l'abscisse de la coupe (ordonnée ou cote). {\it Plot $x$} ($y$ ou
+  $z$) trace la couple. {\it Plot all $x$} trace toutes les coupes
+  d'un seul coup.
+
+\end{itemize}
+
+\subsection{Force et couple optique}
+
+\begin{itemize}
+
+\item Le premier bouton {\it Field} permet de choisir de représenter
+  la force ou le couple optique.
+
+\item Le bouton {\it Type} permet de choisir de représenter le module
+  ou la composante $x$, $y$ ou $z$ du champ étudié.
+
+\item Le bouton {\it Cross section $x$} ($y$ ou $z$) permet de choisir
+  l'abscisse de la coupe (ordonnée ou cote). {\it Plot $x$} ($y$ ou
+  $z$) trace la couple. {\it Plot all $x$} trace toutes les coupes
+  d'un seul coup.
+
+\end{itemize}

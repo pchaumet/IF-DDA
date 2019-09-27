@@ -1,0 +1,248 @@
+\chapter{Generality}\label{chap1}
+\markboth{\uppercase{Generality}}{\uppercase{Generality}}
+
+\minitoc
+
+\section{Introduction}
+
+
+This software computes the diffraction of an electromagnetic wave by a
+three-dimensional object. This interaction is taken into account
+rigorously by solving the Maxwell's equations, but can also do with
+the approximation of Born, Rytov or the BPM. The code has an
+user-friendly interface and allows you to choose canonical objects
+(sphere, cube, ...) as well as predefined incident waves (plane wave,
+Gaussian beam, ...) or aribitrary objects and incidents waves. After
+by drop-down menus, it is easy to study cross sections, optical forces
+and torques, diffraction near field and far field as well as
+microsocopy.
+
+
+There are numerous methods that enable the study of the diffraction of
+an electromagnetic wave by an object of arbitrary form and relative
+permittivity. We are not going here to set up an exhaustive list of
+these methods, but the curious reader may refer to the article by
+F. M. Kahnert who details the advantages and weaknesses of the most
+common methods.~\cite{Kahnert_JQSRT_03} 
+
+The method we use is called coupled dipoles method (CDM) or the
+discrete dipole approximation (DDA). This method is a volume method,
+because the diffracted field is obtained from an integral, the support
+of which is the volume of the considered object.  It had been
+introduced by E. M. Purcell and C. R. Pennypacker in 1973, in order to
+study the scattering of light by grains in interstellar
+medium.~\cite{Purcell_AJ_73} The DDA has been subsequently widened to
+objects in presence of a plane substrate or in a multilayer system,
+see for instance Ref.~[\onlinecite{Rahmani_PRA_97}]. These past few
+years, we endeavoured, on the one hand, to widen the DDA to more
+complex geometries (grating with or without any default) and, on the
+other hand, to increase its precision.  These improvements tend to
+make this chapter a little technical, but they are going to be applied
+in the next chapters. Before studying more in details the last
+improvements of DDA, though, let us remind first of its principle.
+
+\section{The principle of discrete dipole approximation}
+
+Take an object of arbitrary form and relative permittivity in a
+homogeneous space that we suppose here being the vacuum. This object
+is submitted to an incident electromagnetic wave of wavelength
+$\lambda$ ($k_0=2\pi/\lambda$).  The principle of the DDA consists in
+representing the object as a set of $N$ small cubes of an edge $a$ [by
+little, we mean smaller than the wavelength in the object :
+$a\ll \lambda/\sqrt{\varepsilon}$ (Fig.~\ref{discretisation})].
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+\begin{center}
+\includegraphics*[draft=false,width=150mm]{discretisation.eps}
+\caption{Principle of the DDA : the object under study (on the left)
+  is discretized in a set of small dipoles (on the right)l.}
+\label{discretisation}
+\end{center}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Each one of the small cubes under the action of the incident wave is
+going to get polarized, and as such, to acquire a dipolar moment,
+whose value is going to depend on the incident field and on its
+interaction with its neighbours. The local field of a dipole located
+at $\ve{r}_i$, $\ve{E}(\ve{r}_i)$, is the sum of the incident wave and
+the field radiated by the other $N-1$ dipoles :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \label{cdms} \ve{E}(\ve{r}_i)=\ve{E}_0(\ve{r}_i)+\sum_{j=1,i\neq
+j}^{N} \ve{T}(\ve{r}_i,\ve{r}_j)\alpha(\ve{r}_j)\ve{E}(\ve{r}_j). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+$\ve{E}_0$ is the incident wave, $\ve{T}$ the linear susceptibility of
+the field in homogeneous space:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{T}(\ve{r}_i,\ve{r}_j)=e^{ik_0 r}
+\left[\left(3\frac{\ve{r}\bigotimes\ve{r}}{r^2}- \ve{I}\right)
+  \left(\frac{1}{r^3}-\frac{ik_0}{r^2}\right) +
+  \left(\ve{I}-\frac{\ve{r}\bigotimes\ve{r}}{r^2}\right)
+  \frac{k_0^2}{r}\right] \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with $\ve{I}$ the unity matrix and
+$\ve{r}=\ve{r}_i-\ve{r}_j$. $\alpha$ is the polarizability of each
+discretization element obtained from the Clausius-Mossotti
+relation. Note that the polarizability $\alpha$, in order to respect
+the optical theorem, needs to contain a term called the radiative
+reaction term.~\cite{Draine_AJ_88} Equation~(\ref{cdms}) is valid for
+$i=1,\cdots,N$, and so represents a system of $3N$ linear equations
+where the local fields, $\ve{E}(\ve{r}_i)$, being the unknowns. Once
+the system of linear equation is solved, the field scattered by the
+object at an arbitrary position $\ve{r}$ is obtained by making the sum
+of all the radiated fields by each one of the dipoles :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \label{cdmd} \ve{E}(\ve{r})=\sum_{j=1}^{N} \ve{T}(\ve{r},\ve{r}_j)
+\alpha(\ve{r}_j) \ve{E}(\ve{r}_j). \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+When the object is in presence of a plane substrate or within a
+multilayer system, it is just necessary to replace $\ve{T}$, by the
+linear susceptibility of the referential system.
+
+We have just presented the DDA as E. M. Purcell and C. R. Pennypacker
+had presented it earlier.~\cite{Purcell_AJ_73} Note that another
+method very close to the DDA does exist. This method called the method
+of the moments starts from the integral equation of Lippman Schwinger,
+which is strictly identical to the DDA. The demonstration of the
+equivalence between these two methods being a little technical, it is
+explained in Ref.~\cite{Chaumet_PRE_04}.
+
+The advantages of the DDA are that it is applicable to objects of
+arbitrary forms, inhomogeneous (that is hardly achievable in case of
+surface method), and anisotropic (the polarizability associated to the
+mesh becomes a tensor). The outgoing wave condition is automatically
+satisfied through the linear susceptibility of the field. Finally,
+note that only the object is discretized unlike the methods of finite
+differences and finite elements.~\cite{Kahnert_JQSRT_03} The main
+inconvenience of the DDA consists in the fast increase of computation
+time together with the increase of the number of discretization
+elements, {\it i.e.}, the increase in size of the system of linear
+equations to be solved.  There are ways to accelerate the resolution
+of a system of linear equations very important in size as the method
+of conjugated gradients, but, besides all, values of $N>10^6$ in
+homogeneous space are difficult to deal with.
+
+\section{A word about the code}
+
+The code is thought to have a user-friendly interface so that everyone
+can use it without any problems including non specialists. This allows
+undergraduate students to study, for example, the basics of microscopy
+(Rayleigh's criteria, notion of numerical aperture, ...)  or
+diffraction without any problem; and researchers, typically
+biologists, having no notion of Maxwell's equations to simulate what
+gives a microscope (brightfield, phase microscope, dark field, ...) in
+function of the usual parameters and the object. Nevertheless, this
+code can also serve physicists specializing in electromagnetism in
+performing, for example, calculations of optical forces, diffraction,
+cross sections, near field and this with many incident beams.
+
+The code thus has by default a simple interface where all numeroical
+parameters are hidden and where many options are then chosen by
+default. But it's easy to access all Code options by checking the
+Advanced Interface option. This userguide explains how to use the
+advanced interface in starting with the different approaches used by
+the code to solve the Maxwell equations.
+
+Note that the usability of the code is made to the detriment of the
+optimization of the RAM and the code can used large memory for large
+objects.
+
+
+\section{How to compile the code}
+
+The application is based on Qt-4.8 and gfortran To install it you need
+: qt, qt-devel, gcc-c++ et gfortran. Then to compile it:
+\begin{itemize}
+\item qmake-qt4
+\item make
+\item make install
+\end{itemize}
+
+To run the application, cd bin, and ./cdm.
+
+Notice that there is three versions of the code, the first one is
+sequential and uses FFTE (Fast Fourier Transform in the east), the
+second one uses FFTW (Fast Fourier Transform in the west) which needs
+openmp 4.5 minimum and the third uses HDF5 format to save data file.
+
+On linux system with the library FFTW, it requires to install FFTW
+packages with `` dnf install * fftw * ''. For the version that uses
+HDF5 file you should install the following packages ``dnf install hdf
+hdf5 hdf5-static hdf5-devel''.
+
+The code works on windows system but it is tricky to compile it if you
+want to use FFTW.
+
+
+
+\section{A word about the authors}
+
+\begin{itemize}
+\item P. C. Chaumet is Professor at Fresnel Institute of Aix-Marseille
+  University, and deals with the development of the fortran source
+  code.
+\item D. Sentenac develops the convivial interface of the code.
+\item A. Sentenac is research director at the CNRS, and works at
+  Fresnel Institute of Aix-Marseille University, and participates to
+  the development of the code connected to the far field diffraction.
+\end{itemize}
+
+\section{Licence}
+
+
+Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+
+You are free to:
+
+\begin{itemize}
+\item Share - copy and redistribute the material in any medium or
+  format
+\item Adapt - remix, transform, and build upon the material
+\end{itemize}
+
+The licensor cannot revoke these freedoms as long as you follow the
+license terms.
+\begin{itemize}
+\item Attribution - You must give appropriate credit, provide a link
+  to the license, and indicate if changes were made. You may do so in
+  any reasonable manner, but not in any way that suggests the licensor
+  endorses you or your use.
+\item NonCommercial - You may not use the material for commercial
+  purposes.
+\item ShareAlike - If you remix, transform, or build upon the
+  material, you must distribute your contributions under the same
+  license as the original.
+\end{itemize}
+
+
+\section{How to quote the code}
+
+\begin{itemize}
+
+\item If only the basic functions of the code are used:
+
+P. C. {\textsc{Chaumet}}, A. {\textsc{Sentenac}}, and
+A. {\textsc{Rahmani}}, \\{\it Coupled dipole method for scatterers
+  with large permittivity.}\\
+Phys. Rev. E {\bf 70}, 036606 (2004).
+
+\item If the calculation of the optical forces is used, then:
+
+P.C. {\textsc{Chaumet}}, A. {\textsc{Rahmani}},
+A. {\textsc{Sentenac}}, and G. W. {\textsc{Bryant}},\\ {\it Efficient
+  computation of optical forces with the coupled dipole method.}\\
+Phys. Rev. E {\bf 72}, 046708 (2005).
+
+\item If the calculation of optical couples is used:
+
+P. C. {\textsc{Chaumet}} and C. {\textsc{Billaudeau}},\\ {\it Coupled
+  dipole method to compute optical torque: Application to a
+  micropropeller.}\\
+J. Appl. Phys. {\bf 101}, 023106 (2007).
+
+\item If the rigorous Gaussian beam is used:
+
+P. C. {\textsc{Chaumet}},\\ {\it Fully vectorial highly non
+  paraxial beam close to the waist.}\\
+J. Opt. Soc. Am. A {\bf 23}, 3197 (2006).
+
+\end{itemize}

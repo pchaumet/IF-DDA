@@ -1,0 +1,138 @@
+\chapter{Détails numériques}\label{chappola}
+\markboth{\uppercase{Détails numériques}}{\uppercase{Détails
+    numériques}}
+
+\minitoc
+
+\section{Polarisabilité}
+
+
+Comme vu au chapitre précédent la DDA découpe l'objet en un ensemble
+de dipôle ponctuel, où à chaque dipôle ponctuel est associé une
+polarisabilité $\alpha$. Il existe différente forme pour cette
+polarisabilité. La première a avoir été utilisée, et la plus simple
+qui a été introduite au chapitre précédent, est la relation de
+Clausius Mossotti (CM)~\cite{Purcell_AJ_73}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm CM} & = & \frac{3}{4\pi}
+\frac{\varepsilon-1}{\varepsilon+2}d^3= 
+\frac{\varepsilon-1}{\varepsilon+2}a^3, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec $\varepsilon$ la permittivité de l'objet, $d$ la taille de la
+maille cubique et $a=\left(\frac{3}{4\pi}\right)^{\frac{1}{3}}d$ qui
+est le rayon de la sphère de même volume que la maille cubique de côté
+$d$. Malheureusement cette relation ne conserve pas l'énergie et il
+faut alors introduire un terme de réaction de rayonnement qui tient
+compte du fait que des charges en mouvement perdent de l'énergie, et
+la polarisabilité s'écrit alors~\cite{Draine_AJ_88}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm RR} & = & \frac{\alpha_{\rm CM}}{1-\frac{2}{3} i k_0^3
+  \alpha_{\rm CM}}. \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Après différentes formes de la polarisabilité ont été établies pour
+améliorer la précision de la DDA et prendre en compte le caractère non
+ponctuel dipôle, et on peut citer parmi les plus connues celles de
+Goedecke et O'Brien~\cite{Goedecke_AO_88},
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm GB} & = & \frac{\alpha_{\rm CM}}{1-\frac{2}{3} i k_0^3
+  \alpha_{\rm CM}-k_0^2 \alpha_{\rm CM}/a}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+de Lakhtakia~\cite{Lakhtakia_IJMPC_92}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm LA} & = & \frac{ \alpha_{\rm CM} }{1- 2
+  \frac{\varepsilon-1}{\varepsilon+2}\left[ (1-i k_0 a)e^{i k_0
+      a}-1\right] } \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+et de Draine et Goodman~\cite{Draine_AJ_93}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \alpha_{\rm LR} & = & \frac{ \alpha_{\rm CM}}{ 1 + \alpha_{\rm CM}
+  \left[ \frac{(b_1+\varepsilon b_2 +\varepsilon b_3
+      S)k_0^2}{d}-\frac{2}{3} i k_0^3 \right] }, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+avec $b_1=-1.891531$, $b_2=0.1618469$, $b_3=-1.7700004$ et $S=1/5$.
+
+Dans le code par défaut c'est $\alpha_{\rm RR}$ qui est utilisée par
+défaut. Dans le cas où la permittivité est anisotrope seule
+$\alpha_{\rm RR}$ ou $\alpha_{\rm CM}$ seront utilisées.
+
+
+Une dernière polarisabilité est introduite (PS) qui ne fonctionne que
+pour les sphères homogènes et marche particulièrement bien pour les métaux. 
+Cela consiste à effectuer un changement de polarisabilité des éléments
+ sur le bord de la sphère en prenant en compte le facteur de
+ dépolarisation de la sphère.~\cite{Rahmani_AJ_04}
+
+\section{Correction au tenseur de susceptibilité}
+
+Le tenseur de susceptibilité du champ relie le dipôle à la position
+$\ve{r}_j$ au champ rayonné par celui-ci à la position $\ve{r}_i$ par
+la relation :
+$\ve{E}(\ve{r}_i)= \ve{T}(\ve{r}_i,\ve{r}_j)\ve{p}(\ve{r}_i)$. En
+toute rigueur, dans la DDA, du fait que les dipôles sont associés à un
+certain volume, c'est l'intégration suivante qui
+intervient~\cite{Chaumet_PRE_04}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E}(\ve{r}_i)= \int_{V_j} \ve{T}(\ve{r}_i,\ve{r})\ve{p}(\ve{r})
+{\rm d} \ve{r} \approx \left[ \int_{V_j} \ve{T}(\ve{r}_i,\ve{r}) {\rm
+    d} \ve{r}\right] \ve{p}(\ve{r}_j), \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+en supposant la maille petite pour pouvoir considérer le champ
+uniforme dans celle-ci. Il faut donc intégrer le tenseur sur la maille
+$V_j$. Cette intégration n'est pas analytique (il faut donc la faire
+numériquement et cela prend donc du temps) et en fait ne sert que pour
+les dipôles les plus proches de l'observation, après l'intégration
+n'apporte aucun gain de précision. Dans le code nous proposons donc la
+possibilité d'intégrer sur les mailles les plus proches:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \int_{V_j} \ve{T}(\ve{r}_i,\ve{r}) {\rm d} \ve{r} & ~~~~~{\rm
+  si}~~~~~& \frac{\|\ve{r}_i-\ve{r}_j\|}{d} \le n \\
+\ve{T}(\ve{r}_i,\ve{r}_j) & ~~~~~{\rm si}~~~~~&
+\frac{\|\ve{r}_i-\ve{r}_j\|}{d} \gt n. \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+$n$ peut prendre la valeur entière 0 (par défaut) jusqu'à 5.
+
+
+\section{Résoudre le système d'équation linéaire}
+
+Nous avons, pour connaître le champ électrique local dans l'objet,
+c'est à dire à la position des $N$ éléments de discrétisation, à
+résoudre le système d'équation linéaire suivant:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be \ve{E} = \ve{E}_0 + \ve{A} \ve{D}_\alpha \ve{E},\ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+où $\ve{E}_0$ est un vecteur de taille $3N$ qui contient les champs
+incidents sur chacun des éléments de discrétisation. $\ve{A}$ est une
+matrice $3N\times 3N$ qui contient tous les tenseurs de susceptibilité
+linéaire du champ et $\ve{D}_\alpha$ est une matrice diagonale
+$3N\times 3N$, si l'objet est isotrope, ou bloc diagonal $3\times 3$
+si l'objet est anisotrope. $\ve{E}$ est le vecteur $3N$ qui contient
+les champs électriques inconnus. L'équation est résolue par une
+méthode itérative non linéaire. Le code propose de nombreuses méthodes
+itératives et celle qui est utilisée par défaut est GPBICG car la plus
+efficace dans de nombreux cas~\cite{Chaumet_OL_09}. Le code s'arrête
+quand le résidu,
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\be r & = & \frac{ \|\ve{E}-\ve{A} \ve{D}_\alpha \ve{E} -\ve{E}_0\|} {
+  \|\ve{E}_0 \|}, \ee
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+est en dessous de la tolérance donnée par l'utilisateur. A noter que
+la valeur initiale est le champ incident. $10^{-4}$ est la tolérance
+utilisée par défaut car c'est un bon compromis entre vitesse et
+précision. Ci-dessous la liste des méthodes itératives proposées:
+\begin{itemize}
+\item GPBICG1 : Ref.~\onlinecite{Thuthu_IMECS_09}
+\item GPBICG2 : Ref.~\onlinecite{Thuthu_IMECS_09}
+\item GPBICGsafe : Ref.~\onlinecite{Fujino_IMECS_12}
+\item GPBICGplus : Ref.~\onlinecite{Fujino_conf_13}
+\item GPBICGAR1 : Ref.~\onlinecite{Thuthu_IMECS_09}
+\item GPBICGAR2 : Ref.~\onlinecite{Thuthu_IMECS_09}
+\item QMRCLA : Ref.~\onlinecite{Cunha_ANM_95}
+\item TFQMR : Ref.~\onlinecite{Cunha_ANM_95}
+\item CG : Ref.~\onlinecite{Cunha_ANM_95}
+\item BICGSTAB : Ref.~\onlinecite{Cunha_ANM_95}
+\item QMRBICGSTAB1 : Ref.~\onlinecite{Chan_SIAMJSC_94}
+\item QMRBICGSTAB2 : Ref.~\onlinecite{Chan_SIAMJSC_94}
+\item GPBICOR : Ref.~\onlinecite{Zhao_CMA_13}
+\item CORS : Ref.~\onlinecite{Carpentieri_CEI_CEIW}
+\item BiCGstar-plus Ref.~\onlinecite{Fujino_WCE_15}
+\end{itemize}
