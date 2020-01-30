@@ -1,7 +1,7 @@
 image: "ubuntu:latest"
 
 before_script:
-  - apt install -y build-essential
+  - apt update -qq && apt install -y build-essential
   - apt install -y gfortran qt-devel 
 
 compil:
