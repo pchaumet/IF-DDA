@@ -1,4 +1,4 @@
-image: "ubuntu:latest"
+image: "ruby:2.6"
 
 before_script:
   - apt update -qq && apt install -y build-essential gfortran qt-devel 
