@@ -169,7 +169,7 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
     double wavelength;
     wavelength = options->getWavelength();
     QLOG_DEBUG () << "Wavelength:" << QString::number(wavelength,'g',5);
-    char beam[64];
+    char beam[64] = {' '};
     if (options->getBeam() == "Circular plane wave") strcpy (beam,"pwavecircular");
     if (options->getBeam() == "Linear plane wave") strcpy (beam,"pwavelinear");
     if (options->getBeam() == "Multiplane wave") strcpy (beam,"wavelinearmulti");
@@ -188,7 +188,7 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
      namefileinc[i] = ' ';
     strncpy(namefileinc,(char*)options->getBeamFile().toStdString().c_str(),options->getBeamFile().size());
     QLOG_DEBUG () << "BeamFile:" << options->getBeamFile();
-    char object[64];
+    char object[64] = {' '};
     if (options->getObject() == "sphere") strcpy (object,"sphere");
     if (options->getObject() == "inhomogeneous sphere") strcpy (object,"inhomosphere");
     if (options->getObject() == "random spheres (length)") strcpy (object,"randomsphere1");
