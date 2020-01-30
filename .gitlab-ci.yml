@@ -1,12 +1,14 @@
 image: "ubuntu:latest"
 
 before_script:
-  - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt-devel
+  - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake
 
 full:
   script:
     - qmake-qt4
     - make
+  only:
+    - ffts
   tags:
     - tag1
 
