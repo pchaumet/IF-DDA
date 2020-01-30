@@ -1,0 +1,14 @@
+image: "fedora:29"
+
+before_script:
+  - dnf groupinstall -y "Development Tools"
+  - dnf install -y gcc-gfortran qt-devel 
+
+compil:
+  script:
+    - qmake-qt4
+    - make
+  only:
+    - ffts  # uniquement sur la branche ffts pour commencer
+  tags:
+    - tag1
