@@ -1,20 +1,12 @@
-image: "ruby:2.6"
+image: "ubuntu:latest"
 
 before_script:
-  - apt update -qq && apt install -y build-essential gfortran qt-devel 
+  - apt-get update -qq && apt-get install -y -qq gfortran
 
-compil:
+full:
   script:
-    - qmake-qt4
-    - make
-  only:
-    - ffts  # uniquement sur la branche ffts pour commencer
+    - gfortran mod_arg.f90 monprog.f90
+    - ./a.out
   tags:
     - tag1
-  artifacts:
-    when: always
-    untracked: true
-    paths:
-      - build
-    expire_in: 1d
 
