@@ -1,8 +1,8 @@
-image: "fedora:29"
+image: "ubuntu:latest"
 
 before_script:
-  - dnf groupinstall -y "Development Tools"
-  - dnf install -y gcc-gfortran qt-devel 
+  - apt install -y build-essential
+  - apt install -y gfortran qt-devel 
 
 compil:
   script:
@@ -12,3 +12,4 @@ compil:
     - ffts  # uniquement sur la branche ffts pour commencer
   tags:
     - tag1
+
