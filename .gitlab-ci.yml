@@ -12,3 +12,7 @@ full:
   tags:
     - tag1
 
+job:
+  script:
+    - echo "Nothing"
+
