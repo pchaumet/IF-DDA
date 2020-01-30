@@ -1,12 +1,12 @@
 image: "ubuntu:latest"
 
 before_script:
-  - apt-get update -qq && apt-get install -y -qq gfortran
+  - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt-devel
 
 full:
   script:
-    - gfortran mod_arg.f90 monprog.f90
-    - ./a.out
+    - qmake-qt4
+    - make
   tags:
     - tag1
 
