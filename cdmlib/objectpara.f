@@ -3,7 +3,9 @@
      $     ,methode,epsilon ,polarisa,sidex,sidey,sidez,xg,yg,zg,phi
      $     ,theta,psi,na,nmat,file_id ,group_iddip,infostr,nstop)
 
+#ifdef USE_HDF5
       use HDF5
+#endif
 
       implicit none
       integer nmax,tabdip(nmax),nbsphere,ndipole,nx,ny,nz,ii,jj,i,j,k
@@ -19,6 +21,10 @@
       character(64) infostr
 
       character(LEN=100) :: datasetname
+#ifndef USE_HDF5
+      integer,parameter:: hid_t=4
+#endif
+
       integer(hid_t) :: file_id
       integer(hid_t) :: group_iddip
       integer :: dim(4)
@@ -376,7 +382,6 @@ c     z=-side/2.d0+aretecube*(dble(i)-0.5d0)
             write(12,*) zs(i)
          enddo
       elseif (nmat.eq.2) then
-
          dim(1)=nbsphere
          dim(2)=nmax
          datasetname="Dipole position x"

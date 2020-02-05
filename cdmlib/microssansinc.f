@@ -9,7 +9,10 @@
      $     ,Efourierz,Ediffkzpos,Ediffkzneg,kxy,xy ,nside,planf ,planb
      $     ,plan2f ,plan2b,nmat,file_id ,group_idmic,nstop ,infostr)
 
+#ifdef USE_HDF5
       use HDF5
+#endif
+
       implicit none
 c     variables en argument      
       integer ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm,nx,ny,nz ,nx2
@@ -50,6 +53,11 @@ c     variable pour le bright field
       double complex tmpx,tmpy,tmpz,Ex,Ey,Ez,Emx,Emy,Emz,ctmp,ctmp1
 
       character(LEN=100) :: datasetname
+
+#ifndef USE_HDF5
+      integer,parameter:: hid_t=4
+#endif
+
       integer(hid_t) :: file_id
       integer(hid_t) :: group_idmic
       integer :: dim(4)
@@ -776,7 +784,9 @@ c********************************************************
      $     ,gross,zlens,Eimagex ,Eimagey,Eimagez ,Efourierx,Efouriery
      $     ,Efourierz,Ediffkzpos,Ediffkzneg,kxy,xy ,nside,planf ,planb
      $     ,plan2f ,plan2b,nmat,file_id ,group_idmic,nstop ,infostr)
+#ifdef USE_HDF5
       use HDF5
+#endif
       implicit none
 c     variables en argument      
       integer ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm,nx,ny,nz ,nx2
@@ -817,6 +827,11 @@ c     variable pour le bright field
       double complex tmpx,tmpy,tmpz,Ex,Ey,Ez,Emx,Emy,Emz,ctmp,ctmp1
      $     ,icomp,zfocus
       character(LEN=100) :: datasetname
+
+#ifndef USE_HDF5
+      integer,parameter:: hid_t=4
+#endif
+
       integer(hid_t) :: file_id
       integer(hid_t) :: group_idmic
       integer :: dim(4)

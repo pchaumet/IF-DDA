@@ -1,6 +1,8 @@
       !ecrit une sous matrice dont les dimensions sont definies par
       !dim(1)=nx dim(2)=ny dim(3)=nxm dim(4)=nym
       subroutine hdf5write2d(file_id, datasetname, data0, dim0)
+#ifdef USE_HDF5
+
          use HDF5
          implicit none
          integer(hid_t) :: file_id
@@ -62,5 +64,5 @@
          call h5sclose_f(dataspace_id, error)
          !ferme le dataspace de espace memoire
          call h5sclose_f(memspace_id, error)
-
+#endif
       end subroutine hdf5write2d

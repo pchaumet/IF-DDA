@@ -20,9 +20,9 @@ DEFINES 	+=      CDMVERSION=\\\"$$VERSION\\\"
 
 DEFINES 	+= 	QT_NO_DEBUG_OUTPUT
 
-QMAKE_CC        =       gfortran -Warray-bounds -fcray-pointer -w
+QMAKE_CC        =       gfortran 
 
-QMAKE_CFLAGS    += -fopenmp -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -DDEBUG
 
 QMAKE_CFLAGS_RELEASE    = -O3 
 
@@ -167,5 +167,7 @@ SOURCES		+= 	cdmlib.f \
 INCLUDEPATH 	+= .
 
 LIBS 		+= 	-lgfortran -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+# sans HDF5
+LIBS 		+= 	-lgfortran -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include
 
 QMAKE_DISTCLEAN += lib/*

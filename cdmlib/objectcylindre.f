@@ -2,7 +2,9 @@
      $     ,aretecube,tabdip,nnnr,nmax,nbsphere,ndipole,nx,ny,nz,nxm,nym
      $     ,nzm,methode ,na,epsilon,polarisa,rayon,hauteur,xg,yg,zg,phi
      $     ,theta,psi,nmat,file_id,group_iddip,infostr,nstop)
+#ifdef USE_HDF5
       use HDF5
+#endif
       implicit none
       integer nmax,tabdip(nmax),nbsphere,ndipole,nx,ny,nz,ii,jj,i,j,k
      $     ,test,IP(3),nnnr,dddis,inv,na,nstop,nxm,nym,nzm,nmat
@@ -17,6 +19,10 @@
       character(64) infostr
 
       character(LEN=100) :: datasetname
+#ifndef USE_HDF5
+      integer,parameter:: hid_t=4
+#endif
+
       integer(hid_t) :: file_id
       integer(hid_t) :: group_iddip
       integer :: dim(4)

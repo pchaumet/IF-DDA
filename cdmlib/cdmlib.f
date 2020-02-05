@@ -59,7 +59,9 @@ c     taille double complex (nfft2d,nfft2d,3)
 c     taille entier (nxm*nym*nzm)
      $     Tabdip,Tabmulti)
 
+#ifdef USE_HDF5
       use HDF5
+#endif
       
       implicit none
       
@@ -206,6 +208,9 @@ c     variables pour le temps
       integer debug
       integer error
       
+#ifndef USE_HDF5
+      integer,parameter:: hid_t=4
+#endif
       integer(hid_t) :: file_id
       integer(hid_t) :: group_idopt,group_idmic,group_idnf,group_idof
      $     ,group_idff,group_iddip
@@ -264,6 +269,7 @@ c     FFloc : champ local
       write(*,*) 'Use FFTW'
       if (nmat.eq.2) then
          debug=1
+#ifdef USE_HDF5
          call hdf5create(h5file, file_id)
          write(*,*) 'h5 file created  ',trim(h5file)
          write(*,*) 'file_id', file_id
@@ -273,6 +279,7 @@ c     FFloc : champ local
          call h5gcreate_f(file_id,"Microscopy", group_idmic, error)
          call h5gcreate_f(file_id,"Optical Force", group_idof, error)
          call h5gcreate_f(file_id,"Near Field", group_idnf, error)
+#endif
       endif
 
 c     arret de suite si nnnr trop petit par rapport a n*m
@@ -1113,6 +1120,7 @@ c     cré le fichier de data pour connaitre les options pour matlab
 c     ne fait que l'objet
       if (nobjet.eq.1.and.nmat.eq.2) then 
          infostr='Dipole calculation completed!'
+#ifdef USE_HDF5
          CALL h5gclose_f(group_idopt,error) 
          CALL h5gclose_f(group_iddip,error)
          CALL h5gclose_f(group_idff,error)
@@ -1120,6 +1128,9 @@ c     ne fait que l'objet
          CALL h5gclose_f(group_idof,error)
          CALL h5gclose_f(group_idnf,error)
          call hdf5close(file_id)
+#else
+        write(*,*) "No HDF5!"
+#endif
          return
       endif
 
@@ -4559,6 +4570,8 @@ c     output file
 
       if (nmat.eq.2) then
 !     fermeture du fichier hdf5
+#ifdef USE_HDF5
+
          CALL h5gclose_f(group_idopt,error) 
          CALL h5gclose_f(group_iddip,error)
          CALL h5gclose_f(group_idff,error)
@@ -4567,6 +4580,10 @@ c     output file
          CALL h5gclose_f(group_idnf,error)
          call hdf5close(file_id)
          write(*,*) 'close h5file'
+#else
+        write(*,*) "No HDF5!"
+#endif
+
       endif
 
       
