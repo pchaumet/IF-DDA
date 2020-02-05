@@ -1,18 +1,25 @@
-image: "ubuntu:latest"
+# tests sur plusieurs OS
 
-before_script:
-  - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake
-
-full:
+ubuntu:latest:
+  image: "ubuntu:latest"
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake
   script:
     - qmake-qt4
     - make
   only:
-    - ffts
+    - master
   tags:
     - tag1
 
-job:
+fedora:29:
+  before_script:
+    - dnf groupinstall -y "Development Tools" gcc-gfortran qt-devel
   script:
-    - echo "Nothing"
+    - qmake-qt4
+    - make
+  only:
+    - master
+  tags:
+    - tag1
 
