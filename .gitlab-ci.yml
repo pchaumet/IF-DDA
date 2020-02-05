@@ -3,7 +3,7 @@
 ubuntu:latest:
   image: "ubuntu:latest"
   before_script:
-    - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake
+    - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake libqt4-dev
   script:
     - qmake-qt4
     - make
