@@ -86,13 +86,14 @@ win32::LIBS 	+= -L$$CDMLIB_LIB_PATH -lcdmlib \
 HDF5_LIBS       = -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
 # sans HDF5
 HDF5_LIBS       = 
+FFTW_LIBS       = # -lfftw3_omp -lfftw3
 
 unix:LIBS            += -Wl,-Bstatic \
                    -L$$CDMLIB_LIB_PATH -lcdmlib \
                    -L$$QWT_LIB_PATH -lqwt \
                    -L$$QWTPLOT3_LIB_PATH -lqwtplot3d \
                    -Wl,-Bdynamic \
-                   -lGLU -lgfortran -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include $$HDF5_LIBS
+                   -lGLU -lgfortran $$FFTW_LIBS -lm -I/usr/lib64/gfortran/modules -I/usr/include $$HDF5_LIBS
 
 
 # make install

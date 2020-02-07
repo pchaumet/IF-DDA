@@ -14,7 +14,7 @@ ubuntu:latest:
 
 fedora:29:
   before_script:
-    - dnf groupinstall -y "Development Tools" gcc-gfortran qt-devel
+    - yum groupinstall -y "Development Tools" && yum install -y gcc-gfortran qt-devel
   script:
     - qmake-qt4
     - make
