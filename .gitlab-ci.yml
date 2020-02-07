@@ -13,6 +13,7 @@ ubuntu:latest:
     - tag1
 
 fedora:29:
+  image: "fedora:29"
   before_script:
     - yum groupinstall -y "Development Tools" && yum install -y gcc-gfortran qt-devel
   script:
