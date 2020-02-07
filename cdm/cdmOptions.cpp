@@ -37,7 +37,11 @@ Options::Options()
   nrigList = (QStringList() << "rigorous" << "renormalized Born" << "Born"
 	                    << "Born order 1" << "renormalized Rytov" << "Rytov"
 	                    << "Beam propagation" << "renormalized Beam propagation");
+#ifdef USE_HDF5
   nmatlabList = (QStringList() << "Save in ascii file" << "Do not save file" << "Save in HDF5 file");
+#else
+  nmatlabList = (QStringList() << "Save in ascii file" << "Do not save file");
+#endif
   ntypemicList = (QStringList() << "Holographic" << "Brightfield" << "Darkfield & phase");
   nsideList = (QStringList() << "kz>0 (transmission)" << "kz<0 (reflexion)");
     
