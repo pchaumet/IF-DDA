@@ -221,6 +221,7 @@ c     variables pour le temps
       call date_and_time(date,time,zone,valuesi)
       call cpu_time(ti)
 
+#ifdef USE_FFTW
       call dfftw_init_threads(iret)
       if (iret.eq.0) then
          infostr='Unlikely error during thread initialization'
@@ -228,6 +229,7 @@ c     variables pour le temps
          return
       endif
       CALL dfftw_plan_with_nthreads(omp_get_max_threads())
+#endif
 
 c     change nside to meet the right value to get the sign of kz
       if (nside.eq.1) nside=-1
@@ -1148,6 +1150,7 @@ c     calcul les plans pour la FFT3D
       FFTW_FORWARD=-1
       FFTW_BACKWARD=+1
       FFTW_ESTIMATE=64
+#ifdef USE_FFTW
       call dfftw_plan_dft_3d(planb, nx2,ny2,nz2, vectx,vectx
      $     ,FFTW_BACKWARD,FFTW_ESTIMATE)
       call dfftw_plan_dft_3d(planf, nx2,ny2,nz2, vectx,vectx
@@ -1158,6 +1161,7 @@ c     calcul les plans pour la FFT2D
      $     ,FFTW_BACKWARD,FFTW_ESTIMATE)
       call dfftw_plan_dft_2d(plan2f, nfft2d,nfft2d, Eimagex, Eimagex
      $     ,FFTW_FORWARD,FFTW_ESTIMATE)
+#endif
       
 
       write(*,*) '*****************************************'
@@ -1974,10 +1978,12 @@ c     compute the FFT in all the box
          nym2=2*nympp
          nzm2=2*nzmpp
          nxym2=nxm2*nym2
+#ifdef USE_FFTW
          call dfftw_plan_dft_3d(planbn,nxm2,nym2,nzm2,vectx,vectx
      $        ,FFTW_BACKWARD,FFTW_ESTIMATE)
          call dfftw_plan_dft_3d(planfn,nxm2,nym2,nzm2,vectx,vectx
      $        ,FFTW_FORWARD,FFTW_ESTIMATE)
+#endif
 
          if (nquad.eq.0) then
             call greencalculfft(nxmpp,nympp,nzmpp,nxm2,nym2,nzm2,nxym2

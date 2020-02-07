@@ -31,8 +31,9 @@ QMAKE_CXXFLAGS_RELEASE  -= -O2
 
 QMAKE_CXXFLAGS 	+= -O3 
 
-QMAKE_LFLAGS    += -fopenmp -lfftw3_omp -lfftw3 -lm
-QMAKE_LFLAGS    += -O3
+#QMAKE_LFLAGS    += -fopenmp -lfftw3_omp -lfftw3 -lm
+# sans FFTW ni OpenMP
+QMAKE_LFLAGS    += -lm
 
 HEADERS 	+= 	cdmMain.h \
 			cdmOptions.h \

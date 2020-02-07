@@ -71,12 +71,14 @@ c***************************************************************
       
 c     Compute FFT
 
+#ifdef USE_FFTW
       call dfftw_execute_dft(planb,DFFTTENSORxx,DFFTTENSORxx)
       call dfftw_execute_dft(planb,DFFTTENSORxy,DFFTTENSORxy) 
       call dfftw_execute_dft(planb,DFFTTENSORxz,DFFTTENSORxz)
       call dfftw_execute_dft(planb,DFFTTENSORyy,DFFTTENSORyy)
       call dfftw_execute_dft(planb,DFFTTENSORyz,DFFTTENSORyz)
       call dfftw_execute_dft(planb,DFFTTENSORzz,DFFTTENSORzz)
+#endif
 
 c     product of the FFT
 !$OMP PARALLEL  DEFAULT(SHARED) PRIVATE(indice,ctmpx,ctmpy,ctmpz)
@@ -99,9 +101,11 @@ c     product of the FFT
 
 c     FFT inverse (deconvolution)
 
+#ifdef USE_FFTW
       call dfftw_execute_dft(planf,DFFTTENSORxx,DFFTTENSORxx)
       call dfftw_execute_dft(planf,DFFTTENSORyy,DFFTTENSORyy)
       call dfftw_execute_dft(planf,DFFTTENSORzz,DFFTTENSORzz)
+#endif
 
 c     remet le vecteur resultat dans FF0
 

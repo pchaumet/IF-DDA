@@ -18,12 +18,14 @@
 c     FFT comme dans la diffraction a cause du grossissement negatif qui
 c     repasse la FFT de inverse à directe.
       
+#ifdef USE_FFTW
       call dfftw_execute_dft(plan2f,Eimageincx,Eimageincx)
       call dfftw_execute_dft(plan2f,Eimageincy,Eimageincy)
       call dfftw_execute_dft(plan2f,Eimageincz,Eimageincz)
       call dfftw_execute_dft(plan2f,Eimagex,Eimagex)
       call dfftw_execute_dft(plan2f,Eimagey,Eimagey)
       call dfftw_execute_dft(plan2f,Eimagez,Eimagez)
+#endif
 
 !$OMP PARALLEL DEFAULT(SHARED)
 !$OMP& PRIVATE(i,j,indicex,indicey,indice,kk,ctmp)

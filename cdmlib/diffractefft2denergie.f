@@ -132,9 +132,11 @@ c     energie
 !$OMP ENDDO 
 !$OMP END PARALLEL     
 
+#ifdef USE_FFTW
             call dfftw_execute_dft(plan2f,Eloinx,Eloinx)
             call dfftw_execute_dft(plan2f,Eloiny,Eloiny)
             call dfftw_execute_dft(plan2f,Eloinz,Eloinz)
+#endif
          
             kk=1+nx*ny*(k-1)
 
@@ -324,9 +326,11 @@ c     arret avant ne rentre jamais ici
       enddo
 
 c     calcul de la FFT
+#ifdef USE_FFTW
       call dfftw_execute_dft(plan2f,Eloinx,Eloinx)
       call dfftw_execute_dft(plan2f,Eloiny,Eloiny)
       call dfftw_execute_dft(plan2f,Eloinz,Eloinz)
+#endif
          
       fluxinc=0.d0
       fluxref=0.d0

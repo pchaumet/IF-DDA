@@ -103,9 +103,11 @@ c     fac=dble(nfft2d*nfft2d)
 !$OMP ENDDO 
 !$OMP END PARALLEL     
 
+#ifdef USE_FFTW
          call dfftw_execute_dft(plan2f,Eloinx,Eloinx)
          call dfftw_execute_dft(plan2f,Eloiny,Eloiny)
          call dfftw_execute_dft(plan2f,Eloinz,Eloinz)  
+#endif
 
          kk=1+nx*ny*(k-1)
          

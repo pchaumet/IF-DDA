@@ -47,9 +47,11 @@ c     position du dipole
 !$OMP ENDDO 
 !$OMP END PARALLEL
 
+#ifdef USE_FFTW
       call dfftw_execute_dft(planb, vectx, vectx)   
       call dfftw_execute_dft(planb, vecty, vecty)     
       call dfftw_execute_dft(planb, vectz, vectz)
+#endif
 
       
 !$OMP PARALLEL  DEFAULT(SHARED) PRIVATE(indice,ctmpx,ctmpy,ctmpz)   
@@ -70,9 +72,11 @@ c     position du dipole
 
       
 c     FFT inverse (deconvolution)
+#ifdef USE_FFTW
       call dfftw_execute_dft(planf, vectx, vectx)
       call dfftw_execute_dft(planf, vecty, vecty)
       call dfftw_execute_dft(planf, vectz, vectz)
+#endif
       
 !$OMP PARALLEL  DEFAULT(SHARED) PRIVATE(indice,jj,i,j,k)
 !$OMP DO SCHEDULE(STATIC) COLLAPSE(3)               

@@ -36,8 +36,9 @@
 !$OMP ENDDO 
 !$OMP END PARALLEL
       
+#ifdef USE_FFTW
       call dfftw_execute_dft(planb, vectx, vectx)   
       call dfftw_execute_dft(planb, vecty, vecty)     
       call dfftw_execute_dft(planb, vectz, vectz)
-
+#endif
       end

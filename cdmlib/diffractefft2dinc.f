@@ -235,9 +235,11 @@ c     ne rentre jamais ici
       enddo
 
 c     calcul de la FFT
+#ifdef USE_FFTW
       call dfftw_execute_dft(plan2f,Eloinx,Eloinx)
       call dfftw_execute_dft(plan2f,Eloiny,Eloiny)
       call dfftw_execute_dft(plan2f,Eloinz,Eloinz)
+#endif
          
       
 c     sauvegarde dans le tableau que pour les kz interessant et ajouts

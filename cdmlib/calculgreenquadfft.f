@@ -72,11 +72,13 @@ c     integration de l'espace libre
       
       write(*,*) 'End computation of the Green function'
 c     compute the FFT of the Green function
+#ifdef USE_FFTW
       call dfftw_execute_dft(planb,FFTTENSORxx,FFTTENSORxx)
       call dfftw_execute_dft(planb,FFTTENSORxy,FFTTENSORxy) 
       call dfftw_execute_dft(planb,FFTTENSORxz,FFTTENSORxz)
       call dfftw_execute_dft(planb,FFTTENSORyy,FFTTENSORyy)
       call dfftw_execute_dft(planb,FFTTENSORyz,FFTTENSORyz)
       call dfftw_execute_dft(planb,FFTTENSORzz,FFTTENSORzz)
+#endif
 
       end

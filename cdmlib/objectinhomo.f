@@ -114,8 +114,10 @@ c     3 5. Si on utilisait FFTW ceci disparaitrait.
 c     size of the subunit
       aretecube=2.d0*rayon/dble(nnnr)
 
+#ifdef USE_FFTW
       call dfftw_plan_dft_3d(planb, nx,ny,nz,epsb,epsb,FFTW_BACKWARD
      $     ,FFTW_ESTIMATE)
+#endif
 
       lx=dble(nx)*aretecube
       ly=dble(ny)*aretecube
@@ -165,7 +167,9 @@ c     Spectre symetrique pour diffraction harmonique
       enddo     
       
 c     Profil des hauteurs
+#ifdef USE_FFTW
       call dfftw_execute_dft(planb, epsb, epsb)   
+#endif
       
       moyenne=0.d0
       ecartype=0.d0

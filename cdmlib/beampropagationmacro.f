@@ -121,9 +121,11 @@ c     commence boucle sur les z
          
 c     FFT à deux dimensions
          
+#ifdef USE_FFTW
          call dfftw_execute_dft(plan2b,Imagex,Imagex)
          call dfftw_execute_dft(plan2b,Imagey,Imagey)
          call dfftw_execute_dft(plan2b,Imagez,Imagez)
+#endif
 
 
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,indice,ii,jj,kx,ky,kz,ctmp)
@@ -162,9 +164,11 @@ c     FFT à deux dimensions
 !$OMP ENDDO 
 !$OMP END PARALLEL
 
+#ifdef USE_FFTW
          call dfftw_execute_dft(plan2f,Imagex,Imagex)
          call dfftw_execute_dft(plan2f,Imagey,Imagey)
          call dfftw_execute_dft(plan2f,Imagez,Imagez)
+#endif
 
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,indice,x,y,ii,kk) 
 !$OMP DO SCHEDULE(STATIC) COLLAPSE(2) 
