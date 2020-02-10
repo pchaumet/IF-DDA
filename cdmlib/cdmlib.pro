@@ -8,7 +8,7 @@ VERSION         =       0.3.5
 
 TARGET 		=       cdmlib
 
-CONFIG          +=      staticlib warn_on
+CONFIG          +=      staticlib warn_on #fftw
 
 DEPENDPATH 	+= .
 
@@ -16,13 +16,18 @@ DESTDIR      	= lib
 
 QT      	+=
 
-DEFINES 	+=      CDMVERSION=\\\"$$VERSION\\\"
+DEFINES 	+=      CDMVERSION=\\\"$$VERSION\\\"  DEBUG 
+CONFIG(fftw) {
+DEFINES 	+=      USE_FFTW
+}
 
 DEFINES 	+= 	QT_NO_DEBUG_OUTPUT
 
 QMAKE_CC        =       gfortran 
 
-QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -DDEBUG
+QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp 
+
+QMAKE_LFLAGS    = 
 
 QMAKE_CFLAGS_RELEASE    = -O3 
 
@@ -167,8 +172,17 @@ SOURCES		+= 	cdmlib.f \
                         
 INCLUDEPATH 	+= .
 
-LIBS 		+= 	-lgfortran -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
-# sans HDF5
-LIBS 		+= 	-lgfortran -lm -I/usr/lib64/gfortran/modules -I/usr/include
+CONFIG(fftw) {
+	LIBS 		+= 	-lgfortran -lfftw3_omp -lfftw3 -lm 
+} else {
+	LIBS 		+= 	-lgfortran -lm 
+}
+
+CONFIG(hdf5) {
+	LIBS 		+= 	-I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+} else {
+	# sans HDF5
+	LIBS 		+= 	
+}
 
 QMAKE_DISTCLEAN += lib/*

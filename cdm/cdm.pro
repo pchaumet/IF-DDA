@@ -8,7 +8,7 @@ VERSION         =       0.4.6
 
 TARGET 		=       cdm
 
-CONFIG          += 	qt thread opengl warn_off release
+CONFIG          += 	qt thread opengl warn_off release # fftw
 
 DEPENDPATH 	+= .
 
@@ -30,10 +30,6 @@ RCC_DIR         = resources
 QMAKE_CXXFLAGS_RELEASE  -= -O2
 
 QMAKE_CXXFLAGS 	+= -O3 
-
-#QMAKE_LFLAGS    += -fopenmp -lfftw3_omp -lfftw3 -lm
-# sans FFTW ni OpenMP
-QMAKE_LFLAGS    += -lm
 
 HEADERS 	+= 	cdmMain.h \
 			cdmOptions.h \
@@ -84,17 +80,20 @@ win32::LIBS 	+= -L$$CDMLIB_LIB_PATH -lcdmlib \
                    -L$$QWTPLOT3_LIB_PATH -lqwtplot3d \
                    -lglu32 -lz -lopengl32 -lgfortran
 
-HDF5_LIBS       = -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
-# sans HDF5
-HDF5_LIBS       = 
-FFTW_LIBS       = # -lfftw3_omp -lfftw3
-
 unix:LIBS            += -Wl,-Bstatic \
                    -L$$CDMLIB_LIB_PATH -lcdmlib \
                    -L$$QWT_LIB_PATH -lqwt \
                    -L$$QWTPLOT3_LIB_PATH -lqwtplot3d \
                    -Wl,-Bdynamic \
-                   -lGLU -lgfortran $$FFTW_LIBS -lm -I/usr/lib64/gfortran/modules -I/usr/include $$HDF5_LIBS
+                   -lGLU -lgfortran 
+
+CONFIG(fftw) {
+unix:LIBS            += -fopenmp -lfftw3_omp -lfftw3 -lm
+}
+
+CONFIG(hdf5) {
+unix:LIBS            += -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+}
 
 
 # make install
