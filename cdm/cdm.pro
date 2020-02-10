@@ -8,7 +8,7 @@ VERSION         =       0.4.6
 
 TARGET 		=       cdm
 
-CONFIG          += 	qt thread opengl warn_off release # fftw
+CONFIG          += 	qt thread opengl warn_off release fftw
 
 DEPENDPATH 	+= .
 

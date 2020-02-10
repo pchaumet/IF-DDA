@@ -17,15 +17,18 @@ You are free to:
 VERSION
 -----------------------------------------------------------
 
-There is three branches of the code, there are similar but one uses FFTS
-(Singleton) and is single processor,  the other one uses FFTW and
-is compiled in parallel and hence, needs to have on the computer
-openmp (version 4.5 at least) and the library fftw.
+By default, the code compiles without FFTW and HDF5. A custom FFT library is uded. It is single processor.
+If you have FFTW installed, open the two files cdm/cdm.pro and cdmlib/cdmlib.pro and modify the line:
+CONFIG          +=     qt thread opengl warn_off release fftw
+
+It is compiled in parallel and hence, needs to have on the computer
+openmp (version 4.5 at least).
 beware that if you use the parallel version, if you have a
 core dump issue, the main reason may be the stack size. Use the
 instructions (on LINUX system).
 ulimit-s unlimited
 The last one uses HDF5 and needs the library hdf5
+CONFIG          +=     qt thread opengl warn_off release fftw hdf5
 
 if you have 4 processors,
 export OMP_NUM_THREADS=4

@@ -8,7 +8,7 @@ VERSION         =       0.3.5
 
 TARGET 		=       cdmlib
 
-CONFIG          +=      staticlib warn_on #fftw
+CONFIG          +=      staticlib warn_on fftw
 
 DEPENDPATH 	+= .
 
@@ -181,7 +181,6 @@ CONFIG(fftw) {
 CONFIG(hdf5) {
 	LIBS 		+= 	-I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
 } else {
-	# sans HDF5
 	LIBS 		+= 	
 }
 
