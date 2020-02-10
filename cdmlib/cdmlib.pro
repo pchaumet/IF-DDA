@@ -71,6 +71,7 @@ SOURCES		+= 	cdmlib.f \
                         fdump.f \
                         fouriertoimage.f \
                         fouriertoimage2.f \                        
+                        fftsingletonz.f \                        
 			gaussiand.f \
                         gaussian.f \
                         gaussianfft.f \
