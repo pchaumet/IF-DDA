@@ -1161,6 +1161,12 @@ c     calcul les plans pour la FFT2D
      $     ,FFTW_BACKWARD,FFTW_ESTIMATE)
       call dfftw_plan_dft_2d(plan2f, nfft2d,nfft2d, Eimagex, Eimagex
      $     ,FFTW_FORWARD,FFTW_ESTIMATE)
+#else
+      call fftsingletonz3d(vectx, nx2,ny2,nz2,FFTW_BACKWARD) 
+      call fftsingletonz3d(vectx, nx2,ny2,nz2,FFTW_FORWARD) 
+c     calcul les plans pour la FFT2D
+      call fftsingletonz2d(Eimagex, nfft2d,nfft2d, FFTW_BACKWARD)
+      call fftsingletonz2d(Eimagex, nfft2d,nfft2d, FFTW_FORWARD)
 #endif
       
 
@@ -1983,6 +1989,9 @@ c     compute the FFT in all the box
      $        ,FFTW_BACKWARD,FFTW_ESTIMATE)
          call dfftw_plan_dft_3d(planfn,nxm2,nym2,nzm2,vectx,vectx
      $        ,FFTW_FORWARD,FFTW_ESTIMATE)
+#else 
+      call fftsingletonz3d(vectx, nxm2,nym2,nzm2,FFTW_BACKWARD)
+      call fftsingletonz3d(vectx, nxm2,nym2,nzm2,FFTW_FORWARD)
 #endif
 
          if (nquad.eq.0) then

@@ -133,6 +133,8 @@ c     discretization of the object under study
 #ifdef USE_FFTW
       call dfftw_plan_dft_3d(planbpara,nx,ny,nz,epsb,epsb,FFTW_BACKWARD
      $     ,FFTW_ESTIMATE)
+#else
+      call fftsingletonz3d(epsb, nx,ny,nz,FFTW_BACKWARD)
 #endif
 
       lx=dble(nx)*aretecube
