@@ -1,11 +1,23 @@
 # tests sur plusieurs OS
 
-ubuntu:latest:
+ubuntu:default:
   image: "ubuntu:latest"
   before_script:
     - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake libqt4-dev
   script:
     - qmake-qt4
+    - make
+  only:
+    - master
+  tags:
+    - tag1
+
+ubuntu:fftw:
+  image: "ubuntu:latest"
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake libqt4-dev fftw*
+  script:
+    - qmake-qt4 "CONFIG+=fftw"
     - make
   only:
     - master

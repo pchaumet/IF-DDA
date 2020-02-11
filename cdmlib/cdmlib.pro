@@ -8,7 +8,7 @@ VERSION         =       0.3.5
 
 TARGET 		=       cdmlib
 
-CONFIG          +=      staticlib warn_on fftw
+CONFIG          +=      staticlib warn_on 
 
 DEPENDPATH 	+= .
 
