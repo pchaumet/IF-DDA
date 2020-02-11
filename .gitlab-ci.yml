@@ -51,7 +51,7 @@ fedora:29:
 fedora:fftw:
   image: "fedora:29"
   before_script:
-    - yum groupinstall -y "Development Tools" && yum install -y gcc-gfortran qt-devel
+    - yum groupinstall -y "Development Tools" && yum install -y gcc-gfortran qt-devel fftw*
   script:
     - qmake-qt4 "CONFIG+=fftw"
     - make
@@ -63,7 +63,7 @@ fedora:fftw:
 fedora:hdf5:
   image: "fedora:29"
   before_script:
-    - yum groupinstall -y "Development Tools" && yum install -y gcc-gfortran qt-devel hdf hdf5 hdf5-static hdf5-devel
+    - yum groupinstall -y "Development Tools" && yum install -y gcc-gfortran qt-devel fftw* hdf hdf5 hdf5-static hdf5-devel
   script:
     - qmake-qt4 "CONFIG+=fftw hdf5"
     - make
