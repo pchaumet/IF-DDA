@@ -185,7 +185,7 @@ CONFIG(hdf5) {
   }
 # sur ubuntu
   exists( /usr/include/hdf5/serial ) {
-	LIBS 		+= 	-I/usr/include/hdf5/serial -I/usr/include -L/usr/lib/x86_64-linux-gnu -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+	LIBS 		+= 	-I/usr/include/hdf5/serial -I/usr/include -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
   }
 } else {
 	LIBS 		+= 	

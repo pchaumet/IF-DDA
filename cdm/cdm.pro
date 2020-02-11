@@ -92,7 +92,14 @@ unix:LIBS            += -fopenmp -lfftw3_omp -lfftw3 -lm
 }
 
 CONFIG(hdf5) {
-unix:LIBS            += -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+# sur centos, fedora, etc...
+  exists( /usr/lib64/gfortran/modules ) {
+  unix:LIBS            += -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+  }
+# sur ubuntu
+  exists( /usr/include/hdf5/serial ) {
+  unix:LIBS            += -I/usr/include/hdf5/serial -I/usr/include -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+  }
 }
 
 
