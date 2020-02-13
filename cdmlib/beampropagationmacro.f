@@ -125,6 +125,17 @@ c     FFT à deux dimensions
          call dfftw_execute_dft(plan2b,Imagex,Imagex)
          call dfftw_execute_dft(plan2b,Imagey,Imagey)
          call dfftw_execute_dft(plan2b,Imagez,Imagez)
+#else
+!$OMP PARALLEL DEFAULT(SHARED)
+!$OMP SECTIONS 
+!$OMP SECTION   
+         call fftsingletonz2d(Imagex,nfft2d,nfft2d,FFTW_BACKWARD)
+!$OMP SECTION   
+         call fftsingletonz2d(Imagey,nfft2d,nfft2d,FFTW_BACKWARD)
+!$OMP SECTION   
+         call fftsingletonz2d(Imagez,nfft2d,nfft2d,FFTW_BACKWARD)
+!$OMP END SECTIONS
+!$OMP END PARALLEL         
 #endif
 
 
@@ -168,6 +179,18 @@ c     FFT à deux dimensions
          call dfftw_execute_dft(plan2f,Imagex,Imagex)
          call dfftw_execute_dft(plan2f,Imagey,Imagey)
          call dfftw_execute_dft(plan2f,Imagez,Imagez)
+#else
+!$OMP PARALLEL DEFAULT(SHARED)
+!$OMP SECTIONS 
+!$OMP SECTION   
+         call fftsingletonz2d(Imagex,nfft2d,nfft2d,FFTW_FORWARD)
+!$OMP SECTION   
+         call fftsingletonz2d(Imagey,nfft2d,nfft2d,FFTW_FORWARD)
+!$OMP SECTION   
+         call fftsingletonz2d(Imagez,nfft2d,nfft2d,FFTW_FORWARD)
+!$OMP END SECTIONS
+!$OMP END PARALLEL
+        
 #endif
 
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,indice,x,y,ii,kk) 

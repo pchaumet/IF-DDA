@@ -20,6 +20,17 @@ c     repasse la FFT de inverse à directe.
       call dfftw_execute_dft(plan2f,Eimagex,Eimagex)
       call dfftw_execute_dft(plan2f,Eimagey,Eimagey)
       call dfftw_execute_dft(plan2f,Eimagez,Eimagez)
+#else
+!$OMP PARALLEL DEFAULT(SHARED)
+!$OMP SECTIONS 
+!$OMP SECTION   
+      call fftsingletonz2d(Eimagex,nfft2d,nfft2d,FFTW_FORWARD)
+!$OMP SECTION   
+      call fftsingletonz2d(Eimagey,nfft2d,nfft2d,FFTW_FORWARD)
+!$OMP SECTION   
+      call fftsingletonz2d(Eimagez,nfft2d,nfft2d,FFTW_FORWARD)
+!$OMP END SECTIONS
+!$OMP END PARALLEL
 #endif 
 !$OMP PARALLEL DEFAULT(SHARED)
 !$OMP& PRIVATE(i,j,indicex,indicey,indice,kk,ctmp)

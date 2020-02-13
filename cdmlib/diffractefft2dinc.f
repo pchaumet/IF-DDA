@@ -239,6 +239,17 @@ c     calcul de la FFT
       call dfftw_execute_dft(plan2f,Eloinx,Eloinx)
       call dfftw_execute_dft(plan2f,Eloiny,Eloiny)
       call dfftw_execute_dft(plan2f,Eloinz,Eloinz)
+#else
+!$OMP PARALLEL DEFAULT(SHARED)
+!$OMP SECTIONS 
+!$OMP SECTION   
+      call fftsingletonz2d(Eloinx,nfft2d,nfft2d,FFTW_FORWARD)
+!$OMP SECTION   
+      call fftsingletonz2d(Eloiny,nfft2d,nfft2d,FFTW_FORWARD)
+!$OMP SECTION   
+      call fftsingletonz2d(Eloinz,nfft2d,nfft2d,FFTW_FORWARD)
+!$OMP END SECTIONS
+!$OMP END PARALLEL
 #endif
          
       

@@ -78,6 +78,23 @@ c     Compute FFT
       call dfftw_execute_dft(planb,DFFTTENSORyy,DFFTTENSORyy)
       call dfftw_execute_dft(planb,DFFTTENSORyz,DFFTTENSORyz)
       call dfftw_execute_dft(planb,DFFTTENSORzz,DFFTTENSORzz)
+#else
+!$OMP PARALLEL DEFAULT(SHARED)
+!$OMP SECTIONS 
+!$OMP SECTION   
+      call fftsingletonz3d(DFFTTENSORxx,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(DFFTTENSORxy,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(DFFTTENSORxz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(DFFTTENSORyy,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(DFFTTENSORyz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(DFFTTENSORzz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP END SECTIONS
+!$OMP END PARALLEL
 #endif
 
 c     product of the FFT
@@ -105,6 +122,18 @@ c     FFT inverse (deconvolution)
       call dfftw_execute_dft(planf,DFFTTENSORxx,DFFTTENSORxx)
       call dfftw_execute_dft(planf,DFFTTENSORyy,DFFTTENSORyy)
       call dfftw_execute_dft(planf,DFFTTENSORzz,DFFTTENSORzz)
+#else
+!$OMP PARALLEL DEFAULT(SHARED)
+!$OMP SECTIONS 
+!$OMP SECTION   
+      call fftsingletonz3d(DFFTTENSORxx,NX2,NY2,NZ2,FFTW_FORWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(DFFTTENSORyy,NX2,NY2,NZ2,FFTW_FORWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(DFFTTENSORzz,NX2,NY2,NZ2,FFTW_FORWARD)
+!$OMP END SECTIONS
+!$OMP END PARALLEL
+
 #endif
 
 c     remet le vecteur resultat dans FF0

@@ -142,8 +142,6 @@ c     boite au plus pres de l'objet
 #ifdef USE_FFTW
       call dfftw_plan_dft_3d(planbpara,nx,ny,nz,epsb,epsb,FFTW_BACKWARD
      $     ,FFTW_ESTIMATE)
-#else 
-      call fftsingletonz3d(epsb, nx,ny,nz,FFTW_BACKWARD)
 #endif
 
       lx=dble(nx)*aretecube
@@ -195,6 +193,8 @@ c     Spectre symetrique pour diffraction harmonique
 c     Profil des hauteurs
 #ifdef USE_FFTW
       call dfftw_execute_dft(planbpara, epsb, epsb)   
+#else 
+      call fftsingletonz3d(epsb, nx,ny,nz,FFTW_BACKWARD)
 #endif
 
       moyenne=0.d0

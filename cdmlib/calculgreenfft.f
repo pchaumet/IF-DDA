@@ -76,6 +76,24 @@ c     compute the FFT of the Green function
       call dfftw_execute_dft(planb,FFTTENSORyy,FFTTENSORyy)
       call dfftw_execute_dft(planb,FFTTENSORyz,FFTTENSORyz)
       call dfftw_execute_dft(planb,FFTTENSORzz,FFTTENSORzz)
+#else
+!$OMP PARALLEL DEFAULT(SHARED)
+!$OMP SECTIONS 
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORxx,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORxy,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORxz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORyy,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORyz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORzz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP END SECTIONS
+!$OMP END PARALLEL  
+      
 #endif
       
 

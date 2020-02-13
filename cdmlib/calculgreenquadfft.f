@@ -7,13 +7,14 @@
       double complex, dimension(8*nxm*nym*nzm) :: FFTTENSORxx,
      $     FFTTENSORxy,FFTTENSORxz,FFTTENSORyy,FFTTENSORyz, FFTTENSORzz
 
-      integer ii,jj,kk,i,j,k,indice
+      integer ii,jj,kk,i,j,k,indice,FFTW_BACKWARD
       double precision x0,y0,z0,xx0,yy0,zz0,RELREQ,lim
       double complex propaesplibre(3,3)
       integer*8 planb
       x0=0.d0
       y0=0.d0
       z0=0.d0
+      FFTW_BACKWARD=+1
       
       do kk=1,nz2
          do jj=1,ny2
@@ -79,6 +80,24 @@ c     compute the FFT of the Green function
       call dfftw_execute_dft(planb,FFTTENSORyy,FFTTENSORyy)
       call dfftw_execute_dft(planb,FFTTENSORyz,FFTTENSORyz)
       call dfftw_execute_dft(planb,FFTTENSORzz,FFTTENSORzz)
-#endif
+#else
+      
+#endif!$OMP PARALLEL DEFAULT(SHARED)
+!$OMP SECTIONS 
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORxx,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORxy,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORxz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORyy,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORyz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(FFTTENSORzz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP END SECTIONS
+!$OMP END PARALLEL  
+
 
       end

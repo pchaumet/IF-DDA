@@ -59,6 +59,17 @@ c     position du dipole
       call dfftw_execute_dft(planb, vectx, vectx)   
       call dfftw_execute_dft(planb, vecty, vecty)     
       call dfftw_execute_dft(planb, vectz, vectz)
+#else
+!$OMP PARALLEL DEFAULT(SHARED)
+!$OMP SECTIONS 
+!$OMP SECTION   
+      call fftsingletonz3d(vectx,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(vecty,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP SECTION   
+      call fftsingletonz3d(vectz,NX2,NY2,NZ2,FFTW_BACKWARD)
+!$OMP END SECTIONS
+!$OMP END PARALLEL           
 #endif
 
 !$OMP PARALLEL  DEFAULT(SHARED) PRIVATE(indice,ctmpx,ctmpy,ctmpz)   
