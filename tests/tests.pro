@@ -33,8 +33,12 @@ SOURCES		+= 	main.f
                         
 INCLUDEPATH 	+= .
 
+CDMLIB_LIB_PATH  =      ../cdmlib/lib
+
+LIBS			+= -L$$CDMLIB_LIB_PATH -lcdmlib
+
 CONFIG(fftw) {
-	LIBS 		+= 	-lgfortran -lfftw3_omp -lfftw3 -lm 
+	LIBS 		+= 	-lgfortran -fopenmp -lfftw3_omp -lfftw3 -lm 
 } else {
 	LIBS 		+= 	-lgfortran -lm 
 }
@@ -52,6 +56,3 @@ CONFIG(hdf5) {
 	LIBS 		+= 	
 }
 
-CDMLIB_LIB_PATH  =      ../cdmlib/lib
-
-LIBS			+= -L$$CDMLIB_LIB_PATH -lcdmlib
