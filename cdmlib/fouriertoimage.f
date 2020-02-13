@@ -13,7 +13,14 @@
       double precision tmp
       double complex ctmp
       integer*8 plan2f,plan2b
+      
+#ifndef USE_FFTW
+      integer FFTW_BACKWARD,FFTW_FORWARD
+      FFTW_BACKWARD=+1
+      FFTW_FORWARD=-1
+#endif
 
+      
       tmp=deltakx*deltaky/gross
 c     FFT comme dans la diffraction a cause du grossissement negatif qui
 c     repasse la FFT de inverse à directe.

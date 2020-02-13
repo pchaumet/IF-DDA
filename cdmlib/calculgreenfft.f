@@ -11,6 +11,11 @@
       double precision x0,y0,z0,xx0,yy0,zz0
       double complex propaesplibre(3,3)
       integer*8 planb
+
+#ifndef USE_FFTW
+      integer FFTW_BACKWARD
+      FFTW_BACKWARD=+1
+#endif
       x0=0.d0
       y0=0.d0
       z0=0.d0

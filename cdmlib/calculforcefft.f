@@ -9,6 +9,10 @@
       integer i,j,k,ii,jj,indice
       integer*8 planb
 
+#ifndef USE_FFTW
+      integer FFTW_BACKWARD
+      FFTW_BACKWARD=+1
+#endif
       
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i)
 !$OMP DO  SCHEDULE(STATIC)

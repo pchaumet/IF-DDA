@@ -1,4 +1,7 @@
+      PROGRAM test_cdmlib
+#ifdef USE_HDF5
       use HDF5
+#endif
 
       implicit none
 c     integer

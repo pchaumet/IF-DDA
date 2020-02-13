@@ -16,6 +16,12 @@ c***************************************************************
       double complex ctmpx,ctmpy,ctmpz
       integer*8 planb,planf
       
+#ifndef USE_FFTW
+      integer FFTW_BACKWARD,FFTW_FORWARD
+      FFTW_BACKWARD=+1
+      FFTW_FORWARD=-1      
+#endif
+      
       xx0=0.d0
       yy0=0.d0
       zz0=0.d0
