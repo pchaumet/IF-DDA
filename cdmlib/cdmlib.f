@@ -207,7 +207,8 @@ c     variables pour le temps
       character(LEN=100) :: datasetname
       integer debug
       integer error
-      
+      character(len=120) :: PROG_STRING
+     
 #ifndef USE_HDF5
       integer,parameter:: hid_t=4
 #endif
@@ -237,6 +238,22 @@ c     change nside to meet the right value to get the sign of kz
 c     FF0 : champ incident
 c     FF  : dipole
 c     FFloc : champ local
+
+      PROG_STRING = "cdm "
+#ifdef CDMVERSION
+      PROG_STRING = trim(PROG_STRING) // ' ' // CDMVERSION
+#endif
+#ifdef DEBUG
+      PROG_STRING = trim(PROG_STRING) // ' debug  '
+#endif
+#ifdef USE_FFTW
+      PROG_STRING = trim(PROG_STRING) // ' with FFTW '
+#endif
+#ifdef USE_HDF5
+      PROG_STRING = trim(PROG_STRING) // ' with HDF5 '
+#endif
+      write (*,*) trim(PROG_STRING)
+
       write(*,*) '******************************************'
       write(*,*) '*************** INPUT DATA ***************'
       write(*,*) '******************************************'
