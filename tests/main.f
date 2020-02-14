@@ -248,7 +248,7 @@ c     theta=18.445351218553004d0
 c********************************************************
 c     Defini le type d'objet
 c********************************************************
-      object='arbitrary'
+      object='sphere'
 c      object='inhomosphere'
 c      object='randomsphere'
 c     object='cube'

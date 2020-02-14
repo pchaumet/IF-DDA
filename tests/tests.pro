@@ -4,7 +4,7 @@
 
 TEMPLATE 	= 	app
 
-VERSION         =       0.1.0
+VERSION         =       0.4.6
 
 TARGET 		=       tests
 
@@ -15,6 +15,9 @@ DEPENDPATH 	+= .
 DEFINES 	+=      CDMVERSION=\\\"$$VERSION\\\"  DEBUG 
 CONFIG(fftw) {
 DEFINES 	+=      USE_FFTW
+}
+CONFIG(hdf5) {
+DEFINES 	+=      USE_HDF5
 }
 
 QMAKE_CC        =       gfortran 
@@ -35,6 +38,8 @@ INCLUDEPATH 	+= .
 
 CDMLIB_LIB_PATH  =      ../cdmlib/lib
 
+INCLUDEPATH     +=  $$CDMLIB_INC_PATH 
+
 LIBS			+= -L$$CDMLIB_LIB_PATH -lcdmlib
 
 CONFIG(fftw) {
@@ -51,6 +56,7 @@ CONFIG(hdf5) {
 # sur ubuntu
   exists( /usr/include/hdf5/serial ) {
 	LIBS 		+= 	-I/usr/include/hdf5/serial -I/usr/include -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+INCLUDEPATH 	+= /usr/include/hdf5/serial
   }
 } else {
 	LIBS 		+= 	

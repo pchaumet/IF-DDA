@@ -4,7 +4,7 @@
 
 TEMPLATE 	= 	lib
 
-VERSION         =       0.3.5
+VERSION         =       0.4.6
 
 TARGET 		=       cdmlib
 
@@ -19,6 +19,9 @@ QT      	+=
 DEFINES 	+=      CDMVERSION=\\\"$$VERSION\\\"  DEBUG 
 CONFIG(fftw) {
 DEFINES 	+=      USE_FFTW
+}
+CONFIG(hdf5) {
+DEFINES 	+=      USE_HDF5
 }
 
 DEFINES 	+= 	QT_NO_DEBUG_OUTPUT
