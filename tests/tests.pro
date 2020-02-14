@@ -38,8 +38,6 @@ INCLUDEPATH 	+= .
 
 CDMLIB_LIB_PATH  =      ../cdmlib/lib
 
-INCLUDEPATH     +=  $$CDMLIB_INC_PATH 
-
 LIBS			+= -L$$CDMLIB_LIB_PATH -lcdmlib
 
 CONFIG(fftw) {
@@ -52,13 +50,14 @@ CONFIG(hdf5) {
 # sur centos, fedora, etc...
   exists( /usr/lib64/gfortran/modules ) {
 	LIBS 		+= 	-I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+INCLUDEPATH     += /usr/lib64/gfortran/modules
   }
 # sur ubuntu
   exists( /usr/include/hdf5/serial ) {
 	LIBS 		+= 	-I/usr/include/hdf5/serial -I/usr/include -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
-INCLUDEPATH 	+= /usr/include/hdf5/serial
+INCLUDEPATH     += /usr/include/hdf5/serial
+
   }
 } else {
 	LIBS 		+= 	
 }
-
