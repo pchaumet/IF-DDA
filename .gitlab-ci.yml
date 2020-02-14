@@ -7,6 +7,7 @@ ubuntu:default:
   script:
     - qmake-qt4
     - make
+    - tests/tests
   only:
     - master
   tags:
@@ -19,6 +20,7 @@ ubuntu:fftw:
   script:
     - qmake-qt4 "CONFIG+=fftw"
     - make
+    - tests/tests
   only:
     - master
   tags:
@@ -31,6 +33,7 @@ ubuntu:hdf5:
   script:
     - qmake-qt4 "CONFIG+=fftw hdf5"
     - make
+    - tests/tests
   only:
     - master
   tags:
@@ -43,6 +46,7 @@ fedora:29:
   script:
     - qmake-qt4
     - make
+    - tests/tests
   only:
     - master
   tags:
@@ -55,6 +59,7 @@ fedora:fftw:
   script:
     - qmake-qt4 "CONFIG+=fftw"
     - make
+    - tests/tests
   only:
     - master
   tags:
@@ -67,6 +72,7 @@ fedora:hdf5:
   script:
     - qmake-qt4 "CONFIG+=fftw hdf5"
     - make
+    - tests/tests
   only:
     - master
   tags:
