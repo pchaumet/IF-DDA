@@ -1,0 +1,119 @@
+ coucousphere                                                          
+ cdmlib   0.0000000000000000        0.0000000000000000        0.0000000000000000     
+ cdm 0.4.6 debug
+ ******************************************
+ *************** INPUT DATA ***************
+ ******************************************
+ Wavelength          :    632.79999999999995      nm
+ Beam                : pwavelinear
+ Object              : sphere isotropy :iso
+ Discretization      :           10
+ Size of the box     :           50          50          50
+ Iterative method    : GPBICG1     Tolerance asked   1.0000000000000000E-004
+ Rigorous or approx. :            0 (0 rigourous)
+ Local field         :            0 (1 compute)
+ Macroscopic field   :            0 (1 compute)
+ Cross section       :            1 Csca           0 (1 compute)
+ Poynting asym. fac. :            0 (1 compute)
+ Energy conservation :            0 (1 compute)
+ Microscopy          :            0 Type           0
+ Side study          :            1 (1 kz>0, -1 kz<0)
+ Quick Lens          :            0 (1 compute)
+ Focal plane position:    0.0000000000000000      nm
+ Optical force       :            0           0 (1 compute)
+ Optical torque      :            0           0 (1 compute)
+ Near field          :            1 Additional side           0           0           0
+ Polarizability      : RR
+ Integration Green   :            0 (0 no integration)
+ Write  file         :            1 0 ascii file: 1 no file: 2 hdf5 file
+ Use FFTW
+ Relative permittivity :               (2.0000000000000000,0.0000000000000000)
+ Number maximum of subunit :nmax =       125000
+ Number of layer for the object :nnnr =           10
+ nproche2           0           0
+ *************END INPUT DATA *******************
+  
+ ***********************************************
+ ************** BEGIN OBJECT *******************
+ ***********************************************
+ Built the object : sphere
+  OBJECT SPHERE FINISHED
+ Object under study created       : sphere
+ Number of subunit for the object :        1000
+ Number of subunit for the mesh   :        1000
+ Size of the mesh size            :   2.0000000000000000E-008
+ number of subunit along x y and z:          10          10          10
+ *************** END OBJECT *****************
+  
+ *****************************************
+ ******** COMPUTE INCIDENT  FIELD ********
+ *****************************************
+ Beam used  : pwavelinear
+ Power      :    1.0000000000000000     
+ Irradiance :    7949085830.6736641     
+ Intensity  :    5989323193448.4180     
+ ********** END INCIDENT FIELD ***********
+  
+ ******************************************
+ **** BEGIN COMPUTATION GREEN FUNCTION ****
+ ******************************************
+ End computation of the Green function
+ End FFT Green function
+ ***** END COMPUTATION GREEN FUNCTION ****
+  
+ *****************************************
+ ***** BEGIN TO SOLVE LINEAR SYSTEM ******
+ *****************************************
+ Near field           0
+ Initial Residue for iterative method  0.23486024950099166      Norm   77390717.747339427     
+ RESIDUE   7.7129341038474951E-003 iteration           0
+ CPU time  to solve Ax=b in second  :    1.6364999999999998E-002
+ Real time  to solve Ax=b in second :    1.6000000000000000E-002
+ Method iterative used             : GPBICG1     
+ Tolerance obtained                :    1.8885073023771112E-005
+ Tolerance asked                   :    1.0000000000000000E-004
+ Number of product Ax needs        :            8
+ ******** END SOLVE LINEAR SYSTEM ********
+  
+ ********************************************
+ ************* COMPUTE CROSS SECTION ********
+ ********************************************
+ Cext =    5.0267068745839127E-015 m2
+ Csca =    5.0267068745839127E-015 m2
+ Cabs =    0.0000000000000000      m2
+ Comparison with Mie s series
+ Cext error in %   10.732570096032351     
+ Csca error in %   10.732570096032370     
+ ********* END CROSS SECTION ************
+  
+ **************** CPU TIME *******************
+ CPU time  to execute the code in second  :    4.0765999999999997E-002
+ Real time  to execute the code in second :    4.1000000000000002E-002
+ *********************************************
+ *************** END *************************
+ infostrCOMPLETED!                                                      
+ Relative permittivity               (2.0000000000000000,0.0000000000000000)
+ Object under study sphere                                                          
+ Nombre Object           1
+ number of subunit for the object        1000
+ number of subunit for the mesh         1000
+ mesh size   2.0000000000000000E-008
+ lambda/(10n)   4.4745717113484721E-008
+ ******* Compute the incident field *******
+ Beam usedpwavelinear                                                     
+ k0=   9929180.3210802563     
+ theta=   0.0000000000000000     
+ phi=   0.0000000000000000     
+ Irradiance   7949085830.6736641     
+ Field               (2447309.3783680922,0.0000000000000000)
+ ***** Solve the linear system *****
+ Tolerance asked for the iterative method      1.0000000000000000E-004
+ Tolerance obtained for the iterative method   1.8885073023771112E-005
+ Number of product Ax for the iterative method           8           3
+ mie               (2.0000000000000000,0.0000000000000000)   1.0000000000000001E-007   6.3280000000000000E-007
+ MIECEXT   4.5395016752745127E-015   8.7196712450215803E-031   4.5395016752745120E-015  0.18825782097600241     
+ force   1.6313420398454752E-026
+ extinction cross section   5.0267068745839127E-015
+ absorbing cross section    0.0000000000000000     
+ scattering cross section   5.0267068745839127E-015
+ cos   0.0000000000000000     
