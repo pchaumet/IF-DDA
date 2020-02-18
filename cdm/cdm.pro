@@ -80,7 +80,9 @@ win32::LIBS 	+= -L$$CDMLIB_LIB_PATH -lcdmlib \
                    -L$$QWTPLOT3_LIB_PATH -lqwtplot3d \
                    -lglu32 -lz -lopengl32 -lgfortran
 
-unix:LIBS            += -Wl,-Bstatic \
+#LIBS            += -Wl,-rpath -Wl,$$CDMLIB_LIB_PATH -L$$CDMLIB_LIB_PATH -lcdmlib
+
+unix:LIBS            += -Wl,-rpath -Wl,$$CDMLIB_LIB_PATH \
                    -L$$CDMLIB_LIB_PATH -lcdmlib \
                    -L$$QWT_LIB_PATH -lqwt \
                    -L$$QWTPLOT3_LIB_PATH -lqwtplot3d \

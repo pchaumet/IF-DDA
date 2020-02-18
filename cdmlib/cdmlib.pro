@@ -8,7 +8,7 @@ VERSION         =       0.4.6
 
 TARGET 		=       cdmlib
 
-CONFIG          +=      staticlib warn_on 
+CONFIG          +=      warn_on 
 
 DEPENDPATH 	+= .
 
@@ -26,11 +26,11 @@ DEFINES 	+=      USE_HDF5
 
 DEFINES 	+= 	QT_NO_DEBUG_OUTPUT
 
-QMAKE_CC        =       gfortran -fopenmp 
+QMAKE_CC        =       gfortran 
 
-QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp 
+QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -fopenmp
 
-QMAKE_LFLAGS    = 
+QMAKE_LFLAGS    = -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -cpp -g -fcheck=all -fbacktrace -lfftw3 -lfftw3_omp -fopenmp
 
 QMAKE_CFLAGS_RELEASE    = -O3 
 
