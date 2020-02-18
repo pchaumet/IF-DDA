@@ -301,6 +301,12 @@ c     FFloc : champ local
 #endif
       endif
 
+      if (nxm.eq.0.or.nym.eq.0.or.nzm.eq.0) then
+         infostr='One of the number of subunit is equal to zero'
+         nstop=-1
+         return
+      endif
+      
 c     arret de suite si nnnr trop petit par rapport a n*m
       if (Object(1:7).ne.'cuboid2' .and. Object(1:13).ne.'inhomocuboid2'
      $     .and. object(1:13).ne.'randomsphere2'.and. object(1:9).ne
@@ -3948,9 +3954,6 @@ c     calcul de l'axe de rotation et effectue la rotation
                      u2=-u(1)*v(3)+u(3)*v(1)
                      costmp=u(1)*v(1)+u(2)*v(2)+u(3)*v(3)
                      sintmp=dsqrt(u1*u1+u2*u2)
-                     u1=u1/sintmp
-                     u2=u2/sintmp
-                     tmp=dsqrt(u(3)/v(3))
                      if (sintmp.eq.0.d0) then
                         Eimagex(indice)=Efourierx(kk)
                         Eimagey(indice)=Efouriery(kk)
@@ -3959,7 +3962,9 @@ c     calcul de l'axe de rotation et effectue la rotation
                         Eimageincy(indice)=Efourierincy(kk)
                         Eimageincz(indice)=Efourierincz(kk)
                      else
-
+                        u1=u1/sintmp
+                        u2=u2/sintmp
+                        tmp=dsqrt(u(3)/v(3))
 c     rotation de theta plus theta'
                         Eimagex(indice)=((u1*u1+(1.d0-u1*u1)*costmp)
      $                       *Efourierx(kk)+u1*u2*(1.d0-costmp)
@@ -4308,7 +4313,6 @@ c     calcul en transmission
                         u2=-u(1)*v(3)+u(3)*v(1)
                         costmp=u(1)*v(1)+u(2)*v(2)+u(3)*v(3)
                         sintmp=dsqrt(u1*u1+u2*u2)
-                        tmp=dsqrt(u(3)/v(3))
                         if (sintmp.eq.0.d0) then                    
                            Eimagex(indice)=Efourierx(kk)
                            Eimagey(indice)=Efouriery(kk)
@@ -4319,7 +4323,7 @@ c     calcul en transmission
                         else
                            u1=u1/sintmp
                            u2=u2/sintmp
-                           
+                           tmp=dsqrt(u(3)/v(3))
                            Eimageincx(indice)=((u1*u1+(1.d0-u1*u1)
      $                          *costmp)*Efourierincx(kk)+u1*u2*(1.d0
      $                          -costmp)*Efourierincy(kk)+u2*sintmp
@@ -4452,7 +4456,6 @@ c     calcul en reflexion
                         u2=-u(1)*v(3)+u(3)*v(1)
                         costmp=u(1)*v(1)+u(2)*v(2)+u(3)*v(3)
                         sintmp=dsqrt(u1*u1+u2*u2)
-                        tmp=dsqrt(u(3)/v(3))
                         if (sintmp.eq.0.d0) then                    
                            Eimagex(indice)=Efourierx(kk)
                            Eimagey(indice)=Efouriery(kk)
@@ -4460,6 +4463,7 @@ c     calcul en reflexion
                         else
                            u1=u1/sintmp
                            u2=u2/sintmp
+                           tmp=dsqrt(u(3)/v(3))
                            Eimagex(indice)=((u1*u1+(1.d0-u1*u1)*costmp)
      $                          *Efourierx(kk)+u1*u2*(1.d0-costmp)
      $                          *Efouriery(kk)+u2*sintmp*Efourierz(kk))

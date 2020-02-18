@@ -657,11 +657,11 @@ c     *********************************************************
                      u1=u(2)*v(3)-u(3)*v(2)
                      u2=-u(1)*v(3)+u(3)*v(1)
                      costmp=u(1)*v(1)+u(2)*v(2)+u(3)*v(3)
-                     sintmp=dsqrt(u1*u1+u2*u2)
-                     u1=u1/sintmp
-                     u2=u2/sintmp
-                     tmp=dsqrt(u(3)/v(3))
-                     if (sintmp.ne.0.d0) then                    
+                     sintmp=dsqrt(u1*u1+u2*u2)                     
+                     if (sintmp.ne.0.d0) then
+                        u1=u1/sintmp
+                        u2=u2/sintmp
+                        tmp=dsqrt(u(3)/v(3))
                         tmpx=(u1*u1+(1.d0-u1*u1)*costmp)
      $                       *Efourierx(indice)+u1*u2*(1.d0-costmp)
      $                       *Efouriery(indice)+u2*sintmp
@@ -827,11 +827,9 @@ c     variable pour le bright field
       double complex tmpx,tmpy,tmpz,Ex,Ey,Ez,Emx,Emy,Emz,ctmp,ctmp1
      $     ,icomp,zfocus
       character(LEN=100) :: datasetname
-
 #ifndef USE_HDF5
       integer,parameter:: hid_t=4
 #endif
-
       integer(hid_t) :: file_id
       integer(hid_t) :: group_idmic
       integer :: dim(4)
@@ -1458,12 +1456,10 @@ c     *********************************************************
                            u2=-u(1)*v(3)+u(3)*v(1)
                            costmp=u(1)*v(1)+u(2)*v(2)+u(3)*v(3)
                            sintmp=dsqrt(u1*u1+u2*u2)
-                           u1=u1/sintmp
-                           u2=u2/sintmp
-                           tmp=dsqrt(u(3)/v(3))
-
                            if (sintmp.ne.0.d0) then                    
-                              
+                              u1=u1/sintmp
+                              u2=u2/sintmp
+                              tmp=dsqrt(u(3)/v(3))
                               tmpx=(u1*u1+(1.d0-u1*u1)*costmp)
      $                             *Efourierx(indice) +u1*u2*(1.d0
      $                             -costmp) *Efouriery(indice)+u2

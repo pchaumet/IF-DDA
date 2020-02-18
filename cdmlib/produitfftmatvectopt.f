@@ -16,13 +16,11 @@ c     routine optimiser pour le cube.
       double precision dntotal
       integer*8 planf,planb
 c      double precision t1,t2
-
-#ifndef USE_FFTW
       integer FFTW_BACKWARD, FFTW_FORWARD 
+
       FFTW_BACKWARD=+1
       FFTW_FORWARD=-1
-#endif
-      
+
       nxy=nx*ny
       dntotal=dble(ntotal)
       

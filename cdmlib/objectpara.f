@@ -382,6 +382,7 @@ c     z=-side/2.d0+aretecube*(dble(i)-0.5d0)
             write(12,*) zs(i)
          enddo
       elseif (nmat.eq.2) then
+
          dim(1)=nbsphere
          dim(2)=nmax
          datasetname="Dipole position x"

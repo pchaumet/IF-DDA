@@ -34,11 +34,9 @@ c     energie
      $     ,efficacitetrans
       double precision tmp1,tmp2
       integer*8 plan2f,plan2b
-      
-#ifndef USE_FFTW
       integer FFTW_FORWARD
+
       FFTW_FORWARD=-1    
-#endif
 
       pi=dacos(-1.d0)
       icomp=(0.d0,1.d0)

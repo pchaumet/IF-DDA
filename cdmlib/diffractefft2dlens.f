@@ -14,10 +14,9 @@
      $     ,Eloiny(nfft2d*nfft2d),Eloinz(nfft2d*nfft2d)
       character(64) infostr
       integer*8 plan2f,plan2b
-#ifndef USE_FFTW
       integer FFTW_FORWARD
-      FFTW_FORWARD=-1
-#endif      
+
+      FFTW_FORWARD=-1   
       pi=dacos(-1.d0)
       icomp=(0.d0,1.d0)
       deltakx=2.d0*pi/(dble(nfft2d)*aretecube)

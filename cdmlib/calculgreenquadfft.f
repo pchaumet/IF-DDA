@@ -48,11 +48,11 @@
                   zz0=dble(k)*aretecube
 c     integration de l'espace libre
                   if (nquad.ne.0.and.i*i+j*j+k*k.le.nquad*nquad) then
-                    
                      RELREQ=tolinit
                      lim=1.d0
-                     call propaespacelibreint(x0,y0,z0,xx0,yy0,zz0
+                     call propaespacelibreintsim(x0,y0,z0,xx0,yy0,zz0
      $                    ,k0,aretecube,lim,RELREQ,propaesplibre)
+                    
                   else
                      call propa_espace_libre(x0,y0,z0,xx0,yy0,zz0,k0
      $                    ,propaesplibre)
@@ -81,8 +81,8 @@ c     compute the FFT of the Green function
       call dfftw_execute_dft(planb,FFTTENSORyz,FFTTENSORyz)
       call dfftw_execute_dft(planb,FFTTENSORzz,FFTTENSORzz)
 #else
-      
-#endif!$OMP PARALLEL DEFAULT(SHARED)
+  
+!$OMP PARALLEL DEFAULT(SHARED)
 !$OMP SECTIONS 
 !$OMP SECTION   
       call fftsingletonz3d(FFTTENSORxx,NX2,NY2,NZ2,FFTW_BACKWARD)
@@ -98,6 +98,8 @@ c     compute the FFT of the Green function
       call fftsingletonz3d(FFTTENSORzz,NX2,NY2,NZ2,FFTW_BACKWARD)
 !$OMP END SECTIONS
 !$OMP END PARALLEL  
+    
+#endif
 
 
       end

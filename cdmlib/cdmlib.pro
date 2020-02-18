@@ -26,7 +26,7 @@ DEFINES 	+=      USE_HDF5
 
 DEFINES 	+= 	QT_NO_DEBUG_OUTPUT
 
-QMAKE_CC        =       gfortran 
+QMAKE_CC        =       gfortran -fopenmp 
 
 QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp 
 
@@ -50,29 +50,19 @@ SOURCES		+= 	cdmlib.f \
                         calculforcefftopt.f \
 			coeffmie.f \
                         comparaisonxyz.f \
-                        derivechamp.f \
-			d07hre.f \
-			d09hre.f \
-			d113re.f \
-			d132re.f \
+                        derivechamp.f \		
 			d1mach.f \
 			d9lgmc.f \
-			dadhre.f \
 			dasyjy.f \
 			dbesj.f  \
                         dcsevl.f \
-			dchhre.f \
-			dcuhre.f \
                         derivative.f \
 			derivativefield2.f \
 			dfshre.f \
 			dgamlm.f \
 			dgamma.f \
-			dinhre.f \
 			djairy.f \
 			dlngam.f \
-			drlhre.f \
-			dtrhre.f \
 			dznrm2.f \
 			espace_libre_derive_mat.f \
 			espace_libre.f \
@@ -150,7 +140,7 @@ SOURCES		+= 	cdmlib.f \
                         diffractefft2dinc.f \
                         diffractefft2dlens.f \
 			computegcfft2d.f \
-                        propaesplibreint.f \
+                        propaesplibreintsim.f \
                         dipoleinc.f \
                         dipoleincder.f \
                         random.f \
@@ -177,7 +167,7 @@ INCLUDEPATH     += .
 CDMLIB_LIB_PATH  =      ../cdmlib/lib
 
 CONFIG(fftw) {
-	LIBS 		+= 	-lgfortran -lfftw3_omp -lfftw3 -lm 
+	LIBS 		+= -lgfortran -lfftw3_omp -lfftw3 -lm 
 } else {
 	LIBS 		+= 	-lgfortran -lm 
 }

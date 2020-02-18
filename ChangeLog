@@ -1,9 +1,29 @@
+	version 0.5.11
+
+	1) nettoyage de routine fortran qui ne servaient plus, car
+	intégration perso des fonctions de Green.
+	2) Changement pour mettre les trois branches en une avec des ifdef
+	un partout dans le code.
+
+
+	--------------------------------------------------------------
+	version 0.5.10
+
+	1) actualisation du nom de la version
+	2) sintmp =0 evite de diviser par zero dans ce cas
+	3) integration de la fonction de Green par une methode de Simpson
+	et supression de dhchre.f et routines annexes qui bugguaient.
+
+	--------------------------------------------------------------
 	version 0.5.9
 
 	1) en réflexion calcul a part pour holography car pas de speculaire.
 	2) ifdda.m z<0 et kz<0 pour reflexion
-
-
+	---
+	3) adapte le README
+	4) chap5.tex et chap5a.tex partie microsocpy, changer pour faire
+	comme pour la surface.
+	5) ajout arret si nxm, nym ou nzm egal a zero.	
 
 --------------------------------------------------------------
 	version 0.5.8

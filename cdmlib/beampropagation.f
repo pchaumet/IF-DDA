@@ -22,13 +22,11 @@ c     input data
       double complex epsilon(nmax,3,3),FFloc(3*nmax),FF(3*nmax),FF0(3
      $     *nmax),icomp,Ex,Ey,Ez,fac
       integer*8 plan2f,plan2b
-
-#ifndef USE_FFTW
       integer FFTW_BACKWARD, FFTW_FORWARD
       
       FFTW_BACKWARD=+1
       FFTW_FORWARD=-1
-#endif      
+   
       pi=dacos(-1.d0)
       icomp=(0.d0,1.d0)
       c=299792458.d0

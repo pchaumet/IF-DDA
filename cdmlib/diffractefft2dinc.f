@@ -25,10 +25,10 @@ c     variable pour champ incident
       double complex E0m(10)
       integer indicex,indicey
       integer*8 plan2f,plan2b
-#ifndef USE_FFTW
       integer FFTW_FORWARD
+
       FFTW_FORWARD=-1
-#endif
+
       write(*,*) 'Compute the FFT of the incident field',nfft2d
       
       nloin=0
