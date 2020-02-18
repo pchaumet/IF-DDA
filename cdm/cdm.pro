@@ -4,7 +4,7 @@
 
 TEMPLATE 	= 	app
 
-VERSION         =       0.5.12
+VERSION         =       0.5.13
 
 TARGET 		=       cdm
 
@@ -30,6 +30,12 @@ RCC_DIR         = resources
 QMAKE_CXXFLAGS_RELEASE  -= -O2
 
 QMAKE_CXXFLAGS 	+= -g -O3 
+
+QMAKE_CC        =       gfortran
+
+QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -fopenmp
+
+QMAKE_LFLAGS    = -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -cpp -g -fcheck=all -fbacktrace -fopenmp
 
 HEADERS 	+= 	cdmMain.h \
 			cdmOptions.h \
@@ -80,8 +86,6 @@ win32::LIBS 	+= -L$$CDMLIB_LIB_PATH -lcdmlib \
                    -L$$QWTPLOT3_LIB_PATH -lqwtplot3d \
                    -lglu32 -lz -lopengl32 -lgfortran
 
-#LIBS            += -Wl,-rpath -Wl,$$CDMLIB_LIB_PATH -L$$CDMLIB_LIB_PATH -lcdmlib
-
 unix:LIBS            += -Wl,-rpath -Wl,$$CDMLIB_LIB_PATH \
                    -L$$CDMLIB_LIB_PATH -lcdmlib \
                    -L$$QWT_LIB_PATH -lqwt \
@@ -90,7 +94,7 @@ unix:LIBS            += -Wl,-rpath -Wl,$$CDMLIB_LIB_PATH \
                    -lGLU -lgfortran 
 
 CONFIG(fftw) {
-unix:LIBS            += -fopenmp -lfftw3_omp -lfftw3 -lm
+unix:LIBS            += -lfftw3_omp -lfftw3 -lm
 }
 
 CONFIG(hdf5) {

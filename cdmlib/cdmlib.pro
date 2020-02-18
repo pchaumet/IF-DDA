@@ -4,7 +4,7 @@
 
 TEMPLATE 	= 	lib
 
-VERSION         =       0.5.122
+VERSION         =       0.5.13
 
 TARGET 		=       cdmlib
 
@@ -30,7 +30,7 @@ QMAKE_CC        =       gfortran
 
 QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -fopenmp
 
-QMAKE_LFLAGS    = -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -cpp -g -fcheck=all -fbacktrace -lfftw3 -lfftw3_omp -fopenmp
+QMAKE_LFLAGS    = -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -cpp -g -fcheck=all -fbacktrace 
 
 QMAKE_CFLAGS_RELEASE    = -O3 
 

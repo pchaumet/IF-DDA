@@ -22,9 +22,9 @@ DEFINES 	+=      USE_HDF5
 
 QMAKE_CC        =       gfortran 
 
-QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp 
+QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -fopenmp
 
-QMAKE_LFLAGS    = 
+QMAKE_LFLAGS    = -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -cpp -g -fcheck=all -fbacktrace -fopenmp
 
 QMAKE_CFLAGS_RELEASE    = -O3 
 
@@ -38,12 +38,11 @@ INCLUDEPATH 	+= .
 
 CDMLIB_LIB_PATH  =      ../cdmlib/lib
 
-LIBS			+= -Wl,-rpath -Wl,$$CDMLIB_LIB_PATH -L$$CDMLIB_LIB_PATH -lcdmlib
+LIBS			+= -Wl,-rpath -Wl,$$CDMLIB_LIB_PATH -L$$CDMLIB_LIB_PATH -lcdmlib \
+					-lgfortran
 
 CONFIG(fftw) {
-	LIBS 		+= 	-lgfortran -fopenmp -lfftw3_omp -lfftw3 -lm 
-} else {
-	LIBS 		+= 	-lgfortran -lm 
+	LIBS 		+= 	-lfftw3_omp -lfftw3 -lm 
 }
 
 CONFIG(hdf5) {
