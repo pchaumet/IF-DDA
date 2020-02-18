@@ -38,7 +38,7 @@ INCLUDEPATH 	+= .
 
 CDMLIB_LIB_PATH  =      ../cdmlib/lib
 
-LIBS			+= -L$$CDMLIB_LIB_PATH -lcdmlib
+LIBS			+= -Wl,-rpath -Wl,$$CDMLIB_LIB_PATH -L$$CDMLIB_LIB_PATH -lcdmlib
 
 CONFIG(fftw) {
 	LIBS 		+= 	-lgfortran -fopenmp -lfftw3_omp -lfftw3 -lm 
