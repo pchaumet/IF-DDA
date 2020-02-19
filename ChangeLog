@@ -17,25 +17,10 @@
 	5) main.f dans le directory correspond au cas test1 de
 	bin/tests/options.db3
 	6) nett ajouter rm des librairies lib*.so dans cdmlib/lib
-
-	Probleme:
-
-#ifdef USE_HDF5
-  nmatlabList = (QStringList() << "Save in ascii file" << "Do not save file" << "Save in HDF5 file");
-#else
-  nmatlabList = (QStringList() << "Save in ascii file" << "Do not save file");
-#endif
-
-	Ca marche pas la troisième option n'apparait pas. En fait le code
-	prend la deuxième ligne meme si l'option hdf5 est choisie
-
-changement dans cdmOptionsWidget.cpp pour éviter d'afficher le
-	champ hdf5
-#ifdef USE_HDF5
-  layout->addRow(fileh5Label,fileh5);
-#endif
-	devrait éviter d'afficher un champ si l'option hdf5 n'est pas choisi.
-	mais ça marche pas...j'ai enleve les lignes.
+	7) ajouter define fftw et hdf5 dans cdm.pro pour que nmatlist soit
+	bien fixe.
+	8) changement dans cdmOptionsWidget.cpp pour éviter d'afficher le
+	champ hdf5 dans hdf5 pas choisi
 
 	--------------------------------------------------------------
 	version 0.5.12

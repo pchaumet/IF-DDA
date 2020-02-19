@@ -632,8 +632,13 @@ OptionsWidget::advancedinterfaceCheckBoxStateChanged(int state) {
     nread->show();
     nmatlabLabel->show();
     nmatlab->show();
+#ifdef USE_HDF5
     fileh5Label->show();
     fileh5->show();
+#else
+    fileh5Label->hide();
+    fileh5->hide();
+#endif    
   }
    else if (state == Qt::Unchecked) {
      methodeitLabel->hide();

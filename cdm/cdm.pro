@@ -18,6 +18,13 @@ DEFINES 	+=      CDMVERSION=\\\"$$VERSION\\\"
 unix::DEFINES  +=      OS=LINUX
 win32::DEFINES  +=      OS=WIN32
 
+CONFIG(fftw) {
+DEFINES 	+=      USE_FFTW
+}
+CONFIG(hdf5) {
+DEFINES 	+=      USE_HDF5
+}
+
 #DEFINES 	+= 	QT_NO_DEBUG_OUTPUT
 
 MOC_DIR         = moc
