@@ -45,6 +45,13 @@ c     planewavecircular.in / planewavelinear.in files
       filereread1=filereread(1:long)//file1(1:long1)
       long1 = len( trim( file2 ) )
       filereread2=filereread(1:long)//file2(1:long1)
+
+      if (long.eq.0) then
+         infostr='No file given for read local field from file'
+         nstop=1
+         return
+      endif
+      
 c     write(*,*) 'file',filereread1,filereread2
       open(1000,file=filereread1,status='old',iostat=ierror)
 c     write(*,*) 'erreur',ierror

@@ -160,7 +160,8 @@ SOURCES		+= 	cdmlib.f \
                         hdf5read2d.f \
                         hdf5write1d.f \
                         hdf5write2d.f \
-                        writehdf5mic.f
+                        writehdf5mic.f \
+                        primefactor.f
                         
 INCLUDEPATH     += .
 

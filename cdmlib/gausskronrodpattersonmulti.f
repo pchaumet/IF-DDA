@@ -1712,7 +1712,6 @@ c     calcul erreur et test si precision suffisante
             do il=1,n
                erreur(il)=cdabs(int(il)-inta(il))
             enddo
-            write(913,*) dreal(int(il))
             lordref=i        
             if (i.ge.4) then
                ntest=0

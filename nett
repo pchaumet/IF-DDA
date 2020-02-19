@@ -42,4 +42,4 @@ rm doc/*.lof
 rm doc/*.maf
 rm doc/*.out
 rm doc/*.toc
-
+rm cdmlib/lib/lib*

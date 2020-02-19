@@ -1,9 +1,55 @@
+	version 0.5.13
+
+	1) creation de test typique pour l'interface graphique:
+	options.db3 avec test1, test2 et test3 dans bin/tests
+	2)si pas de nom donné pour la relecture alors arret:
+	if (long.eq.0) then
+        infostr='No file given for read local field from file'
+	  nstop=1
+        return
+        endif
+	changement dans relecture.f
+	3) rajoutte de primefactor et averti si décomposition compliquée
+	qui ralenti la FFT.
+	changement dans cdmlib.f ajout de primefactor.f et changement dans
+	cdmlib.pro
+	4) enlever un write debile dans gausskronrod patterson
+	5) main.f dans le directory correspond au cas test1 de
+	bin/tests/options.db3
+	6) nett ajouter rm des librairies lib*.so dans cdmlib/lib
+
+	Probleme:
+
+#ifdef USE_HDF5
+  nmatlabList = (QStringList() << "Save in ascii file" << "Do not save file" << "Save in HDF5 file");
+#else
+  nmatlabList = (QStringList() << "Save in ascii file" << "Do not save file");
+#endif
+
+	Ca marche pas la troisième option n'apparait pas. En fait le code
+	prend la deuxième ligne meme si l'option hdf5 est choisie
+
+changement dans cdmOptionsWidget.cpp pour éviter d'afficher le
+	champ hdf5
+#ifdef USE_HDF5
+  layout->addRow(fileh5Label,fileh5);
+#endif
+	devrait éviter d'afficher un champ si l'option hdf5 n'est pas choisi.
+	mais ça marche pas...j'ai enleve les lignes.
+
+	--------------------------------------------------------------
+	version 0.5.12
+
+	1) Correction dans le makefile du a la fusion
+	2) creation d'un directory test pour main.f
+
+	--------------------------------------------------------------
 	version 0.5.11
 
 	1) nettoyage de routine fortran qui ne servaient plus, car
 	intégration perso des fonctions de Green.
 	2) Changement pour mettre les trois branches en une avec des ifdef
-	un partout dans le code.
+	un partout dans le code donc fusion des trois en branche en une
 
 
 	--------------------------------------------------------------
@@ -23,7 +69,7 @@
 	3) adapte le README
 	4) chap5.tex et chap5a.tex partie microsocpy, changer pour faire
 	comme pour la surface.
-	5) ajout arret si nxm, nym ou nzm egal a zero.	
+	5) ajout arret si nxm, nym ou nzm egal a zero.
 
 --------------------------------------------------------------
 	version 0.5.8

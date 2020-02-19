@@ -148,9 +148,9 @@ c     data
       c=299792458.d0
       quatpieps0=1.d0/(c*c*1.d-7)
 
-      nxmp=0
-      nymp=0
-      nzmp=0
+      nxmp=1
+      nymp=2
+      nzmp=3
 c********************************************************
 c     Defini les caracteristiques de l'onde incidente
 c********************************************************
@@ -173,7 +173,6 @@ c     beam='arbitrary'
   
       
       if (beam(1:11).eq.'pwavelinear') then
-c     theta=18.445351218553004d0
          theta=0.d0
          phi=0.d0
          pp=0.d0
@@ -260,10 +259,9 @@ c      object='cylinder'
 c      object='sphereconcentric'
 c      object='arbitrary'
 
-      write(*,*) 'coucou',object
       if (object(1:6).eq.'sphere') then
          numberobjet=1
-         rayonmulti(1)=100.d0         
+         rayonmulti(1)=200.d0         
          xgmulti(1)=0.d0
          ygmulti(1)=0.d0
          zgmulti(1)=0.d0
@@ -421,7 +419,7 @@ c********************************************************
       trope='iso'
 c     trope='ani'
       if (trope(1:3).eq.'iso') then
-         epsmulti(1)=(2.0d0,0.d0)
+         epsmulti(1)=(1.5d0,0.d0)
       else
          epsanimulti(1,1,1)=(2.d0,0.d0)
          epsanimulti(2,1,1)=0.d0
@@ -464,39 +462,39 @@ c********************************************************
 c********************************************************
 c     Defini la discretisation de l'obejet
 c********************************************************
-      nnnr=10
+      nnnr=20
 
 c********************************************************
 c     Defini les calculs demandes
 c******************************************************** 
-      nproche=1 !0 calcul le champ dans l'objet, 1 dans le cube
+      nproche=2 !0 calcul le champ dans l'objet, 1 dans le cube
                 !contenant l'objet 2 dans la boite nxm,nym,nzm
-      nlocal=0!  1: calcul le champ local
-      nmacro=0 !  1: calcul le champ macro
+      nlocal=1!  1: calcul le champ local
+      nmacro=1 !  1: calcul le champ macro
       nsection=1! 1: calcul les sections efficaces
-      nsectionsca=0 !1: calcul C_sca, Poynting et g par rayonnement des dipoles
-      nquickdiffracte=0  !1: calcul C_sca, Poynting et g par avec la FFT
-      nforce=0 ! 1: Calul la force optique
-      nforced=0 ! 1: Calcul la densite de force
-      ntorque=0! 1: Calul le couple optique
-      ntorqued=0 ! 1: Calcul la densite de couple
+      nsectionsca=1 !1: calcul C_sca, Poynting et g par rayonnement des dipoles
+      nquickdiffracte=1  !1: calcul C_sca, Poynting et g par avec la FFT
+      nforce=1 ! 1: Calul la force optique
+      nforced=1 ! 1: Calcul la densite de force
+      ntorque=1! 1: Calul le couple optique
+      ntorqued=1 ! 1: Calcul la densite de couple
       nrig=0 ! 1: calcul le champ par Born renormalise, 0 rigoureux
       nlecture=0 !1: relis les dipoles deja calcules
 c      filereread='nom'
-      nlentille=0 !1 Calcul l'objet vu a travers une lentille situee du
+      nlentille=1 !1 Calcul l'objet vu a travers une lentille situee du
                   !cote des z positifs, foyer place a l'origine
-      nquicklens=0!1: calcul avec FFT la vue a travers la lentille
-      numaper=1.d0              ! ouverture numerique de la lentille
-      numaperinc=0.0d0              ! ouverture numerique du condenseur
+      nquicklens=1!1: calcul avec FFT la vue a travers la lentille
+      numaper=0.9d0              ! ouverture numerique de la lentille
+      numaperinc=0.9d0              ! ouverture numerique du condenseur
       ntypemic=0 ! type microscope 0 holo,1 brightfield, 2 darkfield phase
       nside=0 ! ! microscope in reflexion (1)  or transmission (0)
       nobjet=0                  ! 1: calcul juste la forme de l'objet
-      nquad=0 !0 -> 5 defini le niveau d'integration du tenseur
-      nenergie=0
-      nmat=1 ! 0 écrit mat  file,  1 n ecrit pas, 2 hdf5 file
+      nquad=2 !0 -> 5 defini le niveau d'integration du tenseur
+      nenergie=1
+      nmat=0 ! 0 écrit mat  file,  1 n ecrit pas, 2 hdf5 file
       h5file='ifdda.h5'
       gross=100.d0              ! grossissement
-      zlens=0.d0 !position du foyer image de la lentille
+      zlens=200.d0 !position du foyer image de la lentille
       write(*,*) 'cdmlib',sidex,sidey,sidez
 
  

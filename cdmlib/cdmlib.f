@@ -1542,7 +1542,11 @@ c     reread the local field
 c     if the computation asked is rigourous then compute the Green
 c     function
       if (nrig.eq.0.or.nrig.eq.3.or.nrig.eq.4.or.nrig.eq.5) then
-       
+
+         call primefactor(nx,1,test)
+         call primefactor(ny,2,test)
+         call primefactor(nz,3,test)
+         
          write(*,*) '******************************************'
          write(*,*) '**** BEGIN COMPUTATION GREEN FUNCTION ****'
          write(*,*) '******************************************'
