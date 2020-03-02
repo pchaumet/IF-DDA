@@ -1,3 +1,24 @@
+
+	version 0.6.1
+
+	1) Brightfield change pour le nombre d'incidence car trop grand
+	par defaut.  Maintenant base sur delta k=2*pi /(2L) et multiple de
+	deltakx=2 pi/ (a*N) pour éviter les problèmes d'arrondi si on ne
+	tombe pas sur un point incident de fourier.
+	2) Meme chose que le 1 mais pour dark field. par contre plus
+	multiple de delakx car sur un cercle.
+	3) modification de ifdda.m pour tracer les incidents choisis pour
+	le df et le bf dans la figure 560
+	4) création d'un test4 sous options.db3 pour le bf avec une grosse
+	sphere.
+
+	----------------------------------------------------------------
+	version 0.6.0
+
+	La version ou les trois branches sont fusionnees est enfin finie
+	et les bugs corrigés.
+
+	----------------------------------------------------------------
 	version 0.5.13
 
 	1) creation de test typique pour l'interface graphique:
@@ -34,7 +55,7 @@
 	1) nettoyage de routine fortran qui ne servaient plus, car
 	intégration perso des fonctions de Green.
 	2) Changement pour mettre les trois branches en une avec des ifdef
-	un partout dans le code donc fusion des trois en branche en une
+	un peu partout dans le code donc fusion des trois en branche en une
 
 
 	--------------------------------------------------------------

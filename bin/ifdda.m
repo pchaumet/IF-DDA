@@ -40,6 +40,7 @@ nobjet=h5read(namefileh5,'/Option/nobjet');
 ntypemic=h5read(namefileh5,'/Option/ntypemic');
 nside=h5read(namefileh5,'/Option/nside');
 ntypefile=h5read(namefileh5,'/Option/nmat');
+numaperinc=h5read(namefileh5,'/Option/numaperinc');
 
 else
 
@@ -67,6 +68,7 @@ nobjet=inputmatlab(20);         % =1 do only the objet
 ntypemic=inputmatlab(21);       % type de microscope
 nside=inputmatlab(22);          % reflexion or transmission
 ntypefile=inputmatlab(23);      % mat file or hdf5 file
+numaperinc=inputmatlab(24);     % Numerical aperture for condenser
 
 if (ntypefile == 1);
 disp('Data files do not computed')
@@ -1356,6 +1358,35 @@ uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 
 end;
 
+
+figure(560)
+set(560,'DefaultAxesFontName','Times')
+set(560,'DefaultAxesFontSize',12)
+set(560,'DefaultAxesFontWeight','Bold')
+set(560,'DefaultTextfontName','Times')
+set(560,'DefaultTextfontSize',12)
+set(560,'DefaultTextfontWeight','Bold')
+set(560,'Position',[0 0 1000 600])
+
+if (ntypefile == 0);
+load kxincidentbf.mat -ascii
+load kyincidentbf.mat -ascii
+elseif (ntypefile ==2)
+kxincidentbf=h5read(namefileh5,'/Microscopy/kx incident bf');
+kyincidentbf=h5read(namefileh5,'/Microscopy/ky incident bf');
+end;
+
+plot(kxincidentbf,kyincidentbf,'b+')
+title('Position in Fourier space of all the incident field to compute bf')
+xlabel('$k_x/k_0$','Interpreter','latex','Fontsize',18)
+ylabel('$k_y/k_0$','Interpreter','latex','Fontsize',18)
+axis xy  
+axis equal
+axis image
+
+hold on
+rectangle('Position',[-numaperinc -numaperinc 2*numaperinc 2*numaperinc],'Curvature',[1 1],'linewidth',2,'edgecolor','red')
+
 elseif (ntypemic == 2);
 
 if (ntypefile == 0);
@@ -1505,7 +1536,40 @@ uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 'Callback',{@plotimageincreal,ximage,imageincm,imageincxc,imageincyc,imageinczc});
 	
 end;
-	
+
+
+
+figure(560)
+set(560,'DefaultAxesFontName','Times')
+set(560,'DefaultAxesFontSize',12)
+set(560,'DefaultAxesFontWeight','Bold')
+set(560,'DefaultTextfontName','Times')
+set(560,'DefaultTextfontSize',12)
+set(560,'DefaultTextfontWeight','Bold')
+set(560,'Position',[0 0 1000 600])
+
+if (ntypefile == 0);
+load kxincidentdf.mat -ascii
+load kyincidentdf.mat -ascii
+elseif (ntypefile ==2)
+kxincidentdf=h5read(namefileh5,'/Microscopy/kx incident df');
+kyincidentdf=h5read(namefileh5,'/Microscopy/ky incident df');
+end;
+
+plot(kxincidentdf,kyincidentdf,'o','MarkerSize',5,...
+     'MarkerEdgeColor','blue','MarkerFaceColor',[0 0 1])
+title('Position in Fourier space of all the incident field to compute df')
+xlabel('$k_x/k_0$','Interpreter','latex','Fontsize',18)
+ylabel('$k_y/k_0$','Interpreter','latex','Fontsize',18)
+axis xy  
+axis equal
+axis image
+
+hold on
+rectangle('Position',[-numaperinc -numaperinc 2*numaperinc 2*numaperinc],'Curvature',[1 1],'linewidth',1,'edgecolor','red')
+
+
+
 end;
 	
 end;

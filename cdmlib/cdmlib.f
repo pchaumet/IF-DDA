@@ -1073,6 +1073,7 @@ c     cré le fichier de data pour connaitre les options pour matlab
       write(900,*) ntypemic
       write(900,*) nside
       write(900,*) nmat
+      write(900,*) numaperinc
       close(900)
       if (nmat.eq.2) then
          open(901,file='filenameh5')
@@ -1138,6 +1139,8 @@ c     cré le fichier de data pour connaitre les options pour matlab
          call hdf5write1d_int(group_idopt,datasetname,nside,dim)
          datasetname='nmat'
          call hdf5write1d_int(group_idopt,datasetname,nmat,dim)
+         datasetname='numaperinc'
+         call hdf5write1d_int(group_idopt,datasetname,numaperinc,dim)
 
       endif
 

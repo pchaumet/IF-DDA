@@ -50,10 +50,10 @@ c     variables en argument
 
 c     variable pour le bright field
       integer i,j,ii,jj,k,kk,ideltam,idelta,nsens,imaxk0,indice
-     $     ,indicex,indicey,nfft2d2,ikxinc,jkyinc
+     $     ,indicex,indicey,nfft2d2,ikxinc,jkyinc,imul
       double precision deltak,numaperk,phi,theta,zero,pi,kx,ky,kz,ss,pp
      $     ,u1,u2,tmp,normal(3),xmin,xmax,ymin,ymax,deltakx,deltaky
-     $     ,kxinc,kyinc,deltatheta,u(3),v(3),sintmp,costmp
+     $     ,kxinc,kyinc,deltatheta,u(3),v(3),sintmp,costmp,deltakm
       double complex tmpx,tmpy,tmpz,Ex,Ey,Ez,Emx,Emy,Emz,ctmp,ctmp1
 
       character(LEN=100) :: datasetname
@@ -75,6 +75,7 @@ c     initialise
       nfft2d2=nfft2d/2
       npolainc=0
       icomp=(0.d0,1.d0)
+      numaperk=k0*numaperinc
       x=0.d0
       y=0.d0
       z=0.d0
@@ -84,45 +85,73 @@ c
          nstop=1
          return
       endif
+
+c     calcul de deltak      
+      xmax=-1.d300
+      xmin=1.d300
+      ymax=-1.d300
+      ymin=1.d300
+!$OMP PARALLEL  DEFAULT(SHARED) PRIVATE(i)
+!$OMP DO SCHEDULE(STATIC) REDUCTION(max:xmax,ymax)
+!$OMP& REDUCTION(min:xmin,ymin)      
+      do i=1,nbsphere
+         xmax=max(xmax,xs(i))
+         xmin=min(xmin,xs(i))
+         ymax=max(ymax,ys(i))
+         ymin=min(ymin,ys(i))     
+      enddo
+!$OMP ENDDO 
+!$OMP END PARALLEL
+      deltakm=pi/max(xmax-xmin,ymax-ymin)
+      deltax=aretecube
+      
       if (nquicklens.eq.1) then
          
-         deltakx=2.d0*pi/(aretecube*dble(nfft2d))        
-         imaxk0=nint(k0/deltakx)+1
+       deltakx=2.d0*pi/(aretecube*dble(nfft2d))
+
+         if (deltakx.ge.numaperk) then
+            nstop=1
+          infostr='In FFT lens nfft2d too small:Increase size of FFT 1'
+            return
+         endif        
+         imul=idint(deltakm/deltakx)
+         if (imul.eq.0) then
+            nstop=1
+          infostr='In FFT lens nfft2d too small:Increase size of FFT 2'
+            return            
+         endif
+ 223     deltak=deltakx*dble(imul)
+         write(*,*) 'change delta k :',imul,deltak
+         imaxk0=nint(k0/deltak)+1
+         if (imaxk0.le.3) then
+            imul=imul-1
+            if (imul.eq.0) then
+               nstop=1
+          infostr='In FFT lens nfft2d too small:Increase size of FFT 3'
+               return
+            endif
+            goto 223
+         endif
+         deltakx=deltak
+         write(*,*) 'Step size delta k : ',deltakx,'m-1'
 
       else
-         write(*,*) 'Step size delta k : ',2.d0*pi /(dble(nfft2d)
-     $        *aretecube),'m-1'
          k=0
- 222     deltakx=2.d0*pi/(dble(nfft2d)*aretecube)/dble(2**k)
-         imaxk0=nint(k0/deltakx)+1
-         
-         if (imaxk0.le.20) then
+         deltakx=2.d0*pi/(dble(nfft2d)*aretecube)
+ 222     deltak=deltakx*dnint(deltakm/deltakx)/dble(2**k)
+         imaxk0=nint(k0/deltak)+1
+         if (imaxk0.le.2) then
             k=k+1
             write(*,*) 'change delta k :',k,dble(nfft2d*(2
      $           **k)),nfft2d
             goto 222
          endif
+         deltakx=deltak
+         write(*,*) 'Step size delta k : ',deltakx,'m-1'
       endif
-c$$$      
-c$$$c     calcul de deltak      
-c$$$      xmax=-1.d300
-c$$$      xmin=1.d300
-c$$$      ymax=-1.d300
-c$$$      ymin=1.d300
-c$$$!$OMP PARALLEL  DEFAULT(SHARED) PRIVATE(i)
-c$$$!$OMP DO SCHEDULE(STATIC) REDUCTION(max:xmax,ymax)
-c$$$!$OMP& REDUCTION(min:xmin,ymin)      
-c$$$      do i=1,nbsphere
-c$$$         xmax=max(xmax,xs(i))
-c$$$         xmin=min(xmin,xs(i))
-c$$$         ymax=max(ymax,ys(i))
-c$$$         ymin=min(ymin,ys(i))     
-c$$$      enddo
-c$$$!$OMP ENDDO 
-c$$$!$OMP END PARALLEL
+
       deltax=aretecube
       deltak=deltakx
-      write(*,*) 'Final delta k',deltakx,'m-1'
       deltatheta=deltak/k0*numaperinc
       ideltam=max(int(2.d0*pi/deltatheta)+1,8)
    
@@ -806,6 +835,19 @@ c     *********************************************************
          enddo
          close(400)
          close(401)
+
+         open(410,file='kxincidentdf.mat')
+         open(411,file='kyincidentdf.mat')
+         do idelta=0,ideltam-1
+            phi=dble(idelta)*2.d0*pi/dble(ideltam)
+            theta=dasin(numaperinc)
+            kxinc=dcos(phi)*numaperinc
+            kyinc=dsin(phi)*numaperinc
+            write(410,*) kxinc
+            write(411,*) kyinc
+         enddo
+         close(410)
+         close(411)
          
          open(301,file='imagedf.mat')
          open(302,file='imagedfx.mat')
@@ -849,6 +891,25 @@ c     *********************************************************
          datasetname='Image+incident dark field kz>0'
          call writehdf5mic(Eimageincx,Eimageincy,Eimageincz
      $        ,nfft2d,imaxk0,Ediffkzpos,k,datasetname,group_idmic)
+
+         do idelta=0,ideltam-1
+            phi=dble(idelta)*2.d0*pi/dble(ideltam)
+            theta=dasin(numaperinc)
+            kxy(idelta+1)=dcos(phi)*numaperinc
+         enddo
+         dim(1)=ideltam
+         dim(2)=nfft2d
+         datasetname='kx incident df'
+         call hdf5write1d(group_idmic,datasetname,kxy,dim)
+         do idelta=0,ideltam-1
+            phi=dble(idelta)*2.d0*pi/dble(ideltam)
+            theta=dasin(numaperinc)
+            kxy(idelta+1)=dsin(phi)*numaperinc
+         enddo
+         dim(1)=ideltam
+         dim(2)=nfft2d
+         datasetname='ky incident df'
+         call hdf5write1d(group_idmic,datasetname,kxy,dim)
       endif
       
       end
