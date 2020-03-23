@@ -1,4 +1,31 @@
+	version 0.6.3
 
+	1) changement des options de compilation pour éviter bug de beam
+	64.
+	2) Correction erreur sur bf. Confusion deltak incident et
+	diffracte, de meme pour imaxk0 entre diffracte et incident
+	3) bf: icomp de trop sur le champ incident: enleve.
+	4) change dans microbf quand non rapide oublie initialise de
+	imaxk0 quand 2) a ete fait.
+	5) dark field Confusion deltak incident et
+	diffracte, de meme pour imaxk0 entre diffracte et incident
+	6) df: icomp pas de trop sur le champ incident car dephase de pi
+	pour le contraste de phase.
+	7) pb dans instuction OMP de df et bf, il manquait
+	u,v,zfocus,sintmp et costmp
+	8) dans cdmlib ecrivait nprochefft avant de le calculer.
+	9) changement microssansinc pour faire comme le df et bf en
+	trabsmission avec correction des memes erreurs...
+
+	----------------------------------------------------------------
+	version 0.6.2
+
+	1) change chap1*.tex pour inclure la nouvelle methode de
+	compilation. Recompilation des userguides.
+	2) Changement titre de la fenetre.
+
+
+	----------------------------------------------------------------
 	version 0.6.1
 
 	1) Brightfield change pour le nombre d'incidence car trop grand

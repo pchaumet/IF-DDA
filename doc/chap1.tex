@@ -9,14 +9,14 @@
 Ce logiciel permet de calculer la diffraction d'une onde
 électromagnétique par un objet tridimensionnel. Cette interaction est
 prise en compte rigoureusement par la résolution des équations de
-Maxwell, mais peut aussi le faire par des méthodes approchees telles
+Maxwell, mais peut aussi le faire par des méthodes approchées telles
 que l'approximation de Born, Rytov ou la BPM. Le code par une
 interface conviviale permet de choisir des objets canoniques (sphère,
 cube,...) ainsi que des ondes incidentes prédéfinies (onde plane,
 faisceau Gaussien,...) ainsi que des objets et incidents
-aribitraires. Après par des menus déroulants, il est facile d'étudier
+arbitraires. Après par des menus déroulants, il est facile d'étudier
 les sections efficaces, les forces et couples optiques, la diffraction
-champ proche et champ lointain ainsi que la microsocopie.
+champ proche et champ lointain ainsi que la microscopie.
 
 
 A noter qu'il existe de nombreuses méthodes permettant d'étudier la
@@ -166,20 +166,27 @@ pour les gros objets.
 
 Pour faire tourner le code sur un système linux il est nécessaire
 d'avoir installé les paquets suivants: qt, qt-devel, gcc-c++ et
-gfortran. Pour le compiler faire:
-\begin{itemize}
-\item qmake-qt4
-\item make
-\item make install
-\end{itemize}
+gfortran. Noter qu'il y a trois versions du code, la première en
+séquentielle qui utilise FFT singleton, la deuxième en parallèle et
+qui utilise FFTW (Fast Fourier Transform in the west) et qui nécessite
+openmp version 4.5 minimum, et la troisième qui utilise en plus le
+format HDF5 pour sauvegarder les données dans un seul fichier
+binaire. Par défaut le code est compilé sans HDF5 et FFTW ce qui donne
+donc un code avec des FFT plus lentes et qui n'est pas parallélisé et
+une écriture des datas forcément en ascii.
 
+\begin{tabular}{|c|c|c|}
+  \hline
+  Code par défaut & Code avec FFTW & Code avec FFTW et HDF5 \\
+  \hline
+  qmake-qt4 & qmake-qt4 ``CONFIG+=fftw'' & qmake-qt4 ``CONFIG+=fftw hdf5'' \\
+  make & make & make \\
+make install & make install & make install \\
+  \hline
+\end{tabular}
 Puis pour lancer le code, taper, cd bin, puis ./cdm.
 
-Noter qu'il y a trois versions du code, la première en séquentielle
-qui utilise FFT singleton, la deuxième en parallèle et qui utilise
-FFTW (Fast Fourier Transform in the west) et qui nécessite openmp
-version 4.5 minimum, et la troisième qui utilse en plus le format HDF5
-pour sauvegarder les données dans un seul fichier binaire.
+
 
 Sur linux la version avec FFTW nécessite d'installer les packages FFTW
 avec par exemple ``dnf install *fftw*''. Pour la version qui utilise
@@ -188,7 +195,7 @@ install hdf hdf5 hdf5-static hdf5-devel''.
 
 
 
-Le code s'installe aussi sur windows, mais la version parallèle
+Le code s'installe aussi sous windows, mais la version parallèle
 nécessite évidemment d'installer FFTW sur windows.
 
 
@@ -198,11 +205,14 @@ nécessite évidemment d'installer FFTW sur windows.
 \item P. C. Chaumet est professeur des universités à l'Institut
   Fresnel de l'Université d'Aix-Marseille et s'occupe du développement
   du code source fortran et de l'interface.
-\item D. Sentenac développe l'interface conviviale du code.
 \item A. Sentenac est directrice de recherche au CNRS et travaille à
   l'Institut Fresnel de l'Université d'Aix-Marseille et participe au
   développement du code sur ce qui est lié à la diffraction champ
   lointain et la microscopie.
+\item D. Sentenac de l'European Gravitational Observatory en Italie
+  développe l'interface conviviale du code en C++ et Qt.
+\item G. Henry à l'Institut Fresnel de l'Université d'Aix-Marseille
+  travaille sur la partie compilation du code (Ubuntu, Fedora, etc).
 \end{itemize}
 
 \section{Un mot sur la licence}

@@ -260,7 +260,7 @@ int main(int argc, char *argv[])
   QLOG_INFO() << "Qt User Data location : " 
               <<  QDir::currentPath();
   CdmMain* cdm = new CdmMain(app.applicationDirPath(),NULL,NULL);
-  cdm->setWindowTitle("discrete dipole approximation  in free space");
+  cdm->setWindowTitle("Discrete Dipole Approximation  in homogeneous space");
   cdm->show();
   foreach (const QString &path, app.libraryPaths())
   QLOG_DEBUG() << path;

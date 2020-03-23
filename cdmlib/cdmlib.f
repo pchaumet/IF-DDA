@@ -274,7 +274,8 @@ c     FFloc : champ local
       write(*,*) 'Energy conservation : ',nenergie,'(1 compute)'
       write(*,*) 'Microscopy          : ',nlentille,'Type',ntypemic
       write(*,*) 'Side study          : ',nside,'(1 kz>0, -1 kz<0)'
-      write(*,*) 'Quick Lens          : ',nquicklens,'(1 compute)'
+      write(*,*) 'Quick Lens          : ',nquicklens
+     $     ,'(1 compute with FFT)'
       write(*,*) 'Focal plane position: ',zlens,'nm'
       write(*,*) 'Optical force       : ',nforce ,nforced,'(1 compute)'
       write(*,*) 'Optical torque      : ',ntorque ,ntorqued
@@ -612,12 +613,7 @@ c     wavenumber
       k03=k0*k0*k0
 c     look  for compute near field with FFT
 c     décrément de 1 de nproche pour faciliter le code C
-      nproche=nproche-1
-      write(*,*) 'Number maximum of subunit :nmax = ',nmax     
-      write(*,*) 'Number of layer for the object :nnnr = ',nnnr
-      write(*,*) 'nproche2',nproche,nprochefft
-      write(*,*) '*************END INPUT DATA *******************'
-      write(*,*) ' '
+      nproche=nproche-1    
       
 c     passe objet dans boite si utilise FFT
       if (nlecture.eq.1.and.nproche.eq.-1) nproche=0
@@ -633,6 +629,12 @@ c     passe objet dans boite si utilise FFT
          nprochefft=nproche
          nproche=0
       endif
+      write(*,*) 'Number maximum of subunit :nmax = ',nmax     
+      write(*,*) 'Number of layer for the object :nnnr = ',nnnr
+      write(*,*) 'nproche2',nproche,nprochefft
+      write(*,*) '*************END INPUT DATA *******************'
+      write(*,*) ' '
+      
       write(*,*) '***********************************************'
       write(*,*) '************** BEGIN OBJECT *******************'
       write(*,*) '***********************************************'
@@ -1983,7 +1985,9 @@ c     Beam propagation method
          close(1000)
       endif
 
+c      write(*,*) 'ff local',FF
 
+      
       call cpu_time(t2)
       call date_and_time(date,time,zone,values2)
       messagetemps=' to solve Ax=b '
@@ -2906,6 +2910,7 @@ c     compute the diffracted field with FFT
      $           ,aretecube,Efourierx,Efouriery,Efourierz,FF,imaxk0
      $           ,deltakx,deltaky,Ediffkzpos,Ediffkzneg,plan2f,plan2b
      $           ,nstop,infostr)
+c            write(*,*) 'ff diff',Ediffkzpos
             write(*,*) 'End Quick method with FFT'
             if (nstop.eq.1) return
 c     put the field in file with the right angles
@@ -3674,7 +3679,7 @@ c     calcul sur des forces et couple sur differents objets si presents
      $        ,Ediffkzpos,Ediffkzneg,beam,efficacite ,efficaciteref
      $        ,efficacitetrans,nsectionsca,nquickdiffracte,plan2f,plan2b
      $        ,nstop ,infostr)
-ccc         write(*,*) 'ttt',Efouriery
+c         write(*,*) 'ff diff',Ediffkzpos
          if (nstop.eq.1) return
          write(*,*) 'Absorptivity   : ',1.d0-efficacite
          write(*,*) 'Reflextivity   : ',efficaciteref
@@ -4009,6 +4014,7 @@ c     rotation de theta plus theta'
                   endif
                enddo
             enddo
+c            write(*,*) 'ff Eimage',Eimagex
             write(*,*) 'Number of point in NA',imaxk0
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i)   
 !$OMP DO SCHEDULE(STATIC)  
@@ -4101,12 +4107,14 @@ c     rotation de theta plus theta'
             write(*,*) 'Quick FFT method for microscopy'
 
             if (nsectionsca*nquickdiffracte.eq.0.and.nenergie.eq.0) then
+c               write(*,*) 'ff local',nx,ny,nz,nxm,nym,nzm,nfft2d ,k0
+c     $              ,imaxk0,deltakx,deltaky
                call diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d,k0,xs
      $              ,ys,zs,aretecube,Efourierx,Efouriery,Efourierz,FF
      $              ,imaxk0,deltakx,deltaky,Ediffkzpos,numaper,nside
      $              ,plan2f ,plan2b,nstop ,infostr)
                if (nstop.eq.1) return
-
+c               write(*,*) 'ff diff',Ediffkzpos
             elseif (nsectionsca*nquickdiffracte.eq.1.and.nenergie.eq.0)
      $              then
                k02=k0*k0
@@ -4301,11 +4309,15 @@ c     calcul en transmission
                         kk=i+nfft2d2+1+nfft2d*(j+nfft2d2)
                         Efourierx(kk)=Ediffkzpos(ii,jj,1)*zfocus
                         Efouriery(kk)=Ediffkzpos(ii,jj,2)*zfocus
+                        write(999,*) Efouriery(kk),Ediffkzpos(ii,jj,2)
+     $                       ,ii,jj
                         Efourierz(kk)=Ediffkzpos(ii,jj,3)*zfocus
                         Efourierincx(kk)=(Ediffkzpos(ii,jj,1)
      $                       +Ediffkzneg(ii,jj,1))*zfocus
                         Efourierincy(kk)=(Ediffkzpos(ii,jj,2)
      $                       +Ediffkzneg(ii,jj,2))*zfocus
+c                        write(*,*) 'ff diff',Ediffkzpos(ii,jj,2)
+c     $                       ,Ediffkzneg(ii,jj,2),indice
                         Efourierincz(kk)=(Ediffkzpos(ii,jj,3)
      $                       +Ediffkzneg(ii,jj,3))*zfocus
 
@@ -4361,7 +4373,6 @@ c     calcul en transmission
                enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
-
                if (nmat.eq.0) then
                   open(300,file='fourier.mat')         
                   open(301,file='fourierx.mat')         
@@ -4448,7 +4459,7 @@ c     calcul en reflexion
                         Efourierincx(kk)=(Ediffkzpos(ii,jj,1)
      $                       +Ediffkzneg(ii,jj,1))*zfocus
                         Efourierincy(kk)=(Ediffkzpos(ii,jj,2)
-     $                       +Ediffkzneg(ii,jj,2))*zfocus
+     $                       +Ediffkzneg(ii,jj,2))*zfocus                      
                         Efourierincz(kk)=(Ediffkzpos(ii,jj,3)
      $                       +Ediffkzneg(ii,jj,3))*zfocus
 
@@ -4528,9 +4539,17 @@ c     calcul en reflexion
 
          write(*,*) 'Compute the images through the microscope'
          if (nside.eq.1) then
+c            write(*,*) 'fff Efourier',Eimagey
+c            do i=1,nfft2D*nfft2D
+c               write(999,*) 'f',Eimagey(i),i
+c            enddo
             call fouriertoimage(deltakx,deltaky,gross,Eimagex,Eimagey
      $           ,Eimagez,Eimageincx,Eimageincy,Eimageincz,nfft2D
      $           ,nfft2d2 ,plan2b,plan2f)
+c            do i=1,nfft2D*nfft2D
+c               write(999,*) 'f',Eimagey(i),i
+c            enddo
+c            write(*,*) 'fff Eimage',Eimagey
          else
             call fouriertoimage2(deltakx,deltaky,gross,Eimagex,Eimagey
      $           ,Eimagez,nfft2D ,nfft2d2 ,plan2b,plan2f)

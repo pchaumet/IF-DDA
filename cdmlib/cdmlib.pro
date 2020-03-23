@@ -28,9 +28,8 @@ DEFINES 	+= 	QT_NO_DEBUG_OUTPUT
 
 QMAKE_CC        =       gfortran 
 
-QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace -fopenmp
-
-QMAKE_LFLAGS    = -mcmodel=large -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -cpp -g -fcheck=all -fbacktrace 
+QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large -fopenmp -g
+QMAKE_LFLAGS    = -mcmodel=large
 
 QMAKE_CFLAGS_RELEASE    = -O3 
 

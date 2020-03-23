@@ -50,7 +50,7 @@ c     variables en argument
 
 c     variable pour le bright field
       integer i,j,ii,jj,k,kk,ideltam,idelta,jdelta,nsens,imaxk0,indice
-     $     ,indicex,indicey,nfft2d2,ikxinc,jkyinc,imul
+     $     ,indicex,indicey,nfft2d2,ikxinc,jkyinc,imul,imaxinc
       double precision deltak,numaperk,phi,theta,zero,pi,kx,ky,kz,ss,pp
      $     ,u1,u2,tmp,normal(3),xmin,xmax,ymin,ymax,deltakx,deltaky
      $     ,kxinc,kyinc,u(3),v(3),sintmp,costmp,deltakm
@@ -121,9 +121,9 @@ c     calcul de deltak
             return            
          endif
  223     deltak=deltakx*dble(imul)
-         write(*,*) 'change delta k :',imul,deltak
-         imaxk0=nint(k0/deltak)+1
-         if (imaxk0.le.3) then
+         write(*,*) 'change delta k incident:',deltak,'m-1',imul
+         imaxinc=nint(k0/deltak)+1
+         if (imaxinc.le.3) then
             imul=imul-1
             if (imul.eq.0) then
                nstop=1
@@ -132,24 +132,30 @@ c     calcul de deltak
             endif
             goto 223
          endif
-         deltakx=deltak
-         write(*,*) 'Step size delta k : ',deltakx,'m-1'
+         write(*,*) 'Step size delta k diffracted: ',deltakx,'m-1'
       else
          k=0
-         deltakx=2.d0*pi/(dble(nfft2d)*aretecube)
- 222     deltak=deltakx*dnint(deltakm/deltakx)/dble(2**k)
-         imaxk0=nint(k0/deltak)+1
-         if (imaxk0.le.2) then
+ 224     deltakx=2.d0*pi/(dble(nfft2d)*aretecube)/dble(2**k)
+         imaxk0=nint(k0/deltakx)+1            
+         if (imaxk0.le.5) then
             k=k+1
-            write(*,*) 'change delta k :',k,dble(nfft2d*(2
-     $           **k)),nfft2d
+            write(*,*) 'Change delta k diffracted:',deltakx,'m-1',k
+            goto 224
+         endif
+         write(*,*) 'Final delta k diffracted',deltakx,'m-1'
+
+         k=0
+ 222     deltak=deltakx*dnint(deltakm/deltakx)/dble(2**k)
+         imaxinc=nint(k0/deltak)+1
+         if (imaxinc.le.2) then
+            k=k+1
+            write(*,*) 'Change delta k incident:',deltak,'m-1',k
             goto 222
          endif
-         deltakx=deltak
-         write(*,*) 'Step size delta k : ',deltakx,'m-1'
+         write(*,*) 'Final delta k incident : ',deltak,'m-1'
       endif
-      deltak=deltakx
-      ideltam=imaxk0
+
+      ideltam=imaxinc
 
       ii=0
       do idelta=-ideltam,ideltam
@@ -195,6 +201,8 @@ c     initalise
       endif
 c     calcul puissance
       P0=P0/dble(npol*ii)
+c      P0=1.d0
+c      npol=1
       call irradiance(P0,w0,E0,irra)
       I0=cdabs(E0)**2
       niterii=0
@@ -220,7 +228,8 @@ c     calcul puissance
 c     sommation 
          do idelta=-ideltam,ideltam
             do jdelta=-ideltam,ideltam
-             
+c         do idelta=0,0
+c            do jdelta=0,0
                kxinc=idelta*deltak
                kyinc=jdelta*deltak
                if (kxinc*kxinc+kyinc*kyinc.le.numaperk*numaperk) then
@@ -600,24 +609,26 @@ c     *********************************************************
 c     *********************************************************            
 c     calcul champ diffracte
 c     *********************************************************
-
+c                  write(*,*) 'fff local',FF
                   if (nquicklens.eq.1) then
-                     
+c                    write(*,*) 'fff local',nx,ny,nz,nxm,nym,nzm,nfft2d
+c    $                    ,k0,imaxk0,deltakx,deltaky
                      call diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d
      $                    ,k0,xs,ys,zs,aretecube,Efourierx,Efouriery
      $                    ,Efourierz,FF,imaxk0,deltakx,deltaky
      $                    ,Ediffkzpos,numaper,nside,plan2f,plan2b ,nstop
      $                    ,infostr)
+c                     write(*,*) 'fff diff',Ediffkzpos
                      if (nstop.eq.1) return
                   else
                      
                      
                      deltaky=deltakx
-
                      do i=-imaxk0,imaxk0
                         kx=deltakx*dble(i)
                         do j=-imaxk0,imaxk0
                            ky=deltaky*dble(j)
+                           
                            if (dsqrt(kx*kx+ky*ky).le.numaper) then
                               kz=dsqrt(k0*k0-kx*kx-ky*ky)
                               normal(1)=kx/k0
@@ -672,12 +683,12 @@ c     *********************************************************
 !$OMP ENDDO 
 !$OMP END PARALLEL
 
-                  call deltakroutine(kxinc,kyinc,deltakx,deltaky,k0
+                  call deltakroutine(kxinc,kyinc,deltak,deltak,k0
      $                 ,ikxinc,jkyinc)
 
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,indicex,indicey,indice)
 !$OMP& PRIVATE(kx,ky,kz,u1,u2,normal,tmp,tmpx,tmpy,tmpz,ii,jj)
-!$OMP& PRIVATE(phi,theta,Ex,Ey,Ez)
+!$OMP& PRIVATE(phi,theta,Ex,Ey,Ez,zfocus,u,v,costmp,sintmp)
 !$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
                   do i=-imaxk0,imaxk0 
                      do j=-imaxk0,imaxk0
@@ -713,6 +724,7 @@ c     *********************************************************
      $                          *zfocus
                            Efourierincy(indice)=Ediffkzpos(ii,jj,2)
      $                          *zfocus
+                        
                            Efourierincz(indice)=Ediffkzpos(ii,jj,3)
      $                          *zfocus
 
@@ -722,13 +734,14 @@ c     *********************************************************
                               call   ondeplanekxky(0.d0,0.d0,0.d0,k0,E0
      $                             ,ss,pp,kx,ky,Ex,Ey,Ez,nstop,infostr)
                               Efourierincx(indice)=Efourierincx(indice)
-     $                             +Ex/deltakx/deltaky*icomp*zfocus
+     $                             +Ex/deltakx/deltaky*zfocus
                               Efourierincy(indice)=Efourierincy(indice)
-     $                             +Ey/deltakx/deltaky*icomp*zfocus
+     $                             +Ey/deltakx/deltaky*zfocus                            
                               Efourierincz(indice)=Efourierincz(indice)
-     $                             +Ez/deltakx/deltaky*icomp*zfocus
+     $                             +Ez/deltakx/deltaky*zfocus
                            endif
-
+c                           write(*,*) 'fff diff',Efourierincy(indice)
+c     $                          ,Ey/deltakx/deltaky*icomp,indice
 
                            if (tmp.ne.0.d0) then      
 
@@ -780,11 +793,16 @@ c     *********************************************************
                   enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
-
+c                  do i=1,nfft2D*nfft2D
+c                     write(998,*) 'f',Efouriery(i),i
+c                  enddo
                   call fouriertoimage(deltakx,deltaky,gross,Efourierx
      $                 ,Efouriery,Efourierz,Efourierincx,Efourierincy
      $                 ,Efourierincz,nfft2D ,nfft2d2 ,plan2b,plan2f)
-
+c                  do i=1,nfft2D*nfft2D
+c                     write(998,*) 'f',Efouriery(i),i
+c                  enddo
+c                  write(*,*) 'fff Eimage',Efouriery
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(indice)   
 !$OMP DO SCHEDULE(STATIC)    
                   do indice=1,nfft2d*nfft2d
