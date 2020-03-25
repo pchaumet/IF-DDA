@@ -816,7 +816,11 @@ c     Built the object
          return
       endif
       write(*,*) 'Object under study created       : ',trim(object)
-      
+      if (nprochefft.eq.1) then
+         if (nx.eq.nxm.and.ny.eq.nym.and.nz.eq.nzm) then
+            nprochefft=0
+         endif
+      endif
       if (nstop.eq.1) return
 c     if (nnnr*nnnr*nnnr.gt.nmax) then
 c     nstop=1
@@ -2001,7 +2005,9 @@ c      write(*,*) 'ff local',FF
 c     compute the near field with FFT
  1000 if (nprochefft.ge.1) then
 c     compute the FFT in all the box
-         write(*,*) 'Compute Near field with FFT'
+         write(*,*) '*************************************************'      
+         write(*,*) '************* STUDY LARGE NEAR  FIELD ***********'
+         write(*,*) '*************************************************'
          nxmpp=nx+2*nxmp
          nympp=ny+2*nymp
          nzmpp=nz+2*nzmp
@@ -2499,7 +2505,7 @@ c     Intensity of the macroscopic field wide field
             close(146)
             close(147)            
          endif
-         write(*,*) 'End  computation of Near field'
+         write(*,*) '*************** END LARGE NEAR  FIELD ***********'
          write(*,*) ' '
       else
 c     ***************************************************
@@ -3681,17 +3687,19 @@ c     calcul sur des forces et couple sur differents objets si presents
      $        ,nstop ,infostr)
 c         write(*,*) 'ff diff',Ediffkzpos
          if (nstop.eq.1) return
-         write(*,*) 'Absorptivity   : ',1.d0-efficacite
-         write(*,*) 'Reflextivity   : ',efficaciteref
-         write(*,*) 'Transmittivity : ',efficacitetrans
-          write(*,*) '******** END ENERGY CONSERVATION *******'
+         write(*,*) 'Conservation of energy:',efficacite
+         write(*,*) 'Absorptivity          :',1.d0-efficacite
+         write(*,*) 'Reflextivity          :',efficaciteref
+         write(*,*) 'Transmittivity        :',efficacitetrans
+
+         write(*,*) '******** END ENERGY CONSERVATION *******'
          write(*,*) ' '
       endif
 
       
       if (nlentille.eq.1) then
          write(*,*) '****************************************'
-         write(*,*) '********* BEGIN MICROSOCPY *************'
+         write(*,*) '********* BEGIN MICROSCOPY *************'
          write(*,*) '****************************************'
          write(*,*) 'Microscopy with NA    :',numaper
          write(*,*) 'Magnifying factor     :',gross
@@ -3743,7 +3751,7 @@ c     recalcul la pola
                do i=1,ndipole
                   do ii=1,3
                      do jj=1,3
-                        epsilon(i,ii,jj)=epsani(ii,jj)
+                        epsani(ii,jj)=epsilon(i,ii,jj)
                      enddo
                   enddo
                   call polaepstens(aretecube,epsani,eps0,k0,dddis
@@ -3850,8 +3858,7 @@ c     recalcul la pola
             
             if (imaxk0.le.20) then
                k=k+1
-               write(*,*) 'change delta k :',k,dble(nfft2d*(2**k))
-     $              ,nfft2d
+               write(*,*) 'change delta k :',deltakx,'m-1',k
                goto 222
             endif
             write(*,*) 'Final delta k',deltakx,'m-1'
@@ -4015,7 +4022,7 @@ c     rotation de theta plus theta'
                enddo
             enddo
 c            write(*,*) 'ff Eimage',Eimagex
-            write(*,*) 'Number of point in NA',imaxk0
+            write(*,*) 'Number of point in NA',2*imaxk0+1
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i)   
 !$OMP DO SCHEDULE(STATIC)  
             do i=-nfft2d2,nfft2d2-1
@@ -4610,7 +4617,7 @@ c     remet kx pour interface graphique
 !$OMP ENDDO 
 !$OMP END PARALLEL
             
-         write(*,*) 'End image through the microsocpe'
+         write(*,*) 'End image through the microscope'
          write(*,*) '************* END MICROSCOPY **************'
          write(*,*) ' '
          endif

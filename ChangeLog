@@ -1,3 +1,14 @@
+	version 0.6.4
+
+	1) nprochefft=0 si demande large field mais en fait np=0 pour
+	toutes les composantes. Evite de refaire un calcul pour rien.
+	2) dans recalcul de la fonction de Green, la pola était mal
+	recalculee dans le cas anisotrope.
+	3) Ecriture energie et flux en concordance avec notation de la
+	surface.
+	4) Ecriture pour holography en accord avec la surface.
+
+	----------------------------------------------------------------
 	version 0.6.3
 
 	1) changement des options de compilation pour éviter bug de beam
@@ -15,7 +26,7 @@
 	u,v,zfocus,sintmp et costmp
 	8) dans cdmlib ecrivait nprochefft avant de le calculer.
 	9) changement microssansinc pour faire comme le df et bf en
-	trabsmission avec correction des memes erreurs...
+	transmission avec correction des memes erreurs...
 
 	----------------------------------------------------------------
 	version 0.6.2

@@ -10,7 +10,7 @@ c     correction en -2i pi gamma.
       integer nx,ny,nz,nxm,nym,nzm,nfft2d,nstop,nsectionsca
      $     ,nquickdiffracte
       double precision xs(nxm*nym*nzm),ys(nxm*nym*nzm),zs(nxm*nym*nzm)
-     $     ,aretecube,k0,k02
+     $     ,aretecube,k0,k02,tmp
       double complex FF(3*nxm*nym*nzm),Ediffkzpos(nfft2d,nfft2d,3)
      $     ,Ediffkzneg(nfft2d,nfft2d,3)
 
@@ -46,7 +46,7 @@ c     energie
       var1=(xs(1)+dble(nfft2d2)*aretecube)*deltakx
       var2=(ys(1)+dble(nfft2d2)*aretecube)*deltaky
       k02=k0*k0
-      write(*,*) 'delta k',deltakx
+      write(*,*) 'delta k',deltakx,'m-1'
       if (nfft2d.gt.4096) then
          nstop=1
          infostr='nfft2d too large'
@@ -72,17 +72,15 @@ c     energie
 !$OMP END PARALLEL
       
       imax=nint(k0/deltakx)+1
-      write(*,*) 'Number of point in the numerical aperture',imax
+      write(*,*) 'Number of point in the numerical aperture',imax*2+1
       write(*,*) 'Size of FFT',nfft2d
       
       if (2*imax+1.gt.nfft2d) then
-         write(99,*) '2*imax+1',imax,2*imax+1,nfft2d
          infostr='In FFT diffract nfft2d too small'
          nstop = 1
          return
       endif
       if (2*imax+1.lt.7) then
-         write(99,*) '2*imax+1',imax,2*imax+1,nfft2d
          infostr='In FFT diffract nfft2d too small'
          nstop = 1
          return
@@ -423,10 +421,11 @@ c     $              ,2),Ediffkzpos(ii,jj,3)
       enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL     
-
-      write(*,*) 'Flux reflexion   : ',fluxref
-      write(*,*) 'Flux trasmission : ',fluxtra
-      write(*,*) 'Flux incident    : ',fluxinc
+      tmp=4.d0*pi*pi*deltaky*deltakx/(k0*8.d0*pi*1.d-7*299792458.d0)
+      write(*,*) 'Incident flux   :',fluxinc*tmp,'W'
+      write(*,*) 'Reflected flux  :',fluxref*tmp,'W'
+      write(*,*) 'Transmitted flux:',fluxtra*tmp,'W'
+      write(*,*) 'Total flux      :',fluxref*tmp+fluxtra*tmp,'W'
       efficacite=(fluxref+fluxtra)/fluxinc
       efficaciteref=fluxref/fluxinc
       efficacitetrans=fluxtra/fluxinc
@@ -465,7 +464,6 @@ c     $              ,2),Ediffkzpos(ii,jj,3)
       enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
-      write(*,*) tmp1,tmp2
       write(*,*) 'Energy outside the NA (%)',dabs(tmp1-tmp2)/tmp2*100.d0
       if (dabs(tmp1-tmp2)/tmp2*100.d0.ge.1.d0) then
       infostr='Energy: Beam too inclined or waist or nfft too small'
