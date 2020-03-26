@@ -1,3 +1,9 @@
+	version 0.6.5
+
+	1) changement nom version.
+	2) dans bf et df ameliore un peu rapidite: k02 et kpara
+	
+	----------------------------------------------------------------
 	version 0.6.4
 
 	1) nprochefft=0 si demande large field mais en fait np=0 pour

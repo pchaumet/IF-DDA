@@ -21,8 +21,8 @@ c     variables en argument
      $     ,ny2,nxy2,nz2,nbsphere,nbsphere3,nloop,ncompte,nstop,nfft2d
      $     ,ndipole,nproche,nrig,nmat,ipol,npol,npolainc,nquicklens
      $     ,nside,niter,niterii
-      double precision tol,tolinit,tol1,aretecube,eps0,k0,P0,irra,w0,I0
-     $     ,numaper,numaperinc,gross,deltax,zlens
+      double precision tol,tolinit,tol1,aretecube,eps0,k0,k02,P0,irra,w0
+     $     ,I0,numaper,numaperinc,gross,deltax,zlens
       DOUBLE PRECISION,DIMENSION(nxm*nym*nzm)::xs,ys,zs
       double complex, dimension(8*nxm*nym*nzm) :: FFTTENSORxx,
      $     FFTTENSORxy,FFTTENSORxz,FFTTENSORyy,FFTTENSORyz, FFTTENSORzz
@@ -53,7 +53,7 @@ c     variable pour le bright field
      $     ,indicex,indicey,nfft2d2,ikxinc,jkyinc,imul,imaxinc
       double precision deltak,numaperk,phi,theta,zero,pi,kx,ky,kz,ss,pp
      $     ,u1,u2,tmp,normal(3),xmin,xmax,ymin,ymax,deltakx,deltaky
-     $     ,kxinc,kyinc,u(3),v(3),sintmp,costmp,deltakm
+     $     ,deltakxy,kxinc,kyinc,u(3),v(3),sintmp,costmp,deltakm
       double complex tmpx,tmpy,tmpz,Ex,Ey,Ez,Emx,Emy,Emz,ctmp,ctmp1
      $     ,icomp,zfocus
 
@@ -78,6 +78,7 @@ c     initialise
       npolainc=0
       icomp=(0.d0,1.d0)
       numaperk=k0*numaperinc
+      k02=k0*k0
       if (numaperinc.ge.1.d0.or.numaper.le.0.d0) then
          infostr='NA inc strictly between 0 and 1'
          nstop=1
@@ -630,7 +631,7 @@ c                     write(*,*) 'fff diff',Ediffkzpos
                            ky=deltaky*dble(j)
                            
                            if (dsqrt(kx*kx+ky*ky).le.numaper) then
-                              kz=dsqrt(k0*k0-kx*kx-ky*ky)
+                              kz=dsqrt(k02-kx*kx-ky*ky)
                               normal(1)=kx/k0
                               normal(2)=ky/k0
                               normal(3)=dsqrt(1.d0-normal(1)*normal(1)
@@ -657,9 +658,9 @@ c                     write(*,*) 'fff diff',Ediffkzpos
                               kk=i+nfft2d2+1+nfft2d*(j+nfft2d2)
                               ii=imaxk0+i+1
                               jj=imaxk0+j+1
-                              Ediffkzpos(ii,jj,1)=Emx*k0*k0/ctmp
-                              Ediffkzpos(ii,jj,2)=Emy*k0*k0/ctmp
-                              Ediffkzpos(ii,jj,3)=Emz*k0*k0/ctmp
+                              Ediffkzpos(ii,jj,1)=Emx*k02/ctmp
+                              Ediffkzpos(ii,jj,2)=Emy*k02/ctmp
+                              Ediffkzpos(ii,jj,3)=Emz*k02/ctmp
                            endif
                         enddo
                      enddo
@@ -685,7 +686,7 @@ c     *********************************************************
 
                   call deltakroutine(kxinc,kyinc,deltak,deltak,k0
      $                 ,ikxinc,jkyinc)
-
+                  deltakxy=deltakx*deltaky
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,indicex,indicey,indice)
 !$OMP& PRIVATE(kx,ky,kz,u1,u2,normal,tmp,tmpx,tmpy,tmpz,ii,jj)
 !$OMP& PRIVATE(phi,theta,Ex,Ey,Ez,zfocus,u,v,costmp,sintmp)
@@ -706,17 +707,13 @@ c     *********************************************************
 
                         kx=deltakx*dble(i)
                         ky=deltaky*dble(j)
-                        if (kx*kx+ky*ky.le.numaper*numaper) then
-                           kz=k0*k0-kx*kx-ky*ky
-                           kz=dsqrt(kz)
+                        tmp=kx*kx+ky*ky
+                        if (tmp.le.numaper*numaper) then
+                           kz=dsqrt(k02-tmp)
                            zfocus=cdexp(icomp*kz*zlens)
-                           u1=-ky/k0
-                           u2=kx/k0
-                           tmp=dsqrt(u1*u1+u2*u2)
 
                            ii=imaxk0+i+1
                            jj=imaxk0+j+1
-                           
                            Efourierx(indice)=Ediffkzpos(ii,jj,1)*zfocus
                            Efouriery(indice)=Ediffkzpos(ii,jj,2)*zfocus
                            Efourierz(indice)=Ediffkzpos(ii,jj,3)*zfocus
@@ -730,15 +727,14 @@ c     *********************************************************
 
                            if (i.eq.ikxinc.and.j.eq.jkyinc) then
 
-                           
                               call   ondeplanekxky(0.d0,0.d0,0.d0,k0,E0
      $                             ,ss,pp,kx,ky,Ex,Ey,Ez,nstop,infostr)
                               Efourierincx(indice)=Efourierincx(indice)
-     $                             +Ex/deltakx/deltaky*zfocus
+     $                             +Ex/deltakxy*zfocus
                               Efourierincy(indice)=Efourierincy(indice)
-     $                             +Ey/deltakx/deltaky*zfocus                            
+     $                             +Ey/deltakxy*zfocus
                               Efourierincz(indice)=Efourierincz(indice)
-     $                             +Ez/deltakx/deltaky*zfocus
+     $                             +Ez/deltaky*zfocus
                            endif
 c                           write(*,*) 'fff diff',Efourierincy(indice)
 c     $                          ,Ey/deltakx/deltaky*icomp,indice
