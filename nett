@@ -3,6 +3,7 @@ rm */*.mat
 rm */fort.*
 rm */*/*.a
 rm qwtplot3d/Makefile
+rm tests/Makefile
 rm qwtplot3d/src/Makefile
 rm qwt-6.1.2/Makefile.qwt
 rm qwt-6.1.2/src/Makefile.qwt
@@ -15,6 +16,7 @@ rm cdm/Makefile
 rm Makefile
 rm */*prout*
 rm bin/output
+rm tests/output
 rm *~
 rm */*~
 rm */cdm
@@ -26,6 +28,13 @@ rm bin/*.data
 rm bin/.lf
 rm bin/.data
 rm bin/.bin
+rm tests/*.lf
+rm tests/*.bin
+rm tests/*.data
+rm tests/.lf
+rm tests/.data
+rm tests/.bin
+rm tests/*.h5
 rm */*.log
 rm */output
 rm */*.o

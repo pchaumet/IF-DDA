@@ -1456,7 +1456,11 @@ RunWidget::plotmicroscopy() {
    int line = 0;
    int col = 0;
    int nfft2d;
+   int ntypemic;
+   
    nfft2d = options->getnfft2d();
+   ntypemic = options->getNtypemic();
+   
    QString title,xtitle,ytitle;
    if ( type == "Intensity" ) {
      if ( field == "Image plane: scattered field" ) {
@@ -1768,9 +1772,11 @@ RunWidget::plotmicroscopy() {
      plot = new PlotRaster(this, data, (int)nfft2d, title + " Modulus", xtitle, ytitle, options->getColors());
      plot->setObjectName("plotraster");
      plotlayout->addWidget(plot);
-     plotpc = new PlotRaster(this, datapc, (int)nfft2d, title + " phase", xtitle, ytitle, options->getColors());
-     plotpc->setObjectName("plotraster");
-     plotlayout->addWidget(plotpc);
+     if (ntypemic == 0) {
+       plotpc = new PlotRaster(this, datapc, (int)nfft2d, title + " phase", xtitle, ytitle, options->getColors());
+       plotpc->setObjectName("plotraster");
+       plotlayout->addWidget(plotpc);
+     }
    }
    plotfinalwidget->setLayout(plotlayout);
    plotwidget->setCurrentIndex(plotwidget->addTab(plotfinalwidget,"Microscopy"));

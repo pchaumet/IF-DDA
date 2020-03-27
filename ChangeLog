@@ -2,7 +2,11 @@
 
 	1) changement nom version.
 	2) dans bf et df ameliore un peu rapidite: k02 et kpara
-	
+	3) Dans cdmRunWidget.cpp si df et bf alors ne trace pas la phase
+	pour les composantes car pas de sens.
+	4) nett ajouter pour nettoyer ce qui est dans tests.
+
+
 	----------------------------------------------------------------
 	version 0.6.4
 
