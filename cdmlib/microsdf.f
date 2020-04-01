@@ -786,10 +786,6 @@ c     $                       ,Ez,Ey/deltakx/deltaky*zfocus*icomp
                Eimageincz(indice)=Efourierincz(indice)
      $              *dconjg(Efourierincz(indice))
      $              +Eimageincz(indice)
-               write(999,*) dreal(Efourierincx(indice)
-     $              *dconjg(Efourierincx(indice))+Efourierincy(indice)
-     $              *dconjg(Efourierincy(indice))+Efourierincz(indice)
-     $              *dconjg(Efourierincz(indice))),indice,idelta
             enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
@@ -882,7 +878,6 @@ c     $                       ,Ez,Ey/deltakx/deltaky*zfocus*icomp
          close(306)
          close(307)
          close(308)
-         close(999)
       elseif (nmat.eq.2) then
          dim(1)=nfft2d
          dim(2)=nfft2d

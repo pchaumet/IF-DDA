@@ -1,5 +1,6 @@
 make clean
 rm */*.mat
+rm */*/*.mat
 rm */fort.*
 rm */*/*.a
 rm qwtplot3d/Makefile
@@ -15,6 +16,7 @@ rm cdmlib/Makefile
 rm cdm/Makefile
 rm Makefile
 rm */*prout*
+rm */*/*prout*
 rm bin/output
 rm tests/output
 rm *~
@@ -34,7 +36,13 @@ rm tests/*.data
 rm tests/.lf
 rm tests/.data
 rm tests/.bin
-rm tests/*.h5
+rm tests/test*/*.h5
+rm tests/test*/filenameh5
+rm tests/test*/main
+rm tests/test*/fort.*
+rm tests/test*/output
+rm tests/test*/Makefile
+rm tests/test*/*.log
 rm */*.log
 rm */output
 rm */*.o

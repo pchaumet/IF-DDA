@@ -257,34 +257,34 @@ c     FFloc : champ local
       write(*,*) '******************************************'
       write(*,*) '*************** INPUT DATA ***************'
       write(*,*) '******************************************'
-      write(*,*) 'Wavelength          : ',lambda,'nm'
-      write(*,*) 'Beam                : ',trim(beam)
-      write(*,*) 'Object              : ',trim(object),' isotropy :'
+      write(*,*) 'Wavelength           : ',lambda,'nm'
+      write(*,*) 'Beam                 : ',trim(beam)
+      write(*,*) 'Object               : ',trim(object),' isotropy : '
      $     ,trope
-      write(*,*) 'Discretization      : ',nnnr
-      write(*,*) 'Size of the box     : ',nxm,nym,nzm
-      write(*,*) 'Iterative method    : ',methodeit,'Tolerance asked'
-     $     ,tolinit
-      write(*,*) 'Rigorous or approx. : ',nrig,'(0 rigourous)'
-      write(*,*) 'Local field         : ',nlocal,'(1 compute)'
-      write(*,*) 'Macroscopic field   : ',nmacro,'(1 compute)'
-      write(*,*) 'Cross section       : ',nsection,'Csca',nsectionsca
+      write(*,*) 'Discretization       : ',nnnr
+      write(*,*) 'Size of the box      : ',nxm,nym,nzm
+      write(*,*) 'Iterative method     : ',methodeit
+      write(*,*) 'Tolerance asked      : ',tolinit
+      write(*,*) 'Rigorous or approx.  : ',nrig,'(0 rigourous)'
+      write(*,*) 'Local field          : ',nlocal,'(1 compute)'
+      write(*,*) 'Macroscopic field    : ',nmacro,'(1 compute)'
+      write(*,*) 'Cross section        : ',nsection,'Csca',nsectionsca
      $     ,'(1 compute)'
-      write(*,*) 'Poynting asym. fac. : ',nquickdiffracte,'(1 compute)'
-      write(*,*) 'Energy conservation : ',nenergie,'(1 compute)'
-      write(*,*) 'Microscopy          : ',nlentille,'Type',ntypemic
-      write(*,*) 'Side study          : ',nside,'(1 kz>0, -1 kz<0)'
-      write(*,*) 'Quick Lens          : ',nquicklens
+      write(*,*) 'Poynting asym. fac.  : ',nquickdiffracte,'(1 compute)'
+      write(*,*) 'Energy conservation  : ',nenergie,'(1 compute)'
+      write(*,*) 'Microscopy           : ',nlentille,'Type',ntypemic
+      write(*,*) 'Side study           : ',nside,'(1 kz>0, -1 kz<0)'
+      write(*,*) 'Quick Lens           : ',nquicklens
      $     ,'(1 compute with FFT)'
-      write(*,*) 'Focal plane position: ',zlens,'nm'
-      write(*,*) 'Optical force       : ',nforce ,nforced,'(1 compute)'
-      write(*,*) 'Optical torque      : ',ntorque ,ntorqued
+      write(*,*) 'Focal plane position : ',zlens,'nm'
+      write(*,*) 'Optical force        : ',nforce ,nforced,'(1 compute)'
+      write(*,*) 'Optical torque       : ',ntorque ,ntorqued
      $     ,'(1 compute)'
-      write(*,*) 'Near field          : ',nproche,'Additional side',nxmp
-     $     ,nymp,nzmp
-      write(*,*) 'Polarizability      : ',polarizability
-      write(*,*) 'Integration Green   : ',nquad,'(0 no integration)'
-      write(*,*) 'Write  file         : ',nmat
+      write(*,*) 'Near field           : ',nproche
+      write(*,*) 'Additional side      : ',nxmp ,nymp,nzmp
+      write(*,*) 'Polarizability       : ',polarizability
+      write(*,*) 'Integration Green    : ',nquad,'(0 no integration)'
+      write(*,*) 'Write  file          : ',nmat
      $     ,'0 ascii file: 1 no file: 2 hdf5 file'
       write(*,*) 'Use FFTW'
       if (nmat.eq.2) then
@@ -629,9 +629,10 @@ c     passe objet dans boite si utilise FFT
          nprochefft=nproche
          nproche=0
       endif
-      write(*,*) 'Number maximum of subunit :nmax = ',nmax     
+      write(*,*) 'Number maximum of subunit :     nmax = ',nmax     
       write(*,*) 'Number of layer for the object :nnnr = ',nnnr
-      write(*,*) 'nproche2',nproche,nprochefft
+      write(*,*) 'Near field options :',nproche, 'Wide field :'
+     $     ,nprochefft
       write(*,*) '*************END INPUT DATA *******************'
       write(*,*) ' '
       
@@ -3704,6 +3705,7 @@ c         write(*,*) 'ff diff',Ediffkzpos
          write(*,*) 'Microscopy with NA    :',numaper
          write(*,*) 'Magnifying factor     :',gross
          write(*,*) 'Type of Microscopy    :',ntypemic,'(0 holography)'
+         write(*,*) 'Position focal plane  :',zlens
          
          nfft2d2=nfft2d/2
          numaper=numaper*k0
@@ -4288,7 +4290,7 @@ c     stop
 c     calcul en transmission
 
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,indicex,indicey,indice)
-!$OMP& PRIVATE(kx,ky,kz,u1,u2,sintmp,costmp,tmp,u,v,ii,jj,kk)
+!$OMP& PRIVATE(kx,ky,kz,zfocus,u1,u2,sintmp,costmp,tmp,u,v,ii,jj,kk)
 !$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
                do i=-imaxk0,imaxk0 
                   do j=-imaxk0,imaxk0
@@ -4316,15 +4318,11 @@ c     calcul en transmission
                         kk=i+nfft2d2+1+nfft2d*(j+nfft2d2)
                         Efourierx(kk)=Ediffkzpos(ii,jj,1)*zfocus
                         Efouriery(kk)=Ediffkzpos(ii,jj,2)*zfocus
-                        write(999,*) Efouriery(kk),Ediffkzpos(ii,jj,2)
-     $                       ,ii,jj
                         Efourierz(kk)=Ediffkzpos(ii,jj,3)*zfocus
                         Efourierincx(kk)=(Ediffkzpos(ii,jj,1)
      $                       +Ediffkzneg(ii,jj,1))*zfocus
                         Efourierincy(kk)=(Ediffkzpos(ii,jj,2)
      $                       +Ediffkzneg(ii,jj,2))*zfocus
-c                        write(*,*) 'ff diff',Ediffkzpos(ii,jj,2)
-c     $                       ,Ediffkzneg(ii,jj,2),indice
                         Efourierincz(kk)=(Ediffkzpos(ii,jj,3)
      $                       +Ediffkzneg(ii,jj,3))*zfocus
 

@@ -45,7 +45,7 @@ Options::Options()
   ntypemicList = (QStringList() << "Holographic" << "Brightfield" << "Darkfield & phase");
   nsideList = (QStringList() << "kz>0 (transmission)" << "kz<0 (reflexion)");
     
-  rangeofstudyList = (QStringList() << "object" << "cube around object" << "wide field");
+  rangeofstudyList = (QStringList() << "Object" << "Cube around object" << "Wide field");
 
   initOptions();
 }

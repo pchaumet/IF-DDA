@@ -40,7 +40,7 @@ c     variables for the material
       double complex, dimension(nxm*nym*nzm,3,3) :: polarisa,epsilon
       double complex epsmulti(numberobjetmax)
      $     ,epsanimulti(3,3,numberobjetmax)
-      character(2) methode,cm
+      character(2) polarizability
       character (64), DIMENSION(numberobjetmax) :: materiaumulti
       character(64) materiau,object,beam,namefileobj,namefileinc
      $     ,filereread
@@ -130,7 +130,7 @@ c     Creation des nouvelles variables
 
 c     variable pour avoir l'image a travers la lentille
       integer nlentille,nobjet,nfft2d,nfft2d2,nquicklens,ntypemic,nside
-      parameter (nfft2d=512)
+      parameter (nfft2d=128)
       double precision kx,ky,kz,deltakx,deltaky,numaper,deltax,gross
      $     ,numaperinc,zlens
       double precision kxy(nfft2d),xy(nfft2d)
@@ -144,33 +144,48 @@ c     variable pour avoir l'image a travers la lentille
 
       character(LEN=100) :: h5file
 
-c     data
+c     constant
       c=299792458.d0
       quatpieps0=1.d0/(c*c*1.d-7)
+      pi=dacos(-1.d0)
+      icomp=(0.d0,1.d0)
 
       nxmp=1
       nymp=2
       nzmp=3
-c********************************************************
-c     Defini les caracteristiques de l'onde incidente
-c********************************************************
-      lambda=632.8d0
-      P0=1.d0               
-      w0=lambda*10.d0       
+c     DATA INPUT
+      lambda=632.8d0       !wavelength
+      P0=1.d0              !power    
+      w0=lambda*10.d0      !waist
 
 c********************************************************
-c     Defini le type d'onde incidente
+c     Define the polarizability
 c********************************************************
-      beam='pwavelinear'
-c     beam='wavelinearmulti'
-c      beam='antenna'
-c     beam='pwavecircular'
-c     beam='gparawavecircular'
-c      beam='gparawavelinear'
-c      beam='gwavelinear'  
-c     beam='gwavecircular'
-c     beam='arbitrary' 
-  
+
+c     polarizability='CM'  !Clausius Mossotti
+c     polarizability='RR'  !Clausius Mossotti with radiative reaction
+      polarizability='LA'  !Polarizability defines by Lakthakia
+c     polarizability='LR'  !Polarizability defines by Draine
+c     polarizability='GB'  !Polarizability with first Mie coefficient
+c     polarizability='PS'  !Polarizability for a sphere with local correction
+c********************************************************
+c     End polarizability
+c********************************************************
+      
+c********************************************************
+c     Define the incident wave
+c********************************************************
+      beam='pwavelinear'        !Linear Gaussian wave
+c     beam='wavelinearmulti'    !Multiple linear plane wave
+c     beam='antenna'            !Antenna define by dipolar emitter
+c     beam='pwavecircular'      !Circular plane wave
+c     beam='gparawavecircular'  !Linear Gaussian wave with paraxial approximation
+c     beam='gparawavelinear'    !Circular Gaussian wave with paraxial approximation
+c     beam='gwavelinear'        !Linear Gaussian wave rigourous
+c     beam='gwavecircular'      !Circular Gaussian wave rigourous
+c     beam='arbitrary'          !Arbitrary wave defines by the user
+c     beam='gfftwavecircular'   !Circular Gaussian wave rigourous for the first plane and propagates with FFT
+c     beam='gfftwavelinear'     !Linear Gaussian wave rigourous for the first plane and propagates with FFT
       
       if (beam(1:11).eq.'pwavelinear') then
          theta=0.d0
@@ -190,7 +205,6 @@ c     beam='arbitrary'
          zgaus=0.d0
          theta=0.d0
          phi=0.d0
-
       elseif (beam(1:13).eq.'pwavecircular') then
          theta=0.d0
          phi=0.d0
@@ -243,29 +257,39 @@ c     beam='arbitrary'
       elseif (beam(1:9).eq.'arbitrary') then
          namefileinc='incarbitrary.in'
       endif
-
+c*******************************************************
+c     End incident wave
+c*******************************************************
+      
 c********************************************************
-c     Defini le type d'objet
+c     Define the object
 c********************************************************
-      object='sphere'
-c      object='inhomosphere'
-c      object='randomsphere'
-c     object='cube'
-c     object='cuboid'
-c      object='inhomocuboid'      
-c      object='nspheres' 
-c      object='ellipsoid'
-c      object='cylinder' 
-c      object='sphereconcentric'
-c      object='arbitrary'
+      object='sphere'           !Sphere
+c     object='inhomosphere'     !Inhomogeneous sphere
+c     object='cube'             !Cube
+c     object='cuboid1'          !Cuboid with side given
+c     object='cuboid2'          !Cuboid with nx,ny,nz,aretecube given
+c     object='inhomocuboid1'    !Inhomogeneous cuboid with side given
+c     object='inhomocuboid2'    !Inhomogeneous cuboid with nx,ny,nz,aretecube given
+c     object='ellipsoid'        !Ellipsoid
+c     object='nspheres'         !Multiple spheres with same radius
+c     object='cylinder'         !Cylinder
+c     object='concentricsphere' !Concentric sphere
+c     object='randomsphere1'    !Random spheres in box with side given
+c     object='randomsphere2'    !Random spheres in box with nx,ny,nz,aretecube given
+c     object='arbitrary'        !Arbitrary object
 
+
+      
       if (object(1:6).eq.'sphere') then
          numberobjet=1
-         rayonmulti(1)=200.d0         
+         rayonmulti(1)=500.d0         
          xgmulti(1)=0.d0
          ygmulti(1)=0.d0
          zgmulti(1)=0.d0
          materiaumulti(1)='xx'
+         nnnr=40
+         epsmulti(1)=(1.5d0,0.d0)
       elseif (object(1:6).eq.'inhomosphere') then
          numberobjet=1
          rayonmulti(1)=1000.d0
@@ -273,6 +297,8 @@ c      object='arbitrary'
          hc=0.2d0
          materiaumulti(1)='xx'
          ng=2
+         nnnr=20
+         epsmulti(1)=(1.01d0,0.d0)
       elseif (object(1:13).eq.'inhomocuboid1') then
          numberobjet=1
          sidex=2000.d0
@@ -285,7 +311,8 @@ c      object='arbitrary'
          hc=0.2d0
          materiaumulti(1)='xx'
          ng=2
-         write(*,*) 'tt',sidex,sidey,sidez,lc,hc,ng
+         nnnr=20
+         epsmulti(1)=(1.01d0,0.d0)
       elseif (object(1:13).eq.'inhomocuboid2') then
          numberobjet=1
          xgmulti(1)=0.d0
@@ -296,8 +323,7 @@ c      object='arbitrary'
          hc=0.2d0
          materiaumulti(1)='xx'
          ng=2
-         write(*,*) 'tt',sidex,sidey,sidez,lc,hc,ng
-
+         epsmulti(1)=(1.01d0,0.d0)
       elseif (object(1:13).eq.'randomsphere1') then
          numberobjet=1
          rayonmulti(1)=100.d0         
@@ -306,12 +332,15 @@ c      object='arbitrary'
          sidez=2000.d0
          materiaumulti(1)='xx'
          ng=2
+         nnnr=20
+         epsmulti(1)=(1.01d0,0.d0)
       elseif (object(1:13).eq.'randomsphere2') then
          numberobjet=1
          rayonmulti(1)=100.d0         
          aretecube=25.d0
          materiaumulti(1)='xx'
          ng=2
+         epsmulti(1)=(1.01d0,0.d0)
       elseif (object(1:4).eq.'cube') then
          numberobjet=1
          side=100.d0
@@ -335,7 +364,7 @@ c      object='arbitrary'
          thetaobj=0.d0
          psiobj=0.d0
          epsmulti(1)=(2.000d0,0.5d0)
-         write(*,*) 'cuboid'
+         nnnr=20
       elseif (object(1:7).eq.'cuboid2') then
          numberobjet=1
          xgmulti(1)=0.d0
@@ -344,7 +373,6 @@ c      object='arbitrary'
          materiaumulti(1)='xx'
          aretecube=25.d0
          epsmulti(1)=(2.000d0,0.5d0)
-         write(*,*) 'cuboid'
       elseif (object(1:8).eq.'nspheres') then
          numberobjet=2
          xgmulti(1)=0.d0
@@ -352,11 +380,12 @@ c      object='arbitrary'
          zgmulti(1)=0.d0
          rayonmulti(1)=10.d0
          epsmulti(1)=(2.25d0,0.d0)
-c         xgmulti(2)=30.d0
-c         ygmulti(2)=0.d0
-c         zgmulti(2)=0.d0
-c         rayonmulti(2)=15.d0
-c         epsmulti(2)=(1.25d0,0.d0)
+         xgmulti(2)=30.d0
+         ygmulti(2)=0.d0
+         zgmulti(2)=0.d0
+         rayonmulti(2)=15.d0
+         epsmulti(2)=(1.25d0,0.d0)
+         nnnr=20
       elseif (object(1:9).eq.'ellipsoid') then
          demiaxea=10.d0
          demiaxeb=20.d0
@@ -367,6 +396,8 @@ c         epsmulti(2)=(1.25d0,0.d0)
          thetaobj=45.d0
          phiobj=45.d0
          psiobj=0.d0
+         nnnr=20
+         epsmulti(1)=(1.01d0,0.d0)
       elseif (object(1:8).eq.'cylinder') then
          rayon=10.d0
          hauteur=20.d0
@@ -375,6 +406,8 @@ c         epsmulti(2)=(1.25d0,0.d0)
          zgmulti(1)=0.d0
          thetaobj=45.d0
          phiobj=45.d0
+         nnnr=20
+         epsmulti(1)=(1.01d0,0.d0)
       elseif (object(1:16).eq.'sphereconcentric') then
          numberobjet=2      
          rayonmulti(1)=10.d0
@@ -382,10 +415,11 @@ c         epsmulti(2)=(1.25d0,0.d0)
          xgmulti(1)=0.d0
          ygmulti(1)=0.d0
          zgmulti(1)=0.d0
-c         rayonmulti(2)=20.d0
-c         epsmulti(2)=(1.25d0,0.d0)        
+         rayonmulti(2)=20.d0
+         epsmulti(2)=(1.25d0,0.d0)        
          thetaobj=0.d0
          phiobj=0.d0
+         nnnr=20
       elseif (object(1:9).eq.'arbitrary') then
          numberobjet=1
          namefileobj='arbit.in'
@@ -403,24 +437,22 @@ c         epsmulti(2)=(1.25d0,0.d0)
             write(*,*) 'Size of the table too small'
             stop
          endif
-
-         
-c     definir ici l'objet arbitraire
       endif
       if (numberobjet.gt.numberobjetmax) then
          write(*,*) 'redimensionner numberobjetmax',numberobjet
      $        ,numberobjetmax
          stop
       endif
-         
+c*******************************************************
+c     End object
+c*******************************************************
+      
 c********************************************************
-c     Defini la nature de la permittivite
+c     Define if object is isotropic or not
 c********************************************************
       trope='iso'
 c     trope='ani'
-      if (trope(1:3).eq.'iso') then
-         epsmulti(1)=(1.5d0,0.d0)
-      else
+      if (trope(1:3).eq.'ani') then
          epsanimulti(1,1,1)=(2.d0,0.d0)
          epsanimulti(2,1,1)=0.d0
          epsanimulti(3,1,1)=0.d0
@@ -431,78 +463,123 @@ c     trope='ani'
          epsanimulti(2,3,1)=0.d0
          epsanimulti(3,3,1)=(2.d0,0.d0)
       endif
-c********************************************************
-c     Defini la polarisabilite choisie
-c********************************************************
-c      methode='CM'
-      methode='RR'
-c      methode='GB'
-c      methode='LA'
-c      methode='LR'
+
       
-c********************************************************
-c     Defini la methode iterative choisie
-c********************************************************
-      methodeit='GPBICG1'        
-c     methodeit='GPBICG2'       
-c      methodeit='GPBICGsafe'    
-c      methodeit='GPBICGAR1'     
-c     methodeit='GPBICGAR2'     
-c      methodeit='QMRCLA
-c      methodeit='TFQMR' 
-c     methodeit='CG'       
-c      methodeit='BICGSTAB' 
-c      methodeit='QMRBICGSTAB1'
-c     methodeit='QMRBICGSTAB2'
-c      methodeit='GPBICOR'
-c********************************************************
-c     Defini la tolerance de la methode iterative
-c********************************************************
+c*******************************************************
+c     Define the iterative method used
+c*******************************************************
+      methodeit='GPBICG1'      
+c     methodeit='GPBICG2'
+c     methodeit='GPBICGplus'
+c     methodeit='GPBICGsafe'          
+c     methodeit='GPBICGAR'    
+c     methodeit='GPBICGAR2'
+c     methodeit='BICGSTARPLUS'
+c     methodeit='GPBICOR'
+c     methodeit='CORS'
+c     methodeit='QMRCLA'          
+c     methodeit='TFQMR'       
+c     methodeit='CG'           
+c     methodeit='BICGSTAB'    
+c     methodeit='QMRBICGSTAB1' 
+c     methodeit='QMRBICGSTAB2' 
+
+
+c     Define the tolerance of the iterative method
       tolinit=1.d-4
-c********************************************************
-c     Defini la discretisation de l'obejet
-c********************************************************
-      nnnr=20
+c*******************************************************
+c     End iterative method used
+c*******************************************************
+
 
 c********************************************************
-c     Defini les calculs demandes
-c******************************************************** 
-      nproche=2 !0 calcul le champ dans l'objet, 1 dans le cube
-                !contenant l'objet 2 dans la boite nxm,nym,nzm
-      nlocal=1!  1: calcul le champ local
-      nmacro=1 !  1: calcul le champ macro
-      nsection=1! 1: calcul les sections efficaces
-      nsectionsca=1 !1: calcul C_sca, Poynting et g par rayonnement des dipoles
-      nquickdiffracte=1  !1: calcul C_sca, Poynting et g par avec la FFT
-      nforce=1 ! 1: Calul la force optique
-      nforced=1 ! 1: Calcul la densite de force
-      ntorque=1! 1: Calul le couple optique
-      ntorqued=1 ! 1: Calcul la densite de couple
-      nrig=0 ! 1: calcul le champ par Born renormalise, 0 rigoureux
-      nlecture=0 !1: relis les dipoles deja calcules
-c      filereread='nom'
-      nlentille=1 !1 Calcul l'objet vu a travers une lentille situee du
-                  !cote des z positifs, foyer place a l'origine
-      nquicklens=1!1: calcul avec FFT la vue a travers la lentille
-      numaper=0.9d0              ! ouverture numerique de la lentille
-      numaperinc=0.9d0              ! ouverture numerique du condenseur
-      ntypemic=0 ! type microscope 0 holo,1 brightfield, 2 darkfield phase
-      nside=0 ! ! microscope in reflexion (1)  or transmission (0)
-      nobjet=0                  ! 1: calcul juste la forme de l'objet
-      nquad=2 !0 -> 5 defini le niveau d'integration du tenseur
-      nenergie=1
-      nmat=0 ! 0 écrit mat  file,  1 n ecrit pas, 2 hdf5 file
-      h5file='ifdda.h5'
-      gross=100.d0              ! grossissement
-      zlens=200.d0 !position du foyer image de la lentille
-      write(*,*) 'cdmlib',sidex,sidey,sidez
+c     define all the options
+c********************************************************
+      nobjet=0                  ! 1 compute only the position of the
+                                ! dipole, all the other options are
+                                ! disabled.
+      
+c     nproche adjust the size of near field domain. Near field (0)
+c     inside the object, (1) inside a cuboid which contains the object,
+c     (2) inside the boxnx+2*nxmp,ny+2*nymp,nz+2*nzmp
+      nproche=1
+      
+      nxmp=0                    ! if nproche=2 used then the addsize along x : nx+2*nxmp
+      nymp=0                    ! if nproche=2 used then the addsize along y : ny+2*nymp
+      nzmp=0                    ! if nproche=2 used then the addsize along z : nz+2*nzmp
+      nlocal=0                  ! 0 do not compute the local field, 1 compute the local field
+      nmacro=0                  ! 0 do not compute the macroscopic field, 1 compute the macroscopic field
+
+c     1 reread or create a file which contains the local field at each
+c     position. Avoid to compute again the local field if the
+c     configuration is the same, i.e. keep the same local field.
+      nlecture=0               
+      filereread='toto'         ! name fo the file if reread the local field.
+      
+c     nrig adjust the ways used to compute the near field. (0) compute
+c     rigorously the near field in solving the near field equation, (1)
+c     use renormalized Born approximation, (2) use Born approximation,
+c     (3) use Born series at order 1, (4) renormalized Rytov, (5) Rytov,
+c     (6) BPM, (7) renormalized BPM.
+      nrig=0
+
+      nforce=0                  ! (0) Do not compute or (1) compute the optical force.
+      nforced=0                 ! (0) Do not compute or (1) compute the density of optical force.
+      ntorque=0                 ! (0) Do not compute or (1) compute the optical torque.
+      ntorqued=0                ! (0) Do not compute or (1) compute the density of optical torque.
+      
+      nsection=0                ! 0 do not compute the cross section, 1 compute the cross section. 
+      nsectionsca=0             !1: calcul C_sca, Poynting and g with radiating dipole.
+      nquickdiffracte=0         ! 0 compute far field classically, 1 compute far field with FFT.      
+      nside=0                   ! compute microscope in reflexion (1), or transmission (0).
+      nlentille=1               ! Compute microscopy.
+      nquicklens=1              ! Compute microscopy with FFT (1) or wihtout FFT (0).      
+      numaper= 0.9d0            ! Numerical aperture for the microscope.
+      zlens=500.d0              ! Position of lens.
+      ntypemic=1                ! Type of microscope: O Holographic, 1 Bright field, 2 Dark field
+      gross=100.d0              ! Manyfing factor for the microscope
+      numaperinc=0.8d0          ! Numerical aperture for the condenser lens.
+
+      nenergie=0                ! 0 Do not compute energy, 1 compute energy conservation.
+
+      nmat=0                    ! 1 Do not save the data, 0 save the data in mat file, 2 save the data in one hdf5 file.
+      h5file='ifdda.h5'         ! name of the hdf5 file
+
+      nquad=0                   !0 -> 5 define the level of integration of the Green tensor.
 
  
+c*******************************************************
+c     End options
+c*******************************************************
+      
+
+c     compute size when meshsize is given
+      if (object(1:13).eq.'inhomocuboid2'.or.object(1:7).eq.'cuboid2')
+     $     then
+         nx=nxm-2*nxmp
+         ny=nym-2*nymp
+         nz=nzm-2*nzmp
+      else
+         if (nx+2*nxmp.gt.nxm) then
+            write(*,*) 'pb with size: increase nxm'
+            stop
+         endif
+         if (ny+2*nymp.gt.nym) then
+            write(*,*) 'pb with size: increase nym'
+            stop
+         endif
+         if (nz+2*nzmp.gt.nzm) then
+            write(*,*) 'pb with size: increase nzm'
+            stop
+         endif
+      endif
+
+      
       call cdmlib(
 c     input file cdm.in
      $     lambda,beam,object,trope,
-     $     materiaumulti,nnnr,tolinit,methodeit,methode,nquad,nlecture
-     $     ,filereread,nmat,h5file,
+     $     materiaumulti,nnnr,tolinit,methodeit,polarizability,nquad
+     $     ,nlecture,filereread,nmat,h5file,
 c     output file cdm.out
      $     nlocal,nmacro,nsection,nsectionsca,nquickdiffracte,nrig,
      $     nforce,nforced,ntorque,ntorqued,nproche,nlentille,nquicklens,
@@ -557,90 +634,17 @@ c     taille double complex (nfft2d,nfft2d,3)
 c     taille entier (nxm*nym*nzm)
      $     Tabdip,Tabmulti)
 c     output
-      if (nstop.eq.1) then
-         write(*,*) infostr
-         stop
-      endif
-      write(*,*) 'infostr',  infostr
-      pi=dacos(-1.d0)
-      if (materiau.ne.'xx') then     
-         write(*,*) 'Relative permittivity',epsmulti(1)
+  
+      if (nstop.eq.0) then
+         write(*,*) '***********************************************'
+         write(*,*) 'Computation finished without problem:'
+         write(*,*) '***********************************************'
       else
-         if (trope.eq.'iso') then          
-            write(*,*) 'Relative permittivity',epsmulti(1)
-         else 
-            do i=1,3
-               do j=1,3
-                  write(*,*) 'Relative permittivity',epsanimulti(i,j,1)
-     $                 ,i,j
-               enddo
-            enddo
-         endif
+         write(*,*) '***********************************************'
+         write(*,*) 'Programm finished with problem:'
+         write(*,*) infostr
+         write(*,*) '***********************************************'
       endif
-
-      write(*,*) 'Object under study ',object
-      write(*,*) 'Nombre Object',numberobjet
-      write(*,*) 'number of subunit for the object',nbsphere
-      write(*,*) 'number of subunit for the mesh ',ndipole
-      write(*,*) 'mesh size',aretecube
-      write(*,*) 'lambda/(10n)',lambda/10.d0/cdabs(cdsqrt(epsmulti(1)))
-
-      write(*,*) '******* Compute the incident field *******'
-      write(*,*) 'Beam used',beam
-      write(*,*) 'k0=',k0     
-      write(*,*) 'theta=',theta
-      write(*,*) 'phi=',phi
-      write(*,*) 'Irradiance',Irra
-      write(*,*) 'Field',E0
-      I0=cdabs(E0)**2
-
-      write(*,*) '***** Solve the linear system *****'
-      write(*,*) 'Tolerance asked for the iterative method   ',tolinit
-      write(*,*) 'Tolerance obtained for the iterative method',tol1
-      write(*,*) 'Number of product Ax for the iterative method'
-     $     ,ncompte,nloop
-
-      if (nsection.eq.1) then      
-         rayon=rayonmulti(1)*1.d-9
-         write(*,*) 'mie',epsmulti(1),rayon,lambda
-         CALL CALLBHMIE(1.d0,epsmulti(1),rayon,lambda,MIECEXT,MIECABS
-     $        ,MIECSCA,GSCA)
-         write(*,*) 'MIECEXT',MIECEXT,MIECABS,MIECSCA,GSCA
-         write(*,*) 'force',(MIECEXT-GSCA*MIECSCA)/8.d0/pi*quatpieps0
-
-         write(*,*) 'extinction cross section',Cext
-         write(*,*) 'absorbing cross section ',Cabs
-         write(*,*) 'scattering cross section',Csca
-         write(*,*) 'cos',gasym
-      endif
-      if (nsectionsca.eq.1) then
-         write(*,*) 'scattering cross section with integration',Cscai
-         write(*,*) 'scattering asymetric parameter',gasym
-      endif
-
-      if (nforce.eq.1) then
-         write(*,*) '****** Compute the optical force *********'
-         write(*,*) 'optical force x',forcet(1)
-         write(*,*) 'optical force y',forcet(2)
-         write(*,*) 'optical force z',forcet(3)
-         
-         forcemie=(MIECext-GSCA*MIECsca)/8.d0/pi*I0*quatpieps0
-         write(*,*) 'modulus of the force',forcem,'Mie',forcemie
-      endif
-      if (ntorque*nforce.eq.1) then
-         write(*,*) '********* Compute the optical torque *********'
-         write(*,*) 'optical torque x',couplet(1)
-         write(*,*) 'optical torque y',couplet(2)
-         write(*,*) 'optical torque z',couplet(3)
-         write(*,*) 'modulus of the optical torque',couplem
-         write(*,*) 'couple Mie',MIECABS/8.d0/k0/pi*I0*quatpieps0
-      endif
-      if (numberobjet.ne.1) then
-         do i=1,numberobjet
-            write(*,*) 'forcex',forcexmulti(i)
-            write(*,*) 'forcey',forceymulti(i)
-            write(*,*) 'forcez',forcezmulti(i)
-         enddo
-      endif
+      
 
       end

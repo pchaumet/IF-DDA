@@ -171,7 +171,7 @@ OptionsWidget::OptionsWidget(QMainWindow *_mainwindow, Options *_options)
   crosssectionpoynting = new QCheckBox(this);
   connect(crosssectionpoynting, SIGNAL(stateChanged(int)),this,
 	SLOT(crosssectionpoyntingCheckBoxStateChanged(int)));
-  quickdiffractLabel = new QLabel("Quick computation");
+  quickdiffractLabel = new QLabel("Quick computation (FFT)");
   quickdiffract = new QCheckBox(this);
   ntheta = new QLineEdit(QString::number(options->getNtheta()));
   ntheta->setFixedWidth(40);
@@ -206,32 +206,33 @@ OptionsWidget::OptionsWidget(QMainWindow *_mainwindow, Options *_options)
 
  
   emptymicroscopyFFTLabel = new QLabel(" ");
-  microscopyFFTLabel = new QLabel("Quick computation");
+  microscopyFFTLabel = new QLabel("Quick computation (FFT)");
   microscopyFFT = new QCheckBox(this);
    connect(microscopyFFT, SIGNAL(stateChanged(int)),this,
 	SLOT(microscopyFFTCheckBoxStateChanged(int)));
 
   na = new QLineEdit(QString::number(options->getNA()));
   na->setFixedWidth(60);
-  naLabel = new QLabel("Numerical aperture [0,1] (objective lens):");
+  naLabel = new QLabel("Numerical aperture [0,1] (objective lens)");
 
   nainc = new QLineEdit(QString::number(options->getNAinc()));
   nainc->setFixedWidth(60);
-  naincLabel = new QLabel("Numerical aperture [0,1] (condenser lens):");
+  naincLabel = new QLabel("Numerical aperture [0,1] (condenser lens)");
 
   gross = new QLineEdit(QString::number(options->getGross()));
   gross->setFixedWidth(60);
-  grossLabel = new QLabel("Magnification:");
+  grossLabel = new QLabel("Magnification");
 
   zlens = new QLineEdit(QString::number(options->getZlens()));
   zlens->setFixedWidth(60);
-  zlensLabel = new QLabel("Position of the focal plane (nm):");
+  zlensLabel = new QLabel("Focal plane position (nm)");
  
   ntypemicLabel = new QLabel("Microscope");
   ntypemic      = new QComboBox();
   ntypemic->addItems(options->ntypemicList);
   ntypemic->setCurrentIndex(options->getNtypemic());
   ntypemic->setFixedWidth(150);
+  ntypemic->setCurrentIndex(0);
   connect(ntypemic, SIGNAL(currentIndexChanged(int)),this,
 	SLOT(ntypemicStateChanged(int)));
 
@@ -316,16 +317,35 @@ OptionsWidget::OptionsWidget(QMainWindow *_mainwindow, Options *_options)
   rangeofstudy = new QComboBox();
   rangeofstudy->addItems(options->rangeofstudyList);
   rangeofstudy->setCurrentIndex(options->getNproche());
+  rangeofstudy->setFixedWidth(180);
+  connect(rangeofstudy, SIGNAL(currentIndexChanged(int)),this,
+	SLOT(handleRangeofstudySelectionChanged(int)));
+  
   studynearfieldlayout->addWidget(emptyrangeofstudyLabel,2,0,Qt::AlignLeft);
   studynearfieldlayout->addWidget(rangeofstudyLabel,2,1,Qt::AlignLeft);
   studynearfieldlayout->addWidget(rangeofstudy,2,2,Qt::AlignLeft);
-
+  emptynxmpLabel = new QLabel(" ");
+  emptynympLabel = new QLabel(" ");
+  emptynzmpLabel = new QLabel(" ");
   nxmp = new QLineEdit(QString::number(options->getNxmp()));
   nxmp->setFixedWidth(40);
   nymp = new QLineEdit(QString::number(options->getNymp()));
   nymp->setFixedWidth(40);
   nzmp = new QLineEdit(QString::number(options->getNzmp()));
   nzmp->setFixedWidth(40);
+  nxmpLabel = new QLabel("Additional sideband x");
+  nympLabel = new QLabel("Additional sideband y");
+  nzmpLabel = new QLabel("Additional sideband z");
+  studynearfieldlayout->addWidget(emptynxmpLabel,3,0,Qt::AlignLeft);
+  studynearfieldlayout->addWidget(nxmpLabel,3,1,Qt::AlignLeft);
+  studynearfieldlayout->addWidget(nxmp,3,2,Qt::AlignLeft);
+  studynearfieldlayout->addWidget(emptynympLabel,4,0,Qt::AlignLeft);  
+  studynearfieldlayout->addWidget(nympLabel,4,1,Qt::AlignLeft);
+  studynearfieldlayout->addWidget(nymp,4,2,Qt::AlignLeft);
+  studynearfieldlayout->addWidget(emptynzmpLabel,5,0,Qt::AlignLeft);
+  studynearfieldlayout->addWidget(nzmpLabel,5,1,Qt::AlignLeft);
+  studynearfieldlayout->addWidget(nzmp,5,2,Qt::AlignLeft);
+
   //  nxx = new QLineEdit(QString::number(options->getNxx()));
   //    nxx->setFixedWidth(40);
   //    nyy = new QLineEdit(QString::number(options->getNyy()));
@@ -462,9 +482,9 @@ layout->addRow(title4);
   layout->addRow(hsep2);
   layout->addRow(toleranceLabel,tolerance);
   layout->addRow(methodeitLabel,methodeit);
-  layout->addRow("Additional sideband x",nxmp);
-  layout->addRow("Additional sideband y",nymp);
-  layout->addRow("Additional sideband z",nzmp);
+  //layout->addRow("Additional sideband x",nxmp);
+  //layout->addRow("Additional sideband y",nymp);
+  //layout->addRow("Additional sideband z",nzmp);
   layout->addRow(polarizabilityLabel,polarizability);
   layout->addRow(quadLabel,quad);
   layout->addRow(nfft2dLabel,nfft2d);
@@ -582,6 +602,38 @@ OptionsWidget::handleObjectNumberSelectionChanged(int index) {
 //if ( object->currentText() == "nspheres" ||
 //     object->currentText() == "concentricsphere")
    options->setObjectNumber(this->getObjectNumber());
+}
+void 
+OptionsWidget::handleRangeofstudySelectionChanged(int index){
+ QLOG_INFO() << "OptionsWidget::handleRangeofstudySelectionChanged";
+ if ( rangeofstudy->currentText() == "Wide field" )  {
+   nxmp->setText(QString::number(0));
+   nymp->setText(QString::number(0));
+   nzmp->setText(QString::number(0));
+   nxmpLabel->show();
+   nxmp->show();
+   nympLabel->show();
+   nymp->show();
+   nzmpLabel->show();
+   nzmp->show();
+   emptynxmpLabel->show();
+   emptynympLabel->show();
+   emptynzmpLabel->show();  
+ }
+ else {
+   nxmp->setText(QString::number(0));
+   nymp->setText(QString::number(0));
+   nzmp->setText(QString::number(0));
+   nxmpLabel->hide();
+   nxmp->hide();
+   nympLabel->hide();
+   nymp->hide();
+   nzmpLabel->hide();
+   nzmp->hide();
+   emptynxmpLabel->hide();
+   emptynympLabel->hide();
+   emptynzmpLabel->hide();
+ }
 }
 void 
 OptionsWidget::handleBeamSelectionChanged(int index){
@@ -742,10 +794,16 @@ if (state == Qt::Checked) {
    zlens->show();
    ntypemicLabel->show();
    ntypemic->show();
+   if ( ntypemic->currentText() == "Holographic" )  {
+     naincLabel->hide();
+     nainc->hide();
+   }
+   else {
+     naincLabel->show();
+     nainc->show();
+   }
    nsideLabel->show();
    nside->show();
-   naincLabel->show();
-   nainc->show();
    dipolepsilon->setChecked(false);
  }
   else if (state == Qt::Unchecked) {
@@ -772,10 +830,14 @@ QLOG_INFO() << ntypemic->currentText() ;
 if ( ntypemic->currentText() == "Holographic" )  {
   beam->setEnabled( true );
   beamButton->setEnabled( true );
+  naincLabel->hide();
+  nainc->hide();
  }
  else {
    beam->setEnabled( false );
    beamButton->setEnabled( false );
+   naincLabel->show();
+   nainc->show();
 }  
 }
 void
@@ -880,9 +942,28 @@ OptionsWidget::nearfieldCheckBoxStateChanged(int state) {
    nxmp->setText(QString::number(0));
    nymp->setText(QString::number(0));
    nzmp->setText(QString::number(0));
-   nxmp->show();
-   nymp->show();
-   nzmp->show();
+   if (rangeofstudy->currentText() == "Wide field") {
+     nxmp->show();
+     nymp->show();
+     nzmp->show();
+     nxmpLabel->show();
+     nympLabel->show();
+     nzmpLabel->show();
+     emptynxmpLabel->show();
+     emptynympLabel->show();
+     emptynzmpLabel->show();     
+   }
+   else {
+     nxmp->hide();
+     nymp->hide();
+     nzmp->hide();
+     nxmpLabel->hide();
+     nympLabel->hide();
+     nzmpLabel->hide();
+     emptynxmpLabel->hide();
+     emptynympLabel->hide();
+     emptynzmpLabel->hide();
+   }
   }
   else if (state == Qt::Unchecked) {
    emptylocalfieldLabel->hide();
@@ -902,6 +983,12 @@ OptionsWidget::nearfieldCheckBoxStateChanged(int state) {
    nxmp->hide();
    nymp->hide();
    nzmp->hide();
+   nxmpLabel->hide();
+   nympLabel->hide();
+   nzmpLabel->hide();
+   emptynxmpLabel->hide();
+   emptynympLabel->hide();
+   emptynzmpLabel->hide();
   }
 }
 void 

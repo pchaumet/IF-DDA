@@ -102,8 +102,9 @@ c     compute the Residue
          tol1=dsqrt(tol1)/NORM
 c     as we begin with ITNO=-1
          nloop=nloop+1
-c     write(*,*) 'GPBICG1 tol1',tol1,tmp/NORM
-         
+        
+c         write(*,*) 'GPBICG1 tol1',tol1,tmp/NORM,ncompte
+c         write(*,*) 'FF',FF
          
       elseif (methodeit(1:7).eq.'GPBICG2') then
  2009    call GPBICG2(XI,XR,FF0,ldabi,ndim,nlar,nou,WRK,NLOOP,Nlim
@@ -1069,7 +1070,7 @@ c     compute the Residue
          tol1=dsqrt(tol1)/NORM
 c     as we begin with ITNO=-1
          nloop=nloop+1
-         write(*,*) 'CORS tol1',tol1,tmp/NORM
+c         write(*,*) 'CORS tol1',tol1,tmp/NORM
          
          
       else

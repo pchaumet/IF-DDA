@@ -69,7 +69,7 @@ c     variable pour le bright field
 
 
       write(*,*) '***** Bright field microscope ******'
-
+      write(*,*) 'Numerical aperture condenser: ',numaperinc
 c     initialise
       zero=0.d0
       pi=dacos(-1.d0)
@@ -156,6 +156,7 @@ c     calcul de deltak
          write(*,*) 'Final delta k incident : ',deltak,'m-1'
       endif
 
+      deltaky=deltakx
       ideltam=imaxinc
 
       ii=0
@@ -247,7 +248,7 @@ c     calcul champ incident
                   enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
-
+c                  write(*,*) 'inc',k0,E0,ss,pp ,kxinc,kyinc,FF0
 c     calcul champ local
                   if (nrig.eq.0) then
                      tol=tolinit
@@ -264,7 +265,6 @@ c     calcul champ local
      $                       ,planf,planb,nstop,infostr)
                         if (nstop.eq.1) return
                      else
-
                         call inverserigopt(FFTTENSORxx,FFTTENSORxy
      $                       ,FFTTENSORxz,FFTTENSORyy,FFTTENSORyz
      $                       ,FFTTENSORzz,vectx,vecty,vectz,ntotalm
@@ -589,7 +589,7 @@ c     Beam propagation method
 
                      if (nstop.eq.1) return
 
-                     
+                   
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,k)
 !$OMP DO SCHEDULE(STATIC)       
                      do i=1,nbsphere
@@ -610,10 +610,11 @@ c     *********************************************************
 c     *********************************************************            
 c     calcul champ diffracte
 c     *********************************************************
-c                  write(*,*) 'fff local',FF
+c                  write(*,*) 'fff local0',FFloc
+c                  write(*,*) 'fff local1',FF
                   if (nquicklens.eq.1) then
-c                    write(*,*) 'fff local',nx,ny,nz,nxm,nym,nzm,nfft2d
-c    $                    ,k0,imaxk0,deltakx,deltaky
+c                     write(*,*) 'fff local2',nx,ny,nz,nxm,nym,nzm,nfft2d
+c     $                    ,k0,imaxk0,deltakx,deltaky
                      call diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d
      $                    ,k0,xs,ys,zs,aretecube,Efourierx,Efouriery
      $                    ,Efourierz,FF,imaxk0,deltakx,deltaky
@@ -622,9 +623,7 @@ c    $                    ,k0,imaxk0,deltakx,deltaky
 c                     write(*,*) 'fff diff',Ediffkzpos
                      if (nstop.eq.1) return
                   else
-                     
-                     
-                     deltaky=deltakx
+                                        
                      do i=-imaxk0,imaxk0
                         kx=deltakx*dble(i)
                         do j=-imaxk0,imaxk0

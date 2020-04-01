@@ -1,10 +1,33 @@
+	version 0.6.7
+
+	1) réécriture de main.f pour le faire plus conviviale, meme modèle
+	que pour mainsurf.
+	2) refait un peu écriture des datas dans cdmlib.f.
+	3) suppression d'un write 999 et correction d'un zfocus qui
+	manquant dans private de openmp pour l'holographie.
+	4) création de quatre tests, les deux derniers testent bf et df. 4
+	tests sous options.db3 dans bin/tests.
+	5) test1, test2, test3 et test4 cohérents avec options.db3.
+	6) supression des écritures fort dans tout le code.
+	7) nett changé pour nettoyer les tests.
+	8) condenser mis en option suivant le choix du microscope dans le
+	menu déroulant.
+	9) additional side band mis à la bonne place avec le wide field et
+	plus dans numerical parameter.
+	10) remis quelques légende au propre dans l'interface cdm.
+
+	----------------------------------------------------------------
+	version 0.6.6
+
+	1) Dans cdmRunWidget.cpp si df et bf alors ne trace pas la phase
+	pour les composantes car pas de sens.
+	2) nett ajouter pour nettoyer ce qui est dans tests.
+
+	----------------------------------------------------------------
 	version 0.6.5
 
 	1) changement nom version.
 	2) dans bf et df ameliore un peu rapidite: k02 et kpara
-	3) Dans cdmRunWidget.cpp si df et bf alors ne trace pas la phase
-	pour les composantes car pas de sens.
-	4) nett ajouter pour nettoyer ce qui est dans tests.
 
 
 	----------------------------------------------------------------
