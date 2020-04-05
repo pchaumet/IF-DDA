@@ -133,6 +133,7 @@ c     variable pour avoir l'image a travers la lentille
       parameter (nfft2d=1024)
       double precision kx,ky,kz,deltakx,deltaky,numaper,deltax,gross
      $     ,numaperinc,zlens
+      integer tabfft2(nfft2d)
       double precision kxy(nfft2d),xy(nfft2d)
       double complex Eimagex(nfft2d*nfft2d),Eimagey(nfft2d*nfft2d)
      $     ,Eimagez(nfft2d*nfft2d),Eimageincx(nfft2d*nfft2d)
@@ -639,7 +640,7 @@ c     taille double complex (8*nxm*nym*nzm)
 c     taille double complex (nfft2d,nfft2d,3)
      $     Ediffkzpos,Ediffkzneg,
 c     taille entier (nxm*nym*nzm)
-     $     Tabdip,Tabmulti)
+     $     Tabdip,Tabmulti,tabfft2)
 c     output
   
       if (nstop.eq.0) then

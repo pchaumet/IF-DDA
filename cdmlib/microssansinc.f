@@ -2,7 +2,7 @@
      $     ,FFTTENSORyy,FFTTENSORyz,FFTTENSORzz,vectx,vecty,vectz
      $     ,ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm,nx,ny,nz ,nx2,ny2
      $     ,nxy2,nz2,ndipole,nbsphere,nbsphere3,nproche,nrig,nfft2d
-     $     ,tabdip,XI ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon
+     $     ,tabfft2 ,tabdip,XI ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon
      $     ,methodeit,tolinit,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube
      $     ,numaper,numaperinc,npolainc,nquicklens,eps0,k0,P0 ,irra,w0
      $     ,gross,zlens,Eimagex,Eimagey,Eimagez ,Efourierx,Efouriery
@@ -19,6 +19,7 @@ c     variables en argument
      $     ,ny2,nxy2,nz2,nbsphere,nbsphere3,nloop,ncompte,nstop,nfft2d
      $     ,ndipole,nproche,nrig,nmat,ipol,npol,npolainc,nquicklens
      $     ,nside,niter,niterii
+      integer tabfft2(nfft2d)
       double precision tol,tolinit,tol1,aretecube,eps0,k0,P0,irra,w0,I0
      $     ,numaper,numaperinc,gross,deltax,x,y,z,zlens
       DOUBLE PRECISION,DIMENSION(nxm*nym*nzm)::xs,ys,zs
@@ -586,10 +587,10 @@ c     *********************************************************
 c     calcul champ diffracte
 c     *********************************************************            
             if (nquicklens.eq.1) then
-               call diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d,k0
-     $              ,xs,ys,zs,aretecube,Efourierx,Efouriery,Efourierz
-     $              ,FF,imaxk0,deltakx,deltaky,Ediffkzpos,numaper,nside
-     $              ,plan2f,plan2b ,nstop ,infostr)
+               call diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d
+     $              ,tabfft2,k0,xs,ys,zs,aretecube,Efourierx,Efouriery
+     $              ,Efourierz,FF,imaxk0,deltakx,deltaky,Ediffkzpos
+     $              ,numaper,nside,plan2f,plan2b ,nstop ,infostr)
                if (nstop.eq.1) return
                   
             else
@@ -854,7 +855,7 @@ c********************************************************
      $     ,FFTTENSORyy,FFTTENSORyz,FFTTENSORzz,vectx,vecty,vectz
      $     ,ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm,nx,ny,nz ,nx2,ny2
      $     ,nxy2,nz2,ndipole,nbsphere,nbsphere3,nproche,nrig,nfft2d
-     $     ,tabdip,XI ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon
+     $     ,tabfft2,tabdip,XI ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon
      $     ,methodeit,tolinit,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube
      $     ,numaper,numaperinc,npolainc,nquicklens,eps0,k0,P0 ,irra,w0
      $     ,gross,zlens,Eimagex ,Eimagey,Eimagez ,Efourierx,Efouriery
@@ -870,6 +871,7 @@ c     variables en argument
      $     ,ny2,nxy2,nz2,nbsphere,nbsphere3,nloop,ncompte,nstop,nfft2d
      $     ,ndipole,nproche,nrig,nmat,ipol,npol,npolainc,nquicklens
      $     ,nside,niter,niterii
+      integer tabfft2(nfft2d)
       double precision tol,tolinit,tol1,aretecube,eps0,k0,P0,irra,w0,I0
      $     ,numaper,numaperinc,gross,deltax,zlens
       DOUBLE PRECISION,DIMENSION(nxm*nym*nzm)::xs,ys,zs
@@ -1015,7 +1017,7 @@ c     calcul de deltak
          enddo
       enddo
 
-      if (nfft2d.gt.4096) then
+      if (nfft2d.gt.16384) then
          nstop=1
          infostr='nfft2d too large'
          return
@@ -1454,8 +1456,8 @@ c     *********************************************************
                   if (nquicklens.eq.1) then
                      
                      call diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d
-     $                    ,k0,xs,ys,zs,aretecube,Efourierx,Efouriery
-     $                    ,Efourierz,FF,imaxk0,deltakx,deltaky
+     $                    ,tabfft2,k0,xs,ys,zs,aretecube,Efourierx
+     $                    ,Efouriery,Efourierz,FF,imaxk0,deltakx,deltaky
      $                    ,Ediffkzpos,numaper,nside,plan2f,plan2b ,nstop
      $                    ,infostr)
                      if (nstop.eq.1) return

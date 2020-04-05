@@ -1,6 +1,6 @@
-      subroutine diffractefft2d(nx,ny,nz,nxm,nym,nzm,nfft2d,k0,xs,ys,zs
-     $     ,aretecube,Eloinx,Eloiny,Eloinz,FF,imax,deltakx,deltaky
-     $     ,Ediffkzpos,Ediffkzneg,plan2f,plan2b,nstop,infostr)
+      subroutine diffractefft2d(nx,ny,nz,nxm,nym,nzm,nfft2d,tabfft2,k0
+     $     ,xs,ys,zs,aretecube,Eloinx,Eloiny,Eloinz,FF,imax,deltakx
+     $     ,deltaky,Ediffkzpos,Ediffkzneg,plan2f,plan2b,nstop,infostr)
       implicit none
       integer nx,ny,nz,nxm,nym,nzm,nfft2d,nstop,IFO
       double precision xs(nxm*nym*nzm),ys(nxm*nym*nzm),zs(nxm*nym*nzm)
@@ -8,7 +8,7 @@
       double complex FF(3*nxm*nym*nzm),Ediffkzpos(nfft2d,nfft2d,3)
      $     ,Ediffkzneg(nfft2d,nfft2d,3)
 
-      integer nfft2d2,imax,i,j,k,tabfft2(4096),indice,kk,ii,jj
+      integer nfft2d2,imax,i,j,k,tabfft2(nfft2d),indice,kk,ii,jj
       double precision deltakx,deltaky,var1,var2,kx,ky,kz,fac,pi
       double complex ctmp,ctmp1,icomp,Eloinx(nfft2d*nfft2d)
      $     ,Eloiny(nfft2d*nfft2d),Eloinz(nfft2d*nfft2d)
@@ -29,18 +29,20 @@
       var2=(ys(1)+dble(nfft2d2)*aretecube)*deltaky
 c     fac=dble(nfft2d*nfft2d)
       fac=1.d0
-      if (nfft2d.gt.4096) then
+      if (nfft2d.gt.16384) then
          nstop=1
          infostr='nfft2d too large'
          return
       endif
       IFO=2
-    
+
+      
       if (deltakx.ge.k0) then
          nstop=1
          infostr='In FFT Poynting nfft2d too small'
          return
       endif
+      
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i)
 !$OMP DO SCHEDULE(STATIC) 
       do i=1,nfft2d
@@ -52,7 +54,7 @@ c     fac=dble(nfft2d*nfft2d)
       enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
-      
+
       imax=nint(k0/deltakx)+1
       write(*,*) 'deltakx',deltakx,imax,k0
       if (2*imax+1.gt.nfft2d) then

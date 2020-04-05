@@ -56,8 +56,8 @@ c     taille double complex (8*nxm*nym*nzm)
      $     FFTTENSORzz,vectx,vecty,vectz,
 c     taille double complex (nfft2d,nfft2d,3)
      $     Ediffkzpos,Ediffkzneg,
-c     taille entier (nxm*nym*nzm)
-     $     Tabdip,Tabmulti)
+c     taille entier (nxm*nym*nzm) et nfft2d pour tabfft2
+     $     Tabdip,Tabmulti,tabfft2)
 
 #ifdef USE_HDF5
       use HDF5
@@ -178,7 +178,7 @@ c     variable pour avoir l'image a travers la lentille
       integer nlentille,nobjet,nfft2d,nfft2d2
       double precision kx,ky,kz,deltakx,deltaky,numaper,numaperinc
      $     ,deltax,gross,zlens,sintmp,costmp,u(3),v(3)
-
+      integer tabfft2(nfft2d)
       DOUBLE PRECISION,DIMENSION(max((ntheta+1)*nphi,nfft2d
      $     *nfft2d))::thetafield,phifield,poyntingfield
       double complex Ediffkzpos(nfft2d,nfft2d,3),Ediffkzneg(nfft2d
@@ -817,11 +817,6 @@ c     Built the object
          return
       endif
       write(*,*) 'Object under study created       : ',trim(object)
-      if (nprochefft.eq.1) then
-         if (nx.eq.nxm.and.ny.eq.nym.and.nz.eq.nzm) then
-            nprochefft=0
-         endif
-      endif
       if (nstop.eq.1) return
 c     if (nnnr*nnnr*nnnr.gt.nmax) then
 c     nstop=1
@@ -2913,10 +2908,10 @@ c     save the Poynting vecteur
          else
 c     compute the diffracted field with FFT
             write(*,*) 'Diffracted field: Quick method with FFT'
-            call diffractefft2d(nx,ny,nz,nxm,nym,nzm,nfft2d,k0,xs,ys,zs
-     $           ,aretecube,Efourierx,Efouriery,Efourierz,FF,imaxk0
-     $           ,deltakx,deltaky,Ediffkzpos,Ediffkzneg,plan2f,plan2b
-     $           ,nstop,infostr)
+            call diffractefft2d(nx,ny,nz,nxm,nym,nzm,nfft2d,tabfft2,k0
+     $           ,xs,ys,zs,aretecube,Efourierx,Efouriery,Efourierz,FF
+     $           ,imaxk0,deltakx,deltaky,Ediffkzpos,Ediffkzneg,plan2f
+     $           ,plan2b,nstop,infostr)
 c            write(*,*) 'ff diff',Ediffkzpos
             write(*,*) 'End Quick method with FFT'
             if (nstop.eq.1) return
@@ -3679,9 +3674,9 @@ c     calcul sur des forces et couple sur differents objets si presents
          write(*,*) '******** BEGIN ENERGY CONSERVATION *******'
          write(*,*) '******************************************'
          
-         call diffractefft2denergie(nx,ny,nz,nxm,nym,nzm,nfft2d,k0,xs,ys
-     $        ,zs,E0,ss,pp,theta,phi,thetam ,phim, ppm, ssm,E0m,nbinc
-     $        ,xdip,ydip,zdip,xgaus,ygaus,zgaus ,w0,aretecube,tol
+         call diffractefft2denergie(nx,ny,nz,nxm,nym,nzm,nfft2d,tabfft2
+     $        ,k0,xs,ys,zs,E0,ss,pp,theta,phi,thetam ,phim, ppm, ssm,E0m
+     $        ,nbinc,xdip,ydip,zdip,xgaus,ygaus,zgaus ,w0,aretecube,tol
      $        ,Efourierx,Efouriery,Efourierz,FF,imaxk0 ,deltakx,deltaky
      $        ,Ediffkzpos,Ediffkzneg,beam,efficacite ,efficaciteref
      $        ,efficacitetrans,nsectionsca,nquickdiffracte,plan2f,plan2b
@@ -3705,7 +3700,7 @@ c         write(*,*) 'ff diff',Ediffkzpos
          write(*,*) 'Microscopy with NA    :',numaper
          write(*,*) 'Magnifying factor     :',gross
          write(*,*) 'Type of Microscopy    :',ntypemic,'(0 holography)'
-         write(*,*) 'Position focal plane  :',zlens
+         write(*,*) 'Position focal plane  :',zlens*dble(nside)
          
          nfft2d2=nfft2d/2
          numaper=numaper*k0
@@ -3776,13 +3771,13 @@ c     recalcul la pola
      $              ,FFTTENSORyy,FFTTENSORyz,FFTTENSORzz,vectx,vecty
      $              ,vectz ,ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm
      $              ,nx,ny,nz ,nx2,ny2 ,nxy2,nz2,ndipole,nbsphere
-     $              ,nbsphere3,nproche ,nrig,nfft2d ,tabdip,XI ,XR,wrk
-     $              ,FF,FF0 ,FFloc ,polarisa ,epsilon ,methodeit,tolinit
-     $              ,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube ,numaper
-     $              ,numaperinc ,npolainc,nquicklens,eps0,k0,P0 ,irra,w0
-     $              ,gross,zlens ,Eimagex ,Eimagey,Eimagez ,Efourierx
-     $              ,Efouriery ,Efourierz,Eimageincx ,Eimageincy
-     $              ,Eimageincz ,Efourierincx ,Efourierincy
+     $              ,nbsphere3,nproche ,nrig,nfft2d,tabfft2,tabdip,XI
+     $              ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon ,methodeit
+     $              ,tolinit ,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube
+     $              ,numaper ,numaperinc ,npolainc,nquicklens,eps0,k0,P0
+     $              ,irra,w0 ,gross,zlens ,Eimagex ,Eimagey,Eimagez
+     $              ,Efourierx ,Efouriery ,Efourierz,Eimageincx
+     $              ,Eimageincy ,Eimageincz ,Efourierincx ,Efourierincy
      $              ,Efourierincz ,Ediffkzpos ,Ediffkzneg,kxy,xy,nside
      $              ,planf ,planb ,plan2f ,plan2b ,nmat,file_id
      $              ,group_idmic ,nstop ,infostr)
@@ -3791,14 +3786,14 @@ c     recalcul la pola
      $              ,FFTTENSORyy,FFTTENSORyz,FFTTENSORzz,vectx,vecty
      $              ,vectz ,ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm
      $              ,nx,ny,nz ,nx2,ny2 ,nxy2,nz2,ndipole,nbsphere
-     $              ,nbsphere3,nproche ,nrig,nfft2d ,tabdip,XI ,XR,wrk
-     $              ,FF,FF0 ,FFloc ,polarisa ,epsilon ,methodeit,tolinit
-     $              ,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube ,numaper
-     $              ,numaperinc ,npolainc,nquicklens,eps0,k0,P0 ,irra,w0
-     $              ,gross,zlens ,Eimagex ,Eimagey,Eimagez ,Efourierx
-     $              ,Efouriery ,Efourierz ,Ediffkzpos ,Ediffkzneg,kxy,xy
-     $              ,nside ,planf ,planb ,plan2f ,plan2b ,nmat,file_id
-     $              ,group_idmic ,nstop ,infostr)
+     $              ,nbsphere3,nproche ,nrig,nfft2d,tabfft2,tabdip,XI
+     $              ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon ,methodeit
+     $              ,tolinit ,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube
+     $              ,numaper ,numaperinc ,npolainc,nquicklens,eps0,k0,P0
+     $              ,irra,w0 ,gross,zlens ,Eimagex ,Eimagey,Eimagez
+     $              ,Efourierx ,Efouriery ,Efourierz ,Ediffkzpos
+     $              ,Ediffkzneg,kxy,xy ,nside ,planf ,planb ,plan2f
+     $              ,plan2b ,nmat,file_id ,group_idmic ,nstop ,infostr)
             endif
             
             if (nstop.eq.1) return            
@@ -3808,13 +3803,13 @@ c     recalcul la pola
      $              ,FFTTENSORyy,FFTTENSORyz,FFTTENSORzz,vectx,vecty
      $              ,vectz ,ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm
      $              ,nx,ny,nz ,nx2,ny2 ,nxy2,nz2,ndipole,nbsphere
-     $              ,nbsphere3,nproche ,nrig,nfft2d ,tabdip,XI ,XR,wrk
-     $              ,FF,FF0 ,FFloc ,polarisa ,epsilon ,methodeit,tolinit
-     $              ,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube ,numaper
-     $              ,numaperinc ,npolainc,nquicklens,eps0,k0,P0 ,irra,w0
-     $              ,gross,zlens ,Eimagex ,Eimagey,Eimagez ,Efourierx
-     $              ,Efouriery ,Efourierz,Eimageincx ,Eimageincy
-     $              ,Eimageincz ,Efourierincx ,Efourierincy
+     $              ,nbsphere3,nproche ,nrig,nfft2d,tabfft2,tabdip,XI
+     $              ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon ,methodeit
+     $              ,tolinit ,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube
+     $              ,numaper ,numaperinc ,npolainc,nquicklens,eps0,k0,P0
+     $              ,irra,w0 ,gross,zlens ,Eimagex ,Eimagey,Eimagez
+     $              ,Efourierx ,Efouriery ,Efourierz,Eimageincx
+     $              ,Eimageincy ,Eimageincz ,Efourierincx ,Efourierincy
      $              ,Efourierincz ,Ediffkzpos ,Ediffkzneg,kxy,xy,nside
      $              ,planf ,planb ,plan2f ,plan2b ,nmat,file_id
      $              ,group_idmic ,nstop ,infostr)
@@ -3824,14 +3819,14 @@ c     recalcul la pola
      $              ,FFTTENSORyy,FFTTENSORyz,FFTTENSORzz,vectx,vecty
      $              ,vectz ,ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm
      $              ,nx,ny,nz ,nx2,ny2 ,nxy2,nz2,ndipole,nbsphere
-     $              ,nbsphere3,nproche ,nrig,nfft2d ,tabdip,XI ,XR,wrk
-     $              ,FF,FF0 ,FFloc ,polarisa ,epsilon ,methodeit,tolinit
-     $              ,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube ,numaper
-     $              ,numaperinc ,npolainc,nquicklens,eps0,k0,P0 ,irra,w0
-     $              ,gross,zlens ,Eimagex ,Eimagey,Eimagez ,Efourierx
-     $              ,Efouriery ,Efourierz,Ediffkzpos ,Ediffkzneg,kxy,xy
-     $              ,nside ,planf ,planb ,plan2f ,plan2b ,nmat ,file_id
-     $              ,group_idmic,nstop ,infostr)
+     $              ,nbsphere3,nproche ,nrig,nfft2d,tabfft2,tabdip,XI
+     $              ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon ,methodeit
+     $              ,tolinit ,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube
+     $              ,numaper ,numaperinc ,npolainc,nquicklens,eps0,k0,P0
+     $              ,irra,w0 ,gross,zlens ,Eimagex ,Eimagey,Eimagez
+     $              ,Efourierx ,Efouriery ,Efourierz,Ediffkzpos
+     $              ,Ediffkzneg,kxy,xy ,nside ,planf ,planb ,plan2f
+     $              ,plan2b ,nmat ,file_id ,group_idmic,nstop ,infostr)
                
             endif
             if (nstop.eq.1) return
@@ -4118,10 +4113,10 @@ c            write(*,*) 'ff Eimage',Eimagex
             if (nsectionsca*nquickdiffracte.eq.0.and.nenergie.eq.0) then
 c               write(*,*) 'ff local',nx,ny,nz,nxm,nym,nzm,nfft2d ,k0
 c     $              ,imaxk0,deltakx,deltaky
-               call diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d,k0,xs
-     $              ,ys,zs,aretecube,Efourierx,Efouriery,Efourierz,FF
-     $              ,imaxk0,deltakx,deltaky,Ediffkzpos,numaper,nside
-     $              ,plan2f ,plan2b,nstop ,infostr)
+               call diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d
+     $              ,tabfft2,k0,xs,ys,zs,aretecube,Efourierx,Efouriery
+     $              ,Efourierz,FF,imaxk0,deltakx,deltaky,Ediffkzpos
+     $              ,numaper,nside,plan2f ,plan2b,nstop ,infostr)
                if (nstop.eq.1) return
 c               write(*,*) 'ff diff',Ediffkzpos
             elseif (nsectionsca*nquickdiffracte.eq.1.and.nenergie.eq.0)

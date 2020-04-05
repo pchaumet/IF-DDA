@@ -1,6 +1,7 @@
-      subroutine diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d,k0,xs,ys
-     $     ,zs,aretecube,Eloinx,Eloiny,Eloinz,FF,imax,deltakx,deltaky
-     $     ,Ediffkzpos,numaper,nside,plan2f,plan2b,nstop,infostr)
+      subroutine diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d,tabfft2
+     $     ,k0,xs,ys,zs,aretecube,Eloinx,Eloiny,Eloinz,FF,imax,deltakx
+     $     ,deltaky,Ediffkzpos,numaper,nside,plan2f,plan2b,nstop
+     $     ,infostr)
       implicit none
       integer nx,ny,nz,nxm,nym,nzm,nfft2d,nstop,nside
       double precision xs(nxm*nym*nzm),ys(nxm*nym*nzm),zs(nxm*nym*nzm)
@@ -8,7 +9,7 @@
       double complex FF(3*nxm*nym*nzm),Ediffkzpos(nfft2d,nfft2d,3)
 
 
-      integer nfft2d2,imax,i,j,k,tabfft2(4096),indice,kk,ii,jj
+      integer nfft2d2,imax,i,j,k,tabfft2(nfft2d),indice,kk,ii,jj
       double precision deltakx,deltaky,var1,var2,kx,ky,kz,fac,pi
       double complex ctmp,ctmp1,icomp,Eloinx(nfft2d*nfft2d)
      $     ,Eloiny(nfft2d*nfft2d),Eloinz(nfft2d*nfft2d)

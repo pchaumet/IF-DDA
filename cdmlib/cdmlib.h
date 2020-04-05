@@ -65,7 +65,9 @@ int cdmlib_( // input file cdm.in
 //     taille double complex (nfft2d,nfft2d,3)
         dcmplx *Ediffkzpos, dcmplx *Ediffkzneg,
 //     taille entier (nxm*nym*nzm)
-        int *Tabdip, int *Tabmulti
+        int *Tabdip, int *Tabmulti,
+//     taille entier (nfft2d)
+        int *Tabfft2	
 	);
 }
 

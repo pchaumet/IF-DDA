@@ -371,7 +371,7 @@ OptionsWindow::tofile(){
     opt << "   Quick computation:" << options->getMicroscopyFFT() << endl;
     opt << "   numerical aperture:" << options->getNA() << endl;
     opt << "   magnification:" << options->getGross() << endl;
-    opt << "Microscope [0=Holographic, 1=Brightfield, 2=Darkfield & phase]:" << options->getNrig() << endl;
+    opt << "Microscope [0=Holographic, 1=Brightfield, 2=Darkfield & phase]:" << options->getNtypemic() << endl;
   }
   opt << " force checked:" << options->getForce() << endl;
   if ( options->getForce() ) {

@@ -2,7 +2,7 @@
      $     ,FFTTENSORyy,FFTTENSORyz,FFTTENSORzz,vectx,vecty,vectz
      $     ,ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm,nx,ny,nz ,nx2,ny2
      $     ,nxy2,nz2,ndipole,nbsphere,nbsphere3,nproche,nrig,nfft2d
-     $     ,tabdip,XI ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon
+     $     ,tabfft2 ,tabdip,XI ,XR,wrk ,FF,FF0 ,FFloc ,polarisa ,epsilon
      $     ,methodeit,tolinit,tol1 ,nloop ,ncompte,xs ,ys,zs ,aretecube
      $     ,numaper,numaperinc,npolainc,nquicklens,eps0,k0,P0 ,irra,w0
      $     ,gross,zlens,Eimagex ,Eimagey,Eimagez ,Efourierx,Efouriery
@@ -21,6 +21,7 @@ c     variables en argument
      $     ,ny2,nxy2,nz2,nbsphere,nbsphere3,nloop,ncompte,nstop,nfft2d
      $     ,ndipole,nproche,nrig,nmat,ipol,npol,npolainc,nquicklens
      $     ,nside,niter,niterii
+      integer tabfft2(nfft2d)
       double precision tol,tolinit,tol1,aretecube,eps0,k0,k02,P0,irra,w0
      $     ,I0,numaper,numaperinc,gross,deltax,zlens
       DOUBLE PRECISION,DIMENSION(nxm*nym*nzm)::xs,ys,zs
@@ -170,7 +171,7 @@ c     calcul de deltak
          enddo
       enddo
 
-      if (nfft2d.gt.4096) then
+      if (nfft2d.gt.16384) then
          nstop=1
          infostr='nfft2d too large'
          return
@@ -207,6 +208,8 @@ c      P0=1.d0
 c      npol=1
       call irradiance(P0,w0,E0,irra)
       I0=cdabs(E0)**2
+      write(*,*) 'Magnitude of each illumination:',E0
+c      write(*,*) 'Position of the focal plane    :',zlens
       niterii=0
       do ipol=1,npol
        
@@ -616,8 +619,8 @@ c                  write(*,*) 'fff local1',FF
 c                     write(*,*) 'fff local2',nx,ny,nz,nxm,nym,nzm,nfft2d
 c     $                    ,k0,imaxk0,deltakx,deltaky
                      call diffractefft2dlens(nx,ny,nz,nxm,nym,nzm,nfft2d
-     $                    ,k0,xs,ys,zs,aretecube,Efourierx,Efouriery
-     $                    ,Efourierz,FF,imaxk0,deltakx,deltaky
+     $                    ,tabfft2,k0,xs,ys,zs,aretecube,Efourierx
+     $                    ,Efouriery,Efourierz,FF,imaxk0,deltakx,deltaky
      $                    ,Ediffkzpos,numaper,nside,plan2f,plan2b ,nstop
      $                    ,infostr)
 c                     write(*,*) 'fff diff',Ediffkzpos
@@ -710,7 +713,7 @@ c     *********************************************************
                         if (tmp.le.numaper*numaper) then
                            kz=dsqrt(k02-tmp)
                            zfocus=cdexp(icomp*kz*zlens)
-
+c                           write(*,*) 'zfocus',zfocus,icomp,kz,zlens
                            ii=imaxk0+i+1
                            jj=imaxk0+j+1
                            Efourierx(indice)=Ediffkzpos(ii,jj,1)*zfocus

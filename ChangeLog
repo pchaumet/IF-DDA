@@ -1,3 +1,22 @@
+	version 0.6.8
+
+	1) Passe la gestion de nxmp=nymp=nzmp=0 dans le C++ et plus dans
+	le fortran. Du coup elimine aussi un bug avec object arbitrary sur
+	le tracé.
+	2) passe dans le fortran tabfft2 en tableau dans toute les
+	routines, de par ce fait tableau défini dans le code main.
+	3) Dans la liste des arguments pour la fft passe à un maxi de
+	16384 dans le menu déroulant.
+	4) introduction de tabfft2 dans le C++
+	5) correction oublie de tabfft2 dans microssansinc.f
+	6) ajout de tabfft2 dans les main.f qui sont dans les tests.
+	7) setNtypemic(query.value(37).toInt()) était en double ainsi que
+	nside!!
+	8) ntypemic->setCurrentIndex(0); enlevé il ne faut pas l'intialiser
+	c'est le load qui le fait.
+	9) correction concordance entre test3 et test4 avec les main.f
+
+	-----------------------------------------------------------
 	version 0.6.7
 
 	1) réécriture de main.f pour le faire plus conviviale, meme modèle

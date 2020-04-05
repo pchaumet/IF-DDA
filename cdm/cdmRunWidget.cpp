@@ -269,17 +269,7 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
     int opticaltorqueCheck;
     opticaltorqueCheck = options->getOpticaltorque();
     int opticaltorquedensityCheck;
-    opticaltorquedensityCheck = options->getOpticaltorquedensity();
-    int nprocheCheck;
-    options->setNproche(options->getNproche());
-    if ( options->getObjectNumber() > 1 ) {
-       if ( options->getNproche() == 0 )
-          options->setNproche(1);
-    }
-    if ( options->getNearfield() == 0) {
-      options->setNproche(0);
-    }
-    nprocheCheck = options->getNproche();    
+    opticaltorquedensityCheck = options->getOpticaltorquedensity();     
     int microscopyCheck;
     microscopyCheck = options->getMicroscopy();
     int microscopyFFTCheck;
@@ -309,6 +299,23 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
     nzmp = options->getNzmp();
     ntheta = options->getNtheta();
     nphi = options->getNphi();
+    if (options->getNproche() ==2 ) {
+      if (nxmp == 0  && nymp == 0 && nzmp == 0) {
+	options->setNproche(1);
+      }
+    }
+    int nprocheCheck;
+    options->setNproche(options->getNproche());
+    if ( options->getObjectNumber() > 1 ) {
+       if ( options->getNproche() == 0 )
+          options->setNproche(1);
+    }
+    if ( options->getNearfield() == 0) {
+      options->setNproche(0);
+    }
+    nprocheCheck = options->getNproche();  
+
+    
     if (options->getObject() == "cuboid (meshsize)" || options->getObject() == "random spheres (meshsize)" || options->getObject() == "inhomogeneous cuboid (meshsize)") {
       if (options->getNproche() !=2) {
 	nxm = options->getNxx();
@@ -382,7 +389,6 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
     nside = options->getNside();
     int ntypemic;
     ntypemic = options->getNtypemic();
-
     QLOG_DEBUG () << "Beam:" << options->getNtypemic() << ntypemic;
     QLOG_DEBUG () << "Beam:" << options->getNside() << nside;
 
@@ -560,7 +566,7 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
      }
    }
    QLOG_DEBUG () << "fftv:" << nfft2d;
-   if (nfft2d > 4096) {
+   if (nfft2d > 16384) {
      *infoMessage = QString("Meshsize too small for microscopy");
      return;
    }
@@ -581,7 +587,7 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
    double psiobj;
    psiobj = options->getPsiobj();
    QLOG_DEBUG () << "Psi object:" << QString::number(psiobj,'g',5);
-
+  
    // planewavecircular.in files
    double theta;
    theta = options->getIncidenceangle_theta_z();
@@ -679,7 +685,7 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
    dcmplx *FFTTENSORyy, *FFTTENSORyz, *FFTTENSORzz;
    dcmplx *vectx, *vecty, *vectz;
    dcmplx *Ediffkzpos, *Ediffkzneg;
-   int *Tabdip, *Tabmulti;
+   int *Tabdip, *Tabmulti, *Tabfft2;
 
    // Clean up memory
    run->cleanVectorsMemory();
@@ -698,7 +704,7 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
      return;
     }
    else
-     QLOG_INFO() << "Memory used=" << needed_mem << "MB (available memory="
+     QLOG_DEBUG() << "Memory used=" << needed_mem << "MB (available memory="
                  << available_mem << "MB)";
     
    incidentfield = run->getIncidentField();
@@ -770,7 +776,8 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
    Ediffkzneg = run->getEdiffkzneg();
    Tabdip = run->getTabdip();
    Tabmulti = run->getTabmulti();
-   
+   Tabfft2 = run->getTabfft2();
+
    cdmlib_(&wavelength, beam, object, anisotropy, material,
 	   &discretization, &tolerance, methodeit, polarizability, &quad, &nreadCheck, filereread, &nmatlabCheck, fileh5,
 	   &localfieldCheck, &macroscopicfieldCheck, &crosssectionCheck,
@@ -825,7 +832,7 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
 //     taille double complex (nfft2d,nfft2d,3)
            (dcmplx*)Ediffkzpos,(dcmplx*)Ediffkzneg,
 //     taille entier (nxm*nym*nzm)
-           (int*)Tabdip, (int*)Tabmulti
+           (int*)Tabdip, (int*)Tabmulti, (int*)Tabfft2
 	   );
    /*dcmplx *_epstest = run->getEpsilonField();
        for (int k = 0 ; k < nxm*nym*nzm*3*3; k++)
@@ -859,7 +866,7 @@ void cdmlibwrapper(Options *options, Run *run, QString *infoMessage, int *stopFl
    run->setOpticalTorquey(opticaltorque[1]);
    run->setOpticalTorquez(opticaltorque[2]);
    run->setOpticalTorqueModulus(opticaltorquedensity);
-//   QLOG_INFO() << "cdmlibwrapper> Thread finished";
+//   QLOG_DEBUG() << "cdmlibwrapper> Thread finished";
 }
 void 
 RunWidget::displayFinishedBox()
@@ -874,7 +881,7 @@ RunWidget::displayFinishedBox()
 void 
 RunWidget::displayResults()
 {
-   QLOG_INFO () << "!!! THE RESULTS !!!"; 
+   QLOG_DEBUG () << "!!! THE RESULTS !!!"; 
    int nmax = options->getNxm()*options->getNym()*options->getNzm();
    int nmaxs = (options->getNxm() - 1)*(options->getNym() - 1)*(options->getNzm() - 1);
    // Scalar results

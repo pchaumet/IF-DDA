@@ -1,11 +1,11 @@
 c     Cette fonction calcul le champ diffracté sur un plan, d'ou la
 c     correction en -2i pi gamma.
-      subroutine diffractefft2denergie(nx,ny,nz,nxm,nym,nzm,nfft2d,k0,xs
-     $     ,ys,zs,E0,ss,pp,theta,phi,thetam ,phim, ppm, ssm,E0m,nbinc
-     $     ,xdip ,ydip,zdip,xgaus,ygaus,zgaus ,w0,aretecube,tol,Eloinx
-     $     ,Eloiny,Eloinz,FF,imax,deltakx ,deltaky,Ediffkzpos,Ediffkzneg
-     $     ,beam,efficacite,efficaciteref ,efficacitetrans,nsectionsca
-     $     ,nquickdiffracte,plan2f,plan2b,nstop ,infostr)
+      subroutine diffractefft2denergie(nx,ny,nz,nxm,nym,nzm,nfft2d
+     $     ,tabfft2,k0,xs,ys,zs,E0,ss,pp,theta,phi,thetam ,phim, ppm,
+     $     ssm,E0m,nbinc,xdip ,ydip,zdip,xgaus,ygaus,zgaus ,w0,aretecube
+     $     ,tol,Eloinx,Eloiny,Eloinz,FF,imax,deltakx ,deltaky,Ediffkzpos
+     $     ,Ediffkzneg,beam,efficacite,efficaciteref ,efficacitetrans
+     $     ,nsectionsca,nquickdiffracte,plan2f,plan2b,nstop ,infostr)
       implicit none
       integer nx,ny,nz,nxm,nym,nzm,nfft2d,nstop,nsectionsca
      $     ,nquickdiffracte
@@ -14,7 +14,7 @@ c     correction en -2i pi gamma.
       double complex FF(3*nxm*nym*nzm),Ediffkzpos(nfft2d,nfft2d,3)
      $     ,Ediffkzneg(nfft2d,nfft2d,3)
 
-      integer nfft2d2,imax,i,j,k,tabfft2(4096),indice,kk,ii,jj
+      integer nfft2d2,imax,i,j,k,tabfft2(nfft2d),indice,kk,ii,jj
       double precision deltakx,deltaky,var1,var2,kx,ky,kz,fac,pi
       double complex ctmp,ctmp1,icomp,Eloinx(nfft2d*nfft2d)
      $     ,Eloiny(nfft2d*nfft2d),Eloinz(nfft2d*nfft2d)
@@ -47,7 +47,7 @@ c     energie
       var2=(ys(1)+dble(nfft2d2)*aretecube)*deltaky
       k02=k0*k0
       write(*,*) 'delta k',deltakx,'m-1'
-      if (nfft2d.gt.4096) then
+      if (nfft2d.gt.16384) then
          nstop=1
          infostr='nfft2d too large'
          return

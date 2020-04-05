@@ -101,7 +101,8 @@ class Run
    dcmplx* getEdiffkzneg();
    int* getTabdip();
    int* getTabmulti();
-
+   int* getTabfft2();
+  
    QString  getName();
    int      getObjectSubunits();
    int      getMeshSubunits();
@@ -202,7 +203,7 @@ class Run
     dcmplx *FFTTENSORyy, *FFTTENSORyz, *FFTTENSORzz;
     dcmplx *vectx, *vecty, *vectz;
     dcmplx *Ediffkzpos, *Ediffkzneg;
-    int *Tabdip, *Tabmulti;
+    int *Tabdip, *Tabmulti, *Tabfft2;
 
     QString runname;
 

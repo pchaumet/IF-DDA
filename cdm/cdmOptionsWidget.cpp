@@ -232,10 +232,9 @@ OptionsWidget::OptionsWidget(QMainWindow *_mainwindow, Options *_options)
   ntypemic->addItems(options->ntypemicList);
   ntypemic->setCurrentIndex(options->getNtypemic());
   ntypemic->setFixedWidth(150);
-  ntypemic->setCurrentIndex(0);
   connect(ntypemic, SIGNAL(currentIndexChanged(int)),this,
 	SLOT(ntypemicStateChanged(int)));
-
+  QLOG_DEBUG() << " TYPE  MIC2 " << options->getNtypemic() << ntypemic->currentText();
   nsideLabel = new QLabel("Side of observation");
   nside      = new QComboBox();
   nside->addItems(options->nsideList);
@@ -243,7 +242,7 @@ OptionsWidget::OptionsWidget(QMainWindow *_mainwindow, Options *_options)
   nside->setFixedWidth(150);
   connect(nside, SIGNAL(currentIndexChanged(int)),this,
 	SLOT(nsideStateChanged(int)));
-
+ QLOG_DEBUG() << " TYPE  SIDE2 " << options->getNside() << nside->currentText();
   studymicroscopylayout->addWidget(ntypemicLabel,0,1,Qt::AlignLeft);
   studymicroscopylayout->addWidget(ntypemic,0,2,Qt::AlignLeft);  
   studymicroscopylayout->addWidget(nsideLabel,1,1,Qt::AlignLeft);
@@ -352,7 +351,7 @@ OptionsWidget::OptionsWidget(QMainWindow *_mainwindow, Options *_options)
   //    nyy->setFixedWidth(40);
   //    nzz = new QLineEdit(QString::number(options->getNzz()));
   //    nzz->setFixedWidth(40);
-  //    QLOG_INFO() << " UPDATE NXX = " << options->getNxx();
+  //    QLOG_DEBUG() << " UPDATE NXX = " << options->getNxx();
 
   QBoxLayout   *beamlayout = new QBoxLayout(QBoxLayout::LeftToRight);
   beamlayout->addWidget(beam);
@@ -528,13 +527,13 @@ OptionsWidget::execute() {
 }
 void
 OptionsWidget::saveName() {
-  QLOG_INFO() << "PRESENT SAVE NAME " << name;
+  QLOG_DEBUG() << "PRESENT SAVE NAME " << name;
   this->updateOptions();
   if (name == "new") {
     nameLineEdit->clear();
     descriptionLineEdit->clear();
     cfgWindow->exec();
-    QLOG_INFO() << "NEW SAVE NAME " << name;
+    QLOG_DEBUG() << "NEW SAVE NAME " << name;
   }
   else {
    nameLineEdit->setText(name);
@@ -543,17 +542,17 @@ OptionsWidget::saveName() {
 }
 void
 OptionsWidget::saveAsName() {
-  QLOG_INFO() << "PRESENT SAVE NAME " << name;
+  QLOG_DEBUG() << "PRESENT SAVE NAME " << name;
   this->updateOptions();
   nameLineEdit->clear();
   descriptionLineEdit->clear();
   cfgWindow->exec();
-  QLOG_INFO() << "NEW SAVE NAME " << name;
+  QLOG_DEBUG() << "NEW SAVE NAME " << name;
 }
 void 
 OptionsWidget::finish() {
  name = nameLineEdit->text();
- QLOG_INFO() << "OptionsWidget::finish() " << name;
+ QLOG_DEBUG() << "OptionsWidget::finish() " << name;
  if ( name == "" ) {
    QMessageBox::warning(this, "Warning:", "Enter a valid name");
    return;
@@ -605,7 +604,7 @@ OptionsWidget::handleObjectNumberSelectionChanged(int index) {
 }
 void 
 OptionsWidget::handleRangeofstudySelectionChanged(int index){
- QLOG_INFO() << "OptionsWidget::handleRangeofstudySelectionChanged";
+ QLOG_DEBUG() << "OptionsWidget::handleRangeofstudySelectionChanged";
  if ( rangeofstudy->currentText() == "Wide field" )  {
    nxmp->setText(QString::number(0));
    nymp->setText(QString::number(0));
@@ -794,6 +793,7 @@ if (state == Qt::Checked) {
    zlens->show();
    ntypemicLabel->show();
    ntypemic->show();
+    QLOG_DEBUG() << " TYPE  MIC3 " << options->getNtypemic() << ntypemic->currentText();
    if ( ntypemic->currentText() == "Holographic" )  {
      naincLabel->hide();
      nainc->hide();
@@ -826,8 +826,9 @@ if (state == Qt::Checked) {
 }
 void 
 OptionsWidget::ntypemicStateChanged(int state) {
-QLOG_INFO() << ntypemic->currentText() ;
-if ( ntypemic->currentText() == "Holographic" )  {
+QLOG_DEBUG() << ntypemic->currentText() ;
+QLOG_DEBUG() << " TYPE  MIC3 " << options->getNtypemic() << ntypemic->currentText();
+ if ( ntypemic->currentText() == "Holographic" )  {
   beam->setEnabled( true );
   beamButton->setEnabled( true );
   naincLabel->hide();
@@ -1227,7 +1228,7 @@ OptionsWidget::update() {
   //    nxx->setText(QString::number(options->getNxx()));
   //    nyy->setText(QString::number(options->getNyy()));
   //    nzz->setText(QString::number(options->getNzz()));
-  //    QLOG_INFO() << " UPDATE NXX = " << options->getNxx();
+  //    QLOG_DEBUG() << " UPDATE NXX = " << options->getNxx();
 }
 void 
 OptionsWidget::updateOptions() {
@@ -1284,7 +1285,7 @@ OptionsWidget::updateOptions() {
   //      options->setNxx(nxx->text().toInt());
   //      options->setNyy(nyy->text().toInt());
    //     options->setNzz(nzz->text().toInt());
-  //      QLOG_INFO() << " UPDATE NXX = " << options->getNxx();
+  //      QLOG_DEBUG() << " UPDATE NXX = " << options->getNxx();
   }
   else {
     options->setNxm(this->getDiscretization());
@@ -1296,7 +1297,7 @@ OptionsWidget::updateOptions() {
   //      options->setNxx(nxx->text().toInt());
   //      options->setNyy(nyy->text().toInt());
    //     options->setNzz(nzz->text().toInt());
-   //     QLOG_INFO() << " UPDATE NXX = " << options->getNxx();
+   //     QLOG_DEBUG() << " UPDATE NXX = " << options->getNxx();
   }
   options->setNtheta(ntheta->text().toInt());
   options->setNphi(nphi->text().toInt());

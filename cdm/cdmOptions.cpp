@@ -32,7 +32,7 @@ Options::Options()
 
   quadList = (QStringList() << "0" << "1" <<  "2" << "3" << "4" << "5");
 
-  nfft2dList = (QStringList() << "64" << "128" << "256" <<  "512"  << "768" << "1024" << "1536" << "2048" << "3072" << "4096");
+  nfft2dList = (QStringList() << "64" << "128" << "256" <<  "512"  << "768" << "1024" << "1536" << "2048" << "3072" << "4096" << "8192" << "16384");
   
   nrigList = (QStringList() << "rigorous" << "renormalized Born" << "Born"
 	                    << "Born order 1" << "renormalized Rytov" << "Rytov"
@@ -608,6 +608,7 @@ Options::loadDb(QString name){
 	     "microscopyFFT,opticalforce,opticalforcedensity,opticaltorque,opticaltorquedensity,nproche," 
 	     "nxx,nyy,nzz,nxmp,nymp,nzmp,ntheta,nphi,na,nainc,gross,zlens,ntypemic,nside,meshsize,nfft2d,advancedinterface from run_tbl where parent='" + name + "'");
   QLOG_DEBUG () << "SELECT RUN_TBL" << query.lastError().text();
+  QLOG_DEBUG () << "SELECT RUN_TBL" << query.value(37).toInt();
   while (query.next()) {
     this->setMethodeit(query.value(0).toString());
     this->setPolarizability(query.value(1).toString());
@@ -646,11 +647,12 @@ Options::loadDb(QString name){
     this->setNAinc(query.value(34).toDouble());    
     this->setGross(query.value(35).toDouble());
     this->setZlens(query.value(36).toDouble());    
-    this->setNtypemic(query.value(37).toDouble());
-    this->setNside(query.value(38).toDouble());
+    this->setNtypemic(query.value(37).toInt());
+    this->setNside(query.value(38).toInt());
     this->setMeshsize(query.value(39).toDouble());
     this->setnfft2d(query.value(40).toInt());
     this->setAdvancedinterface(query.value(41).toInt());
+    QLOG_DEBUG () << "SELECT TYPEMIC" << query.value(37).toInt();
   }
 }
 void 

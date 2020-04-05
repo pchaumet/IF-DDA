@@ -54,7 +54,7 @@ c     variable pour champ incident
 !$OMP ENDDO 
 !$OMP END PARALLEL
             
-      if (nfft2d.gt.4096) then
+      if (nfft2d.gt.16384) then
          nstop=1
          infostr='nfft2d too large'
          return
