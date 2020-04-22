@@ -1,3 +1,27 @@
+	version 0.6.9
+
+	1) pb objet arbitrary nxmp=nymp=nzmp=0 pas d'affichage: En fait pb
+	quand nmat=2 et ecriture local et macro.Dans ce cas, la mise en
+	mémoire n'était pas fait et pas de plot possble. Rectifier
+	ecriture fait comme avec la surface dans cdmlib.f
+	2) Dans objet arbitrary passe na a 0 si -1 choisi car forcement 0
+	pour nproche dans objetarbitrary.f
+	3) changement nom version en 0.6.9.
+	4) remet la memoire ecrit pour savoir ce qu'on utilise et supprime
+	les logs qui servaient pas.
+	5)  if (minz == maxz) {
+      minz=minz*0.5;
+      maxz=maxz*1.5;
+	}
+	pour rangez pour définir en même temps la colorbar. et evite le
+	cas aussi ou les deux vallent zero.
+
+
+
+	interpolation vraiment moche?
+
+
+	----------------------------------------------------------
 	version 0.6.8
 
 	1) Passe la gestion de nxmp=nymp=nzmp=0 dans le C++ et plus dans

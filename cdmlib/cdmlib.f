@@ -2531,51 +2531,7 @@ c     debut calcul du champ local et macro dans juste l'objet
                      write(43,*) 0.d0
                   endif
                enddo
-            elseif (nmat.eq.2) then
-               do i=1,ndipole
-                  k=tabdip(i)
-                  if (k.ne.0) then
-                     ii=3*(k-1)
-                     wrk(i,1)=FFloc(ii+1)
-                     wrk(i,2)=FFloc(ii+2)
-                     wrk(i,3)=FFloc(ii+3)
-                     wrk(i,4)= dsqrt(dreal(FFloc(ii+1) *dconjg(FFloc(ii
-     $                    +1))+FFloc(ii+2) *dconjg(FFloc(ii +2))
-     $                    +FFloc(ii+3) *dconjg(FFloc(ii+3))))
-                 
-                  else
-                     wrk(i,1)=0.d0
-                     wrk(i,2)=0.d0
-                     wrk(i,3)=0.d0
-                     wrk(i,4)=0.d0 
-                  endif
-               enddo
-               dim(1)=ndipole
-               dim(2)=nmax*3
-               datasetname='Local field modulus'
-               call hdf5write1d(group_idnf,datasetname,dreal(wrk(:,4)),
-     $              dim)
-               datasetname='Local field x component real part'
-               call hdf5write1d(group_idnf,datasetname,dreal(Wrk(:,1))
-     $              ,dim)
-               datasetname='Local field x component imaginary part'
-               call hdf5write1d(group_idnf,datasetname,dimag(Wrk(:,1))
-     $              ,dim)
-               datasetname='Local field y component real part'
-               call hdf5write1d(group_idnf,datasetname,dreal(Wrk(:,2))
-     $              ,dim)
-               datasetname='Local field y component imaginary part'
-               call hdf5write1d(group_idnf,datasetname,dimag(Wrk(:,2))
-     $              ,dim)
-               datasetname='Local field z component real part'
-               call hdf5write1d(group_idnf,datasetname,dreal(Wrk(:,3))
-     $              ,dim)
-               datasetname='Local field z component imaginary part'
-               call hdf5write1d(group_idnf,datasetname,dimag(Wrk(:,3))
-     $              ,dim)
-               
             else
-
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,k,ii)   
 !$OMP DO SCHEDULE(STATIC)
                do i=1,ndipole
@@ -2592,7 +2548,54 @@ c     debut calcul du champ local et macro dans juste l'objet
                   endif
                enddo
 !$OMP ENDDO 
-!$OMP END PARALLEL                 
+!$OMP END PARALLEL        
+
+               if (nmat.eq.2) then
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,k)   
+!$OMP DO SCHEDULE(STATIC)                  
+                  do i=1,ndipole
+                     k=tabdip(i)
+                     if (k.ne.0) then
+                        wrk(i,1)=localfieldx(k)
+                        wrk(i,2)=localfieldy(k)
+                        wrk(i,3)=localfieldz(k)
+                        wrk(i,4)= dsqrt(dreal(localfieldx(k)
+     $                       *dconjg(localfieldx(k))+localfieldy(k)
+     $                       *dconjg(localfieldy(k))+localfieldz(k)
+     $                       *dconjg(localfieldz(k))))
+                     else
+                        wrk(i,1)=0.d0
+                        wrk(i,2)=0.d0
+                        wrk(i,3)=0.d0
+                        wrk(i,4)=0.d0 
+                     endif
+                  enddo
+!$OMP ENDDO 
+!$OMP END PARALLEL                  
+                  dim(1)=ndipole
+                  dim(2)=nmax*3
+                  datasetname='Local field modulus'
+                  call hdf5write1d(group_idnf,datasetname,dreal(wrk(:
+     $                 ,4)),dim)
+                  datasetname='Local field x component real part'
+                  call hdf5write1d(group_idnf,datasetname,dreal(Wrk(:
+     $                 ,1)),dim)
+                  datasetname='Local field x component imaginary part'
+                  call hdf5write1d(group_idnf,datasetname,dimag(Wrk(:
+     $                 ,1)),dim)
+                  datasetname='Local field y component real part'
+                  call hdf5write1d(group_idnf,datasetname,dreal(Wrk(:
+     $                 ,2)),dim)
+                  datasetname='Local field y component imaginary part'
+                  call hdf5write1d(group_idnf,datasetname,dimag(Wrk(:
+     $                 ,2)),dim)
+                  datasetname='Local field z component real part'
+                  call hdf5write1d(group_idnf,datasetname,dreal(Wrk(:
+     $                 ,3)),dim)
+                  datasetname='Local field z component imaginary part'
+                  call hdf5write1d(group_idnf,datasetname,dimag(Wrk(:
+     $                 ,3)),dim)
+               endif
             endif
 c     Close Intensity of the local field
             close(40)
@@ -2636,8 +2639,10 @@ c     compute and save the macroscopic field
                      write(47,*) 0.d0
                   endif
                enddo
-            elseif (nmat.eq.2) then
+            else
                nsens=1
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,k,ii,jj,Eloc,epsani,Em)   
+!$OMP DO SCHEDULE(STATIC)
                do i=1,ndipole
                   k=tabdip(i)
                   if (k.ne.0) then
@@ -2649,21 +2654,42 @@ c     compute and save the macroscopic field
                         do jj=1,3
                            epsani(ii,jj)=epsilon(k,ii,jj)
                         enddo
-                     enddo 
-                     
+                     enddo                      
                      call local_macro(Eloc,Em,epsani,aretecube,k0,nsens)
-                     wrk(i,1)=Em(1)
-                     wrk(i,2)=Em(2)
-                     wrk(i,3)=Em(3)
-                     wrk(i,4)=dsqrt(dreal(Em(1) *dconjg(Em(1))+Em(2)
-     $                    *dconjg(Em(2))+Em(3) *dconjg(Em(3))))
-                  else
-                     wrk(i,1)=0.d0
-                     wrk(i,2)=0.d0
-                     wrk(i,3)=0.d0
-                     wrk(i,4)=0.d0
+                     macroscopicfieldx(k)=Em(1)
+                     macroscopicfieldy(k)=Em(2)
+                     macroscopicfieldz(k)=Em(3)
+                     macroscopicfield(k)= dsqrt(dreal(Em(1)
+     $                    *dconjg(Em(1))+Em(2)*dconjg(Em(2))+Em(3)
+     $                    *dconjg(Em(3))))
                   endif
                enddo
+!$OMP ENDDO 
+!$OMP END PARALLEL
+               if (nmat.eq.2) then
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,k)   
+!$OMP DO SCHEDULE(STATIC)
+                  do i=1,ndipole
+                     k=tabdip(i)
+                     if (k.ne.0) then
+                        wrk(i,1)=macroscopicfieldx(k)
+                        wrk(i,2)=macroscopicfieldy(k)
+                        wrk(i,3)=macroscopicfieldz(k)
+                        wrk(i,4)=dsqrt(dreal(macroscopicfieldx(k)
+     $                       *dconjg(macroscopicfieldx(k))
+     $                       +macroscopicfieldy(k)
+     $                       *dconjg(macroscopicfieldy(k))
+     $                       +macroscopicfieldz(k)
+     $                       *dconjg(macroscopicfieldz(k))))
+                     else
+                        wrk(i,1)=0.d0
+                        wrk(i,2)=0.d0
+                        wrk(i,3)=0.d0
+                        wrk(i,4)=0.d0
+                     endif
+                  enddo
+!$OMP ENDDO 
+!$OMP END PARALLEL    
 
                  dim(1)=ndipole
                  dim(2)=nmax*3
@@ -2691,33 +2717,7 @@ c     compute and save the macroscopic field
      $                ='Macroscopic field z component imaginary part'
                  call hdf5write1d(group_idnf,datasetname,dimag(Wrk(:,3))
      $                ,dim)
-            else
-               nsens=1
-!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,k,ii,jj,Eloc,epsani,Em)   
-!$OMP DO SCHEDULE(STATIC)
-               do i=1,ndipole
-                  k=tabdip(i)
-                  if (k.ne.0) then
-                     ii=3*(k-1)
-                     Eloc(1)= FFloc(ii+1)
-                     Eloc(2)= FFloc(ii+2)
-                     Eloc(3)= FFloc(ii+3)
-                     do ii=1,3
-                        do jj=1,3
-                           epsani(ii,jj)=epsilon(k,ii,jj)
-                        enddo
-                     enddo                      
-                     call local_macro(Eloc,Em,epsani,aretecube,k0,nsens)
-                     macroscopicfieldx(k)=Em(1)
-                     macroscopicfieldy(k)=Em(2)
-                     macroscopicfieldz(k)=Em(3)
-                     macroscopicfield(k)= dsqrt(dreal(Em(1)
-     $                    *dconjg(Em(1))+Em(2)*dconjg(Em(2))+Em(3)
-     $                    *dconjg(Em(3))))
-                  endif
-               enddo
-!$OMP ENDDO 
-!$OMP END PARALLEL                 
+              endif       
             endif
 c     Close Intensity of the macroscopic field
             close(44)
@@ -3011,7 +3011,8 @@ c     save  the Poynting vecteur in kx ky
             deltatheta=pi/dble(ntheta)
             deltaphi=2.d0*pi/dble(nphi)
             cnt = 0
-
+c     calcul Poynting par interpolation en thta phi, avec les points
+c     calcules en kx,ky
             do itheta=0,ntheta
                thetas=deltatheta*dble(itheta)
                do iphi=0,nphi-1
@@ -3063,7 +3064,6 @@ c     save  the Poynting vecteur in kx ky
                      else
                         Emod=(Emod11+Emod12+Emod21+Emod22)/dble(4-test)
                      endif
-                     
                   else
                      Emod11=cdabs(Ediffkzneg(ii,jj,1))**2
      $                    +cdabs(Ediffkzneg(ii,jj,2))**2

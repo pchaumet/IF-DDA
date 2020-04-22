@@ -32,7 +32,8 @@
 
 c     Initialization
       nbsphere=0
-      ndipole=0 
+      ndipole=0
+      if (na.eq.-1) na=0
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i)
 !$OMP DO SCHEDULE(STATIC)
       do i=1,nmax

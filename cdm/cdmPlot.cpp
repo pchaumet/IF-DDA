@@ -247,10 +247,15 @@ PlotRaster::PlotRaster( QWidget *parent , QVector<QwtPoint3D> *_data,
     QwtInterval rangex = QwtInterval(minx,maxx);
     QwtInterval rangey = QwtInterval(miny,maxy);
     QwtInterval rangez;
-    if (minz == maxz) 
-      rangez = QwtInterval(minz*0.5,maxz*1.5);
-    else
-      rangez = QwtInterval(minz,maxz);
+    if (minz == maxz) {
+      minz=minz*0.5;
+      maxz=maxz*1.5;
+      if (minz == maxz) {
+	minz=-0.5;
+	maxz=0.5;
+      }
+    }
+    rangez = QwtInterval(minz,maxz);
     rasterdata->setInterval( Qt::XAxis, rangex );
     rasterdata->setInterval( Qt::YAxis, rangey );
     rasterdata->setInterval( Qt::ZAxis, rangez );

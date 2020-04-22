@@ -83,7 +83,7 @@ Run::~Run() {
 int
 Run::checkAvailableMemorySize() {
 
-  QLOG_INFO() << "Run debut mem ";
+  QLOG_DEBUG() << "Run debut mem ";
 #ifdef OS
 #if OS == LINUX
   //    long long pages = sysconf(_SC_AVPHYS_PAGES);
@@ -103,12 +103,12 @@ Run::checkAvailableMemorySize() {
 int
 Run::allocateVectorsMemory(int nmax, int ntheta, int nphi, int nfft2d, int obj_num) {
   
-  QLOG_INFO() << "Run::allocateVectorsMemory> "; 
+  QLOG_DEBUG() << "Run::allocateVectorsMemory> "; 
 
   int mem_used = 0;
 
-  QLOG_INFO() << "Run::allocateVectorsMemory::Memory allocation dcmplx:" << (int)sizeof(dcmplx);
-  QLOG_INFO() << "Run::allocateVectorsMemory::Memory allocation double:" << (int)sizeof(double);
+  QLOG_DEBUG() << "Run::allocateVectorsMemory::Memory allocation dcmplx:" << (int)sizeof(dcmplx);
+  QLOG_DEBUG() << "Run::allocateVectorsMemory::Memory allocation double:" << (int)sizeof(double);
   xc = (double*) malloc(sizeof(double)*nmax);
   if (xc == NULL) { 
     QLOG_FATAL() << "Run::allocateVectorsMemory::Memory allocation failed";

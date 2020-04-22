@@ -4,7 +4,7 @@
 
 TEMPLATE 	= 	lib
 
-VERSION         =       0.6.5
+VERSION         =       0.6.9
 
 TARGET 		=       cdmlib
 
