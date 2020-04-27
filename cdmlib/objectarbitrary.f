@@ -118,9 +118,12 @@ c     read the input file
                nbsphere=nbsphere+1
                Tabdip(ndipole)=nbsphere
 
-               if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) zs(i)
-               if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(21,*) ys(j)
-               if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) xs(k)
+               if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) zs(1)
+     $              +dble(i-1)*aretecube
+               if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(21,*) ys(1)
+     $              +dble(j-1)*aretecube
+               if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) xs(1)
+     $              +dble(k-1)*aretecube
 
                
                if (trope.eq.'iso') then

@@ -259,8 +259,8 @@ c     FFloc : champ local
       write(*,*) '******************************************'
       write(*,*) 'Wavelength           : ',lambda,'nm'
       write(*,*) 'Beam                 : ',trim(beam)
-      write(*,*) 'Object               : ',trim(object),' isotropy : '
-     $     ,trope
+      write(*,*) 'Object               : ',trim(object)
+      write(*,*) 'Isotropy             : ',trope
       write(*,*) 'Discretization       : ',nnnr
       write(*,*) 'Size of the box      : ',nxm,nym,nzm
       write(*,*) 'Iterative method     : ',methodeit
@@ -286,13 +286,13 @@ c     FFloc : champ local
       write(*,*) 'Integration Green    : ',nquad,'(0 no integration)'
       write(*,*) 'Write  file          : ',nmat
      $     ,'0 ascii file: 1 no file: 2 hdf5 file'
-      write(*,*) 'Use FFTW'
+
       if (nmat.eq.2) then
          debug=1
 #ifdef USE_HDF5
          call hdf5create(h5file, file_id)
-         write(*,*) 'h5 file created  ',trim(h5file)
-         write(*,*) 'file_id', file_id
+         write(*,*) 'h5 file created      : ',trim(h5file)
+         write(*,*) 'file_id              : ', file_id
          call h5gcreate_f(file_id,"Option", group_idopt, error)
          call h5gcreate_f(file_id,"Object", group_iddip, error)
          call h5gcreate_f(file_id,"Far Field", group_idff, error)
@@ -559,7 +559,7 @@ c     passe arbitrary car epsilon pas defini encore, car objet pas fait
             write(99,*) 'Relative permittivity',eps,materiau(1:2),lambda
          else
             if (trope(1:3).eq.'iso') then
-               write(*,*) 'Relative permittivity :',eps
+               write(*,*) 'Relative permittivity: ',eps
                write(99,*) 'Relative permittivity',eps
             else 
                do i=1,3
@@ -629,7 +629,7 @@ c     passe objet dans boite si utilise FFT
          nprochefft=nproche
          nproche=0
       endif
-      write(*,*) 'Number maximum of subunit :     nmax = ',nmax     
+      write(*,*) 'Number maximum of subunit      :nmax = ',nmax     
       write(*,*) 'Number of layer for the object :nnnr = ',nnnr
       write(*,*) 'Near field options :',nproche, 'Wide field :'
      $     ,nprochefft
@@ -1502,9 +1502,9 @@ c     cLose intensity of the incident field
          return
       endif
       
-      write(*,*) 'Power      : ',P0
-      write(*,*) 'Irradiance : ',irra
-      write(*,*) 'Intensity  : ',I0      
+      write(*,*) 'Power      : ',P0,'W'
+      write(*,*) 'Irradiance : ',irra,'W/m2'
+      write(*,*) 'Field      : ',E0      
       write(*,*) '********** END INCIDENT FIELD ***********'
       write(*,*) ' '
 
@@ -2413,7 +2413,6 @@ c     Close Intensity of the local field wide field
             close(142)
             close(143)
          endif
-         write(*,*) 'nlocal',nmacro,subunit
          if (nmacro.eq.1) then
             nsens=1
             if (nmat.eq.0) then
@@ -4174,7 +4173,7 @@ c     met a zero ce qui en dehors de l'AN
             write(*,*) 'Size of FFT           : ',nfft2d
             write(*,*) 'Step size delta k     : ',deltakx,'m-1'
             write(*,*) 'Step size delta x     : ',deltax,'m'
-            write(*,*) 'Number of point in NA : ',imaxk0
+            write(*,*) 'Number of point in NA : ',2*imaxk0+1
 c     calcul le champ incident
 
             if (nenergie.eq.0.and.nside.eq.1) then
@@ -4632,7 +4631,7 @@ c     output file
          CALL h5gclose_f(group_idof,error)
          CALL h5gclose_f(group_idnf,error)
          call hdf5close(file_id)
-         write(*,*) 'close h5file'
+         write(*,*) 'Close h5file'
 #else
         write(*,*) "No HDF5!"
 #endif

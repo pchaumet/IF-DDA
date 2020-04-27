@@ -56,7 +56,8 @@ c     fac=dble(nfft2d*nfft2d)
 !$OMP END PARALLEL
 
       imax=nint(k0/deltakx)+1
-      write(*,*) 'deltakx',deltakx,imax,k0
+      write(*,*) 'deltakx',deltakx,'m-1'
+      write(*,*) 'Number of point in NA',2*imax+1
       if (2*imax+1.gt.nfft2d) then
          write(99,*) '2*imax+1',imax,2*imax+1,nfft2d
          infostr='In FFT diffract nfft2d too small'
@@ -178,5 +179,5 @@ c     $                 ,3)*fac,ii,jj
       enddo
 
 
-      write(*,*) 'end diffracte'
+      write(*,*) 'End Computation diffracted field with FFT'
       end

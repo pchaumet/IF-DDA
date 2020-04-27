@@ -1,3 +1,10 @@
+	version 0.6.10
+
+	1) Erreur dans objet arbitrary sur la mise en memoire des x,y,z.
+	2) Changement dans l'écriture des data.
+
+	
+	----------------------------------------------------------
 	version 0.6.9
 
 	1) pb objet arbitrary nxmp=nymp=nzmp=0 pas d'affichage: En fait pb
