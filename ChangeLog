@@ -1,3 +1,19 @@
+ 	version 0.6.11
+
+	1) rajoute unité dans faisceau ecriture.
+	2) mis en if nmat.eq.0 de l'ouverture des fichiers matlab, evite
+	des ouvertures de fichiers vides dans cdmlib.f et tous les
+	fichiers qui crées les objets
+	3) Ecrit ds ifdda.m quel type de fichier on utilise.	
+	4) option print mis dans le ifdda.m
+	5) correction dans object pour ne pas ecrire quand nmat pas égale à 0.
+	6) meme correction que 5 sur xwf, ywf et zwf.
+
+	
+	Dans ifdda.m changement des titres pour etre en relatif, champ
+	local macroscopique et microscopie.
+
+	----------------------------------------------------------	
 	version 0.6.10
 
 	1) Erreur dans objet arbitrary sur la mise en memoire des x,y,z.

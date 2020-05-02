@@ -1,4 +1,4 @@
-function plotepsilony(heps,event,x,y,z,matxyepsr,matxyepsi)
+function plotepsilony(heps,event,x,y,z,matxyepsr,matxyepsi,nprint)
 
 % Gets the value of the parameter from the slider.
 Param = get(heps,'Value');
@@ -45,3 +45,6 @@ axis image
 title('Im(epsilon)')  
 colorbar('vert')
   
+if (nprint == 1)
+print('-f2','epsilon','-depsc')
+end

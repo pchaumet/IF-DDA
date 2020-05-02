@@ -1,4 +1,4 @@
-function plotmacrofieldz(hmacro,event,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz)
+function plotmacrofieldz(hmacro,event,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz,nprint)
 
 % Gets the value of the parameter from the slider.
 Param = get(hmacro,'Value');
@@ -69,4 +69,7 @@ axis image
 title(' z')  
 colorbar('vert')
 
-  
+if (nprint == 1)
+print('-f30','macroscopic','-depsc')
+end
+

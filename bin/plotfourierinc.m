@@ -1,4 +1,4 @@
-function plotfourierinc(hlocal,event,numaper,kxfourier,fourierm,fourierxc,fourieryc,fourierzc)
+function plotfourierinc(hlocal,event,numaper,kxfourier,fourierm,fourierxc,fourieryc,fourierzc,nprint)
 
 val = get(hlocal,'Value');
 
@@ -220,3 +220,7 @@ title('Phase Angle','Interpreter','latex','Fontsize',18)
 
 
 end;
+
+if (nprint == 1)
+print('-f450','fourierinc','-depsc')
+end

@@ -1,4 +1,4 @@
-function plotimageinc(hlocal,event,ximage,imagem,imagexc,imageyc,imagezc)
+function plotimageinc(hlocal,event,ximage,imagem,imagexc,imageyc,imagezc,nprint)
 
 val = get(hlocal,'Value');
 
@@ -142,3 +142,7 @@ ylabel('$k_y/k_0$','Interpreter','latex','Fontsize',18)
 
 
 end;
+
+if (nprint == 1)
+print('-f550','imageincwf','-depsc')
+end

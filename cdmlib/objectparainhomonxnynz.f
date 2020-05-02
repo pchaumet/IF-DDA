@@ -84,15 +84,16 @@ c     Initialization
       icomp=(0.d0,1.d0)
       ngraine=4*ng+1
 
-      
+      if (nmat.eq.0) then
 c     mesh 
-      open(20,file='x.mat')
-      open(21,file='y.mat')
-      open(22,file='z.mat')  
+         open(20,file='x.mat')
+         open(21,file='y.mat')
+         open(22,file='z.mat')  
 c     discretization of the object under study
-      open(10,file='xc.mat')
-      open(11,file='yc.mat')
-      open(12,file='zc.mat')  
+         open(10,file='xc.mat')
+         open(11,file='yc.mat')
+         open(12,file='zc.mat')  
+      endif
 
       nx=nxm-2*nxmp
       ny=nym-2*nymp
@@ -212,9 +213,9 @@ c     fin essai
 
                
 
-               if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) z+zg
-               if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(21,*) y+yg
-               if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) x+xg
+               if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(22,*) z+zg
+               if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(21,*) y+yg
+               if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(20,*) x+xg
 
                ndipole=ndipole+1  
                nbsphere=nbsphere+1

@@ -1,4 +1,4 @@
-function plotlocalfieldx(hlocal,event,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz)
+function plotlocalfieldx(hlocal,event,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz,nprint)
 
 % Gets the value of the parameter from the slider.
 Param = get(hlocal,'Value');
@@ -69,4 +69,7 @@ axis image
 title(' z')  
 colorbar('vert')
 
-  
+if (nprint == 1)
+print('-f20','local','-depsc')
+end
+

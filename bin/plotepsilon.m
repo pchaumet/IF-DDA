@@ -1,4 +1,4 @@
-function plotepsilon(hObject,event,nx,ny,nz,x,y,z,matxyepsilonr,matxyepsiloni)
+function plotepsilon(hObject,event,nx,ny,nz,x,y,z,matxyepsilonr,matxyepsiloni,nprint)
   val = get(hObject,'Value');
 
 maxepsr=max(max(max(matxyepsilonr)));
@@ -57,7 +57,10 @@ uicontrol('Style', 'text', 'String', 'm','Position', [640 15 15 20]);
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nz,...
 	  'val',1,'sliderstep',[1/(nz-1) 2/(nz-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotepsilonz,x,y,z,matxyepsilonr,matxyepsiloni});
+	  'Position', [350 10 200 30],'Callback', {@plotepsilonz,x,y,z,matxyepsilonr,matxyepsiloni,nprint});
+if (nprint == 1)
+print('-f2','epsilon','-depsc')
+end
 
 case 3
 
@@ -107,7 +110,11 @@ uicontrol('Style', 'text', 'String', 'Choice of y',...
 uicontrol('Style', 'text', 'String', 'm','Position', [640 15 15 20]);
 uicontrol('Style', 'slider', 'Min',1,'Max', ny,...
 	  'val',1,'sliderstep',[1/(ny-1) 2/(ny-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotepsilony,x,y,z,matxyepsilonr,matxyepsiloni});
+	  'Position', [350 10 200 30],'Callback', {@plotepsilony,x,y,z,matxyepsilonr,matxyepsiloni,nprint});
+if (nprint == 1)
+print('-f2','epsilon','-depsc')
+end
+
 case 4
 
 figure(2)
@@ -151,6 +158,7 @@ uicontrol('Style', 'text', 'String', 'Choice of x',...
 uicontrol('Style', 'text', 'String', 'm','Position', [640 15 15 20]);
 uicontrol('Style', 'slider', 'Min',1,'Max', nx,...
 	  'val',1,'sliderstep',[1/(nx-1) 2/(nx-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotepsilonx,x,y,z,matxyepsilonr,matxyepsiloni});
+	  'Position', [350 10 200 30],'Callback', {@plotepsilonx,x,y,z,matxyepsilonr,matxyepsiloni,nprint});
 
 end;
+

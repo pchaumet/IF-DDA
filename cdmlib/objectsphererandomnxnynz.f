@@ -90,17 +90,16 @@ c     Initialization
       
 c     diminue nnnr si pas bon facteur
 
-      write(*,*) 'nnn',nx,ny,nz
-
-      
+      if (nmat.eq.0) then
 c     mesh 
-      open(20,file='x.mat')
-      open(21,file='y.mat')
-      open(22,file='z.mat')  
+         open(20,file='x.mat')
+         open(21,file='y.mat')
+         open(22,file='z.mat')  
 c     discretization of the object under study
-      open(10,file='xc.mat')
-      open(11,file='yc.mat')
-      open(12,file='zc.mat')  
+         open(10,file='xc.mat')
+         open(11,file='yc.mat')
+         open(12,file='zc.mat')  
+      endif
 
       if (sidex.eq.0.d0) then
          nstop=1
@@ -178,9 +177,9 @@ c     test si intersection
                   y=-sidey/2.d0+aretecube*(dble(j)-0.5d0)
                   z=-sidez/2.d0+aretecube*(dble(i)-0.5d0)                 
 
-                  if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) z+zg
-                  if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(21,*) y+yg
-                  if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) x+xg
+                  if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(22,*) z+zg
+                  if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(21,*) y+yg
+                  if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(20,*) x+xg
 
                   ndipole=ndipole+1                   
                   
@@ -233,9 +232,9 @@ c     test si intersection
                   z=-sidez/2.d0+aretecube*(dble(i)-0.5d0)
                   
 
-                  if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) z+zg
-                  if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(21,*) y+yg
-                  if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) x+xg
+                  if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(22,*) z+zg
+                  if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(21,*) y+yg
+                  if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(20,*) x+xg
 
                   ndipole=ndipole+1  
                   nbsphere=nbsphere+1

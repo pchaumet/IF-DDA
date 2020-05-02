@@ -1,4 +1,4 @@
-function plotincifieldy(hinci,event,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz)
+function plotincifieldy(hinci,event,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz,nprint)
 
 % Gets the value of the parameter from the slider.
 Param = get(hinci,'Value');
@@ -66,5 +66,9 @@ ylabel('z')
 axis image
 title(' z')  
 colorbar('vert')
+
+if (nprint == 1)
+print('-f10','incident','-depsc')
+end
 
   

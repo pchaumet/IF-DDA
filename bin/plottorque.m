@@ -1,4 +1,4 @@
-function plottorque(hlocal,event,nx,ny,nz,x,y,z,xx,yy,zz,matxytorquex,matxytorquey,matxytorquez)
+function plottorque(hlocal,event,nx,ny,nz,x,y,z,xx,yy,zz,matxytorquex,matxytorquey,matxytorquez,nprint)
 
 val = get(hlocal,'Value');
 
@@ -30,7 +30,7 @@ ylabel('y')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nz,...
 'val',1,'sliderstep',[1/(nz-1) 2/(nz-1)],...
-'Position', [350 10 200 30],'Callback', {@plottorquez,xx,yy,z,matxytorquex,matxytorquey});
+'Position', [350 10 200 30],'Callback', {@plottorquez,xx,yy,z,matxytorquex,matxytorquey,nprint});
 
 
 case 3
@@ -60,7 +60,7 @@ ylabel('z')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', ny,...
 'val',1,'sliderstep',[1/(ny-1) 2/(ny-1)],...
-'Position', [350 10 200 30],'Callback', {@plottorquey,xx,zz,y,matxytorquex,matxytorquez});
+'Position', [350 10 200 30],'Callback', {@plottorquey,xx,zz,y,matxytorquex,matxytorquez,nprint});
 
 
 
@@ -91,8 +91,12 @@ ylabel('z')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nx,...
 'val',1,'sliderstep',[1/(nx-1) 2/(nx-1)],...
-'Position', [350 10 200 30],'Callback', {@plottorquex,yy,zz,x,matxytorquey,matxytorquez});
+'Position', [350 10 200 30],'Callback', {@plottorquex,yy,zz,x,matxytorquey,matxytorquez,nprint});
 
 
 
 end;
+
+if (nprint == 1)
+print('-f300','torque2d','-depsc')
+end

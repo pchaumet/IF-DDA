@@ -1,4 +1,4 @@
-function plotforcex(hlocal,event,yy,zz,x,matxyforcey,matxyforcez)
+function plotforcex(hlocal,event,yy,zz,x,matxyforcey,matxyforcez,nprint)
 
 % Gets the value of the parameter from the slider.
 Param = get(hlocal,'Value');
@@ -21,8 +21,12 @@ set(200,'DefaultTextfontWeight','Bold')
 set(200,'Position',[0 0 1000 600])
 scale=1
 
-  quiver(yy(i,:,:),zz(i,:,:),matxyforcey(i,:,:),matxyforcez(i,:,:),scale)
-  axis equal
+quiver(yy(i,:,:),zz(i,:,:),matxyforcey(i,:,:),matxyforcez(i,:,:),scale)
+axis equal
 xlabel('y')
 ylabel('z')
 
+
+if (nprint == 1)
+print('-f200','force2d','-depsc')
+end

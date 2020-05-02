@@ -1,4 +1,4 @@
-function plotmacrofield(hmacro,event,nx,ny,nz,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz)
+function plotmacrofield(hmacro,event,nx,ny,nz,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz,nprint)
   val = get(hmacro,'Value');
 
 
@@ -70,7 +70,7 @@ colorbar('vert')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nz,...
 	  'val',1,'sliderstep',[1/(nz-1) 2/(nz-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotmacrofieldz,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz});
+	  'Position', [350 10 200 30],'Callback', {@plotmacrofieldz,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz,nprint});
 
 case 3
 
@@ -137,7 +137,7 @@ colorbar('vert')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', ny,...
 	  'val',1,'sliderstep',[1/(ny-1) 2/(ny-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotmacrofieldy,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz});
+	  'Position', [350 10 200 30],'Callback', {@plotmacrofieldy,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz,nprint});
 
 
 case 4
@@ -206,7 +206,11 @@ colorbar('vert')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nx,...
 	  'val',1,'sliderstep',[1/(nx-1) 2/(nx-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotmacrofieldx,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz});
+	  'Position', [350 10 200 30],'Callback', {@plotmacrofieldx,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz,nprint});
 
 
 end;
+
+if (nprint == 1)
+print('-f30','macroscopic','-depsc')
+end

@@ -1,4 +1,4 @@
-function plotforce(hlocal,event,nx,ny,nz,x,y,z,xx,yy,zz,matxyforcex,matxyforcey,matxyforcez)
+function plotforce(hlocal,event,nx,ny,nz,x,y,z,xx,yy,zz,matxyforcex,matxyforcey,matxyforcez,nprint)
 
 val = get(hlocal,'Value');
 
@@ -30,7 +30,7 @@ ylabel('y')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nz,...
 'val',1,'sliderstep',[1/(nz-1) 2/(nz-1)],...
-'Position', [350 10 200 30],'Callback', {@plotforcez,xx,yy,z,matxyforcex,matxyforcey});
+	  'Position', [350 10 200 30],'Callback', {@plotforcez,xx,yy,z,matxyforcex,matxyforcey,nprint});
 
 
 case 3
@@ -60,7 +60,7 @@ ylabel('z')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', ny,...
 'val',1,'sliderstep',[1/(ny-1) 2/(ny-1)],...
-'Position', [350 10 200 30],'Callback', {@plotforcey,xx,zz,y,matxyforcex,matxyforcez});
+	  'Position', [350 10 200 30],'Callback', {@plotforcey,xx,zz,y,matxyforcex,matxyforcez,nprint});
 
 
 
@@ -91,8 +91,12 @@ ylabel('z')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nx,...
 'val',1,'sliderstep',[1/(nx-1) 2/(nx-1)],...
-'Position', [350 10 200 30],'Callback', {@plotforcex,yy,zz,x,matxyforcey,matxyforcez});
+	  'Position', [350 10 200 30],'Callback', {@plotforcex,yy,zz,x,matxyforcey,matxyforcez,nprint});
 
 
 
 end;
+
+if (nprint == 1)
+print('-f200','force2d','-depsc')
+end

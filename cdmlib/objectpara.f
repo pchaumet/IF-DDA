@@ -63,14 +63,16 @@ c     Initialization
       inv=1
       pi=dacos(-1.d0)
 
+      if (nmat.eq.0) then
 c     mesh 
-      open(20,file='x.mat')
-      open(21,file='y.mat')
-      open(22,file='z.mat')  
+         open(20,file='x.mat')
+         open(21,file='y.mat')
+         open(22,file='z.mat')  
 c     discretization of the object under study
-      open(10,file='xc.mat')
-      open(11,file='yc.mat')
-      open(12,file='zc.mat')  
+         open(10,file='xc.mat')
+         open(11,file='yc.mat')
+         open(12,file='zc.mat')  
+      endif
 
       sidex=sidex*1.d-9
       sidey=sidey*1.d-9
@@ -254,9 +256,9 @@ c     boite au plus pres de l'objet
                   y=-(y2-y1)/2.d0+aretecube*(dble(j)-0.5d0)
                   z=-(z2-z1)/2.d0+aretecube*(dble(i)-0.5d0)                 
 
-                  if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) z+zg
-                  if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(21,*) y+yg
-                  if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) x+xg
+                  if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(22,*) z+zg
+                  if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(21,*) y+yg
+                  if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(20,*) x+xg
 
                   ndipole=ndipole+1                   
 
@@ -314,9 +316,9 @@ c     z=-side/2.d0+aretecube*(dble(i)-0.5d0)
 
                   
 
-                  if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) z+zg
-                  if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(21,*) y+yg
-                  if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) x+xg
+                  if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(22,*) z+zg
+                  if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(21,*) y+yg
+                  if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(20,*) x+xg
 
                   ndipole=ndipole+1  
                   nbsphere=nbsphere+1

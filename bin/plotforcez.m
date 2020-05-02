@@ -1,4 +1,4 @@
-function plotforcez(hlocal,event,xx,yy,z,matxyforcex,matxyforcey)
+function plotforcez(hlocal,event,xx,yy,z,matxyforcex,matxyforcey,nprint)
 
 % Gets the value of the parameter from the slider.
 Param = get(hlocal,'Value');
@@ -27,3 +27,7 @@ quiver(xx(:,:,k),yy(:,:,k),matxyforcex(:,:,k),matxyforcey(:,:,k),scale)
 xlabel('x')
 ylabel('y')
 
+
+if (nprint == 1)
+print('-f200','force2d','-depsc')
+end

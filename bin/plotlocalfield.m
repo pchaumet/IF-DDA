@@ -1,4 +1,4 @@
-function plotlocalfield(hlocal,event,nx,ny,nz,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz)
+function plotlocalfield(hlocal,event,nx,ny,nz,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz,nprint)
   val = get(hlocal,'Value');
 
 
@@ -74,7 +74,7 @@ colorbar('vert')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nz,...
 	  'val',1,'sliderstep',[1/(nz-1) 2/(nz-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotlocalfieldz,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz});
+	  'Position', [350 10 200 30],'Callback', {@plotlocalfieldz,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz,nprint});
 
 case 3
 
@@ -141,7 +141,7 @@ colorbar('vert')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', ny,...
 	  'val',1,'sliderstep',[1/(ny-1) 2/(ny-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotlocalfieldy,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz});
+	  'Position', [350 10 200 30],'Callback', {@plotlocalfieldy,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz,nprint});
 
 
 case 4
@@ -210,7 +210,11 @@ colorbar('vert')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nx,...
 	  'val',1,'sliderstep',[1/(nx-1) 2/(nx-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotlocalfieldx,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz});
+	  'Position', [350 10 200 30],'Callback', {@plotlocalfieldx,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz,nprint});
 
 
 end;
+
+if (nprint == 1)
+print('-f20','local','-depsc')
+end

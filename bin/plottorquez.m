@@ -1,4 +1,4 @@
-function plottorquez(hlocal,event,xx,yy,z,matxytorquex,matxytorquey)
+function plottorquez(hlocal,event,xx,yy,z,matxytorquex,matxytorquey,nprint)
 
 % Gets the value of the parameter from the slider.
 Param = get(hlocal,'Value');
@@ -27,3 +27,6 @@ quiver(xx(:,:,k),yy(:,:,k),matxytorquex(:,:,k),matxytorquey(:,:,k),scale)
 xlabel('x')
 ylabel('y')
 
+if (nprint == 1)
+print('-f300','torque2d','-depsc')
+end

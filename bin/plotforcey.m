@@ -1,4 +1,4 @@
-function plotforcey(hlocal,event,xx,zz,y,matxyforcex,matxyforcez)
+function plotforcey(hlocal,event,xx,zz,y,matxyforcex,matxyforcez,nprint)
 
 % Gets the value of the parameter from the slider.
 Param = get(hlocal,'Value');
@@ -26,3 +26,7 @@ scale=1
 xlabel('x')
 ylabel('z')
 
+
+if (nprint == 1)
+print('-f200','force2d','-depsc')
+end

@@ -486,58 +486,60 @@ c     open the output file:
       open(99,file='output')
       write(99,*) '************* OUTPUT FILE ***************'
 
+      if (nmat.eq.0) then
 c     Intensity of the incident field
-      open(36,file='incidentfieldx.mat')
-      open(37,file='incidentfieldy.mat')
-      open(38,file='incidentfieldz.mat')
-      open(39,file='incidentfield.mat')
+         open(36,file='incidentfieldx.mat')
+         open(37,file='incidentfieldy.mat')
+         open(38,file='incidentfieldz.mat')
+         open(39,file='incidentfield.mat')
 c     Intensity of the local field
-      open(40,file='localfieldx.mat')
-      open(41,file='localfieldy.mat')
-      open(42,file='localfieldz.mat')
-      open(43,file='localfield.mat')
+         open(40,file='localfieldx.mat')
+         open(41,file='localfieldy.mat')
+         open(42,file='localfieldz.mat')
+         open(43,file='localfield.mat')
 c     Intensity of the macroscopic field
-      open(44,file='macroscopicfieldx.mat')
-      open(45,file='macroscopicfieldy.mat')
-      open(46,file='macroscopicfieldz.mat')
-      open(47,file='macroscopicfield.mat')
+         open(44,file='macroscopicfieldx.mat')
+         open(45,file='macroscopicfieldy.mat')
+         open(46,file='macroscopicfieldz.mat')
+         open(47,file='macroscopicfield.mat')
 c     Intensity of the incident field
-      open(136,file='incidentfieldxwf.mat')
-      open(137,file='incidentfieldywf.mat')
-      open(138,file='incidentfieldzwf.mat')
-      open(139,file='incidentfieldwf.mat')
+         open(136,file='incidentfieldxwf.mat')
+         open(137,file='incidentfieldywf.mat')
+         open(138,file='incidentfieldzwf.mat')
+         open(139,file='incidentfieldwf.mat')
 c     Intensity of the local field
-      open(140,file='localfieldxwf.mat')
-      open(141,file='localfieldywf.mat')
-      open(142,file='localfieldzwf.mat')
-      open(143,file='localfieldwf.mat')
+         open(140,file='localfieldxwf.mat')
+         open(141,file='localfieldywf.mat')
+         open(142,file='localfieldzwf.mat')
+         open(143,file='localfieldwf.mat')
 c     Intensity of the macroscopic field
-      open(144,file='macroscopicfieldxwf.mat')
-      open(145,file='macroscopicfieldywf.mat')
-      open(146,file='macroscopicfieldzwf.mat')
-      open(147,file='macroscopicfieldwf.mat')
+         open(144,file='macroscopicfieldxwf.mat')
+         open(145,file='macroscopicfieldywf.mat')
+         open(146,file='macroscopicfieldzwf.mat')
+         open(147,file='macroscopicfieldwf.mat')
 c     Far field discretization
-      open(67,file='xwf.mat')
-      open(68,file='ywf.mat')
-      open(69,file='zwf.mat')
+         open(67,file='xwf.mat')
+         open(68,file='ywf.mat')
+         open(69,file='zwf.mat')
 c     save the Poynting vecteur
-      open(50,file='poynting.mat')
-      open(51,file='theta.mat')
-      open(52,file='phi.mat')
+         open(50,file='poynting.mat')
+         open(51,file='theta.mat')
+         open(52,file='phi.mat')
 c     pour FFT
-      open(53,file='poyntingpos.mat')
-      open(54,file='poyntingneg.mat')
-      open(55,file='kx.mat')
-      open(56,file='ky.mat')
-
+         open(53,file='poyntingpos.mat')
+         open(54,file='poyntingneg.mat')
+         open(55,file='kx.mat')
+         open(56,file='ky.mat')
+         
 c     save the density of the optical force
-      open(60,file='forcex.mat')
-      open(61,file='forcey.mat')
-      open(62,file='forcez.mat')
+         open(60,file='forcex.mat')
+         open(61,file='forcey.mat')
+         open(62,file='forcez.mat')
 c     save the density of optical torque
-      open(63,file='torquex.mat')
-      open(64,file='torquey.mat')
-      open(65,file='torquez.mat')
+         open(63,file='torquex.mat')
+         open(64,file='torquey.mat')
+         open(65,file='torquez.mat')
+      endif
 
 c     compute the relative permittivity fron a database versus the
 c     wavelength of illumination
@@ -1504,7 +1506,7 @@ c     cLose intensity of the incident field
       
       write(*,*) 'Power      : ',P0,'W'
       write(*,*) 'Irradiance : ',irra,'W/m2'
-      write(*,*) 'Field      : ',E0      
+      write(*,*) 'Field      : ',E0,'V/m'      
       write(*,*) '********** END INCIDENT FIELD ***********'
       write(*,*) ' '
 
@@ -2127,9 +2129,9 @@ c     initialize and reuse polarisa : pola= background
                      yswf(cntwf) = y
                      xswf(cntwf) = x
                      
-                     if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(69,*) z
-                     if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(68,*) y
-                     if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(67,*) x
+                     if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(69,*) z
+                     if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(68,*) y
+                     if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(67,*) x
                      
                      subunit=subunit+1              
                      nsubunit=3*(subunit-1)
@@ -2166,9 +2168,9 @@ c     signe - pour compenser le signe moins dans la routibe AX: E=E0-(-Ap)
                      yswf(cntwf) = y
                      xswf(cntwf) = x
 
-                     if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(69,*) z
-                     if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(68,*) y
-                     if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(67,*) x
+                     if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(69,*) z
+                     if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(68,*) y
+                     if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(67,*) x
                      
                      subunit=subunit+1              
                      nsubunit=3*(subunit-1)

@@ -1,4 +1,4 @@
-function plotincifield(hinci,event,nx,ny,nz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz)
+function plotincifield(hinci,event,nx,ny,nz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz,nprint)
   val = get(hinci,'Value');
 
 
@@ -67,7 +67,7 @@ colorbar('vert')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nz,...
 	  'val',1,'sliderstep',[1/(nz-1) 2/(nz-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotincifieldz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz});
+	  'Position', [350 10 200 30],'Callback', {@plotincifieldz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz,nprint});
 
 case 3
 
@@ -134,7 +134,7 @@ colorbar('vert')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', ny,...
 	  'val',1,'sliderstep',[1/(ny-1) 2/(ny-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotincifieldy,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz});
+	  'Position', [350 10 200 30],'Callback', {@plotincifieldy,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz,nprint});
 
 
 case 4
@@ -203,7 +203,11 @@ colorbar('vert')
 
 uicontrol('Style', 'slider', 'Min',1,'Max', nx,...
 	  'val',1,'sliderstep',[1/(nx-1) 2/(nx-1)],...
-	  'Position', [350 10 200 30],'Callback', {@plotincifieldx,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz});
+	  'Position', [350 10 200 30],'Callback', {@plotincifieldx,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz,nprint});
 
 
 end;
+
+if (nprint == 1)
+print('-f10','incident','-depsc')
+end

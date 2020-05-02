@@ -70,15 +70,17 @@ c     Initialization
       ymin=1.d300
       zmax=-1.d300
       zmin=1.d300
-c     mesh 
-      open(20,file='x.mat')
-      open(21,file='y.mat')
-      open(22,file='z.mat')  
-c     discretization of the object under study
-      open(10,file='xc.mat')
-      open(11,file='yc.mat')
-      open(12,file='zc.mat')  
 
+      if (nmat.eq.0) then
+c     mesh 
+         open(20,file='x.mat')
+         open(21,file='y.mat')
+         open(22,file='z.mat')  
+c     discretization of the object under study
+         open(10,file='xc.mat')
+         open(11,file='yc.mat')
+         open(12,file='zc.mat')  
+      endif
       
       
       do is=1,numbersphere
@@ -126,9 +128,9 @@ c     discretization of the object under study
                   y=ymin+dble(j-1)*aretecube+aretecube/2.d0
                   z=zmin+dble(i-1)*aretecube+aretecube/2.d0
 
-                  if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) z
-                  if (i.eq.1.and.k.eq.1.and.nmat.eq.1) write(21,*) y
-                  if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) x
+                  if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(22,*) z
+                  if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(21,*) y
+                  if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(20,*) x
 
                   ndipole=ndipole+1
                   test=0
@@ -185,9 +187,9 @@ c     discretization of the object under study
                   x=xmin+dble(k-1)*aretecube+aretecube/2.d0
                   y=ymin+dble(j-1)*aretecube+aretecube/2.d0
                   z=zmin+dble(i-1)*aretecube+aretecube/2.d0
-                  if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) z
-                  if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(21,*) y
-                  if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) x
+                  if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(22,*) z
+                  if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(21,*) y
+                  if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(20,*) x
 
                   ndipole=ndipole+1
                   nbsphere=nbsphere+1

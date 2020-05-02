@@ -1,4 +1,4 @@
-function plotimage(hlocal,event,ximage,imagem,imagexc,imageyc,imagezc)
+function plotimage(hlocal,event,ximage,imagem,imagexc,imageyc,imagezc,nprint)
 
 val = get(hlocal,'Value');
 
@@ -191,3 +191,7 @@ title('Phase Angle','Interpreter','latex','Fontsize',18)
 
 
 end;
+
+if (nprint == 1)
+print('-f500','image','-depsc')
+end

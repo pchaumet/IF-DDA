@@ -70,6 +70,11 @@ nside=inputmatlab(22);          % reflexion or transmission
 ntypefile=inputmatlab(23);      % mat file or hdf5 file
 numaperinc=inputmatlab(24);     % Numerical aperture for condenser
 
+if (ntypefile == 0);
+disp('Use mat file')
+end;
+
+
 if (ntypefile == 1);
 disp('Data files do not computed')
 disp('Please use Advanced interface')
@@ -90,13 +95,15 @@ end;
 fid=fopen('filenameh5');    % name file of hdf5
 namefileh5a=fgetl(fid);
 k=0; for i=1:101; if namefileh5a(i) ~= ' '; k = k+1; namefileh5(k)=namefileh5a(i);end;end;
+disp('Use HDF5 file')
 %namefileh5=input('Please give the name of an H5 file : ','s')
 end;
 
 end;
 
 icomp=complex(0,1);
-  
+
+nprint = input('Print figures in eps (yes=1)')
 
 
 %%%%%%%%%%%%%%%% Begin plot dipole %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,6 +175,10 @@ ylabel('y')
 zlabel('z')  
 title('Position of the dipoles')
 
+if (nprint == 1)
+print('-f1','dipolepos','-depsc')
+end
+
 if nobjet == 1; return ;end;
 
  else
@@ -208,6 +219,10 @@ zlabel('z')
 title({'Position of the dipoles' 'without background'})
 end;
 
+if (nprint == 1)
+print('-f1','dipolepos','-depsc')
+end
+
 else
 
 figure(1)
@@ -228,6 +243,11 @@ xlabel('x')
 ylabel('y')
 zlabel('z')  
 title('Position of the dipoles (anisotropic object)')
+
+if (nprint == 1)
+print('-f1','dipolepos','-depsc')
+end
+
 if nobjet == 1; return ;end;
 end;
 %%%%%%%%%%%%%%%% End plot dipole %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -259,7 +279,11 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
 'Position', [420 400 170 50],...
-'Callback',{@plotepsilon,nx,ny,nz,x,y,z,matxyepsilonr,matxyepsiloni});
+	  'Callback',{@plotepsilon,nx,ny,nz,x,y,z,matxyepsilonr,matxyepsiloni,nprint});
+
+if (nprint == 1)
+print('-f2','epsilon','-depsc')
+end
 
 else
 
@@ -301,6 +325,10 @@ uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 	  {'xx','xy','xz','yx','yy','yz','zx','zy','zz'},...
 'Position',[490 425 40 40],...
 	  'Callback',{@plotepsilonani,nx,ny,nz,x,y,z,matepsilonrxx,matepsilonixx,matepsilonrxy,matepsilonixy,matepsilonrxz,matepsilonixz,matepsilonryx,matepsiloniyx,matepsilonryy,matepsiloniyy,matepsilonryz,matepsiloniyz,matepsilonrzx,matepsilonizx,matepsilonrzy,matepsilonizy,matepsilonrzz,matepsilonizz});
+
+if (nprint == 1)
+print('-f2','epsilon','-depsc')
+end
 		   
 end;
 %%%%%%%%%%%%%%%% End plot epsilon %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -351,7 +379,11 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 570 2
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
 'Position', [420 500 170 50],...
-'Callback',{@plotincifield,nx,ny,nz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz});
+	  'Callback',{@plotincifield,nx,ny,nz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz,nprint});
+
+if (nprint == 1)
+print('-f10','incident','-depsc')
+end
 
  else
 
@@ -407,7 +439,11 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 570 2
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
 'Position', [420 500 170 50],...
-'Callback',{@plotincifield,nx,ny,nz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz});
+	  'Callback',{@plotincifield,nx,ny,nz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz,nprint});
+
+if (nprint == 1)
+print('-f10','incident','-depsc')
+end
 
 end;
 
@@ -463,8 +499,11 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 570 2
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
 'Position', [420 500 170 50],...
-'Callback',{@plotlocalfield,nx,ny,nz,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz});
+	  'Callback',{@plotlocalfield,nx,ny,nz,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz,nprint});
 
+if (nprint == 1)
+print('-f20','local','-depsc')
+end
 
  else
    
@@ -517,8 +556,11 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 570 2
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
 'Position', [420 500 170 50],...
-'Callback',{@plotlocalfield,nxm,nym,nzm,xwf,ywf,zwf,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz});
+	  'Callback',{@plotlocalfield,nxm,nym,nzm,xwf,ywf,zwf,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz,nprint});
 
+if (nprint == 1)
+print('-f20','local','-depsc')
+end
 
 end;
 
@@ -574,7 +616,12 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 550 2
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
 'Position', [420 500 170 50],...
-'Callback',{@plotmacrofield,nx,ny,nz,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz});
+	  'Callback',{@plotmacrofield,nx,ny,nz,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz,nprint});
+
+if (nprint == 1)
+print('-f30','macroscopic','-depsc')
+end
+
 
  else
 load xwf.mat -ascii
@@ -625,7 +672,11 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 550 2
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
 'Position', [420 500 170 50],...
-'Callback',{@plotmacrofield,nxm,nym,nzm,xwf,ywf,zwf,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz});
+	  'Callback',{@plotmacrofield,nxm,nym,nzm,xwf,ywf,zwf,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz,nprint});
+
+if (nprint == 1)
+print('-f30','macroscopic','-depsc')
+end
 
 end;
 
@@ -674,6 +725,9 @@ xlabel('x')
 ylabel('y')
 zlabel('z')
 
+if (nprint == 1)
+print('-f100','poynting3d','-depsc')
+end
 
 else
 
@@ -715,6 +769,9 @@ xlabel('$x$','Interpreter','latex','Fontsize',18)
 ylabel('$y$','Interpreter','latex','Fontsize',18)
 zlabel('$z$','Interpreter','latex','Fontsize',18)
 
+if (nprint == 1)
+print('-f100','poynting3d','-depsc')
+end
 
 if (ntypefile ==0)
 load poyntingpos.mat -ascii
@@ -776,7 +833,12 @@ xlabel('$k_x/k_0$','Interpreter','latex','Fontsize',18)
 ylabel('$k_y/k_0$','Interpreter','latex','Fontsize',18)
 
 colorbar
-  
+
+if (nprint == 1)
+print('-f101','poynting2d','-depsc')
+end
+
+
 end;
 
 end;
@@ -829,7 +891,9 @@ uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 'Position', [420 500 170 50],...
 	  'Callback',{@plotforce,nx,ny,nz,x,y,z,xx,yy,zz,matxyforcex,matxyforcey,matxyforcez});
 
-
+if (nprint == 1)
+print('-f200','force2d','-depsc')
+end
 
 figure(201)
 set(201,'DefaultAxesFontName','Times')
@@ -847,6 +911,10 @@ xlabel('x')
 ylabel('y')
 zlabel('z')
 title('Density of optical force')
+
+if (nprint == 1)
+print('-f201','force3d','-depsc')
+end
 
 end;  
 %%%%%%%%%%%%%%%% End  optical force %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -891,9 +959,11 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[350 570 3
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
 'Position', [420 500 170 50],...
-	  'Callback',{@plottorque,nx,ny,nz,x,y,z,xx,yy,zz,matxytorquex,matxytorquey,matxytorquez});
+	  'Callback',{@plottorque,nx,ny,nz,x,y,z,xx,yy,zz,matxytorquex,matxytorquey,matxytorquez,nprint});
 
-
+if (nprint == 1)
+print('-f300','torque2d','-depsc')
+end
 
 figure(301)
 set(301,'DefaultAxesFontName','Times')
@@ -911,6 +981,10 @@ xlabel('x')
 ylabel('y')
 zlabel('z')
 title('Density of optical torque')
+
+if (nprint == 1)
+print('-f301','torque3d','-depsc')
+end
 
 end;  
 %%%%%%%%%%%%%%%%%%%%% End  optical torque %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1088,9 +1162,11 @@ uicontrol('Style', 'text','Fontsize',12,'Fontweight','bold', 'String', num2str(n
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
 'Position', [460 566 150 30],...
-'Callback',{@plotfourier,numaper,kxfourier,fourierm,fourierxc,fourieryc,fourierzc});
+	  'Callback',{@plotfourier,numaper,kxfourier,fourierm,fourierxc,fourieryc,fourierzc,nprint});
 
-
+if (nprint == 1)
+print('-f400','fourierpos','-depsc')
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Fourier +incident %%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1135,7 +1211,11 @@ uicontrol('Style', 'text','Fontsize',12,'Fontweight','bold', 'String', num2str(n
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
 'Position', [460 566 150 30],...
-'Callback',{@plotfourierinc,numaper,kxfourier,fourierincm,fourierincxc,fourierincyc,fourierinczc});
+	  'Callback',{@plotfourierinc,numaper,kxfourier,fourierincm,fourierincxc,fourierincyc,fourierinczc,nprint});
+
+if (nprint == 1)
+print('-f450','fourierinc','-depsc')
+end
 
 end;
 
@@ -1174,7 +1254,12 @@ end;
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
 'Position', [460 561 150 30],...
-'Callback',{@plotimage,ximage,imagem,imagexc,imageyc,imagezc});
+	  'Callback',{@plotimage,ximage,imagem,imagexc,imageyc,imagezc,nprint});
+
+if (nprint == 1)
+print('-f500','image','-depsc')
+end
+
 
 %%%%%%%%%%%%%%%%% Image + incident %%%%%%%%%%%%%%%%%%%%%%
 
@@ -1208,7 +1293,11 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 8
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
 'Position', [460 561 150 30],...
-'Callback',{@plotimageinc,ximage,imageincm,imageincxc,imageincyc,imageinczc});
+	  'Callback',{@plotimageinc,ximage,imageincm,imageincxc,imageincyc,imageinczc,nprint});
+
+if (nprint == 1)
+print('-f550','imageinc','-depsc')
+end
 
 end;
 
@@ -1320,7 +1409,11 @@ end;
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
 'Position', [460 561 150 30],...
-'Callback',{@plotimagereal,ximage,imagem,imagexc,imageyc,imagezc});
+	  'Callback',{@plotimagereal,ximage,imagem,imagexc,imageyc,imagezc,nprint});
+
+if (nprint == 1)
+print('-f500','imagewf','-depsc')
+end
 
 %%%%%%%%%%%%%%%%% Image + incident %%%%%%%%%%%%%%%%%%%%%%
 
@@ -1354,7 +1447,11 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 8
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
 'Position', [460 561 150 30],...
-'Callback',{@plotimageincreal,ximage,imageincm,imageincxc,imageincyc,imageinczc});
+	  'Callback',{@plotimageincreal,ximage,imageincm,imageincxc,imageincyc,imageinczc,nprint});
+
+if (nprint == 1)
+print('-f550','imageincwf','-depsc')
+end
 
 end;
 
@@ -1386,6 +1483,11 @@ axis image
 
 hold on
 rectangle('Position',[-numaperinc -numaperinc 2*numaperinc 2*numaperinc],'Curvature',[1 1],'linewidth',2,'edgecolor','red')
+
+if (nprint == 1)
+print('-f560','angleincbf','-depsc')
+end
+
 
 elseif (ntypemic == 2);
 
@@ -1499,7 +1601,12 @@ end;
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
 'Position', [460 561 150 30],...
-'Callback',{@plotimagereal,ximage,imagem,imagexc,imageyc,imagezc});
+	  'Callback',{@plotimagereal,ximage,imagem,imagexc,imageyc,imagezc,nprint});
+
+if (nprint == 1)
+print('-f500','imagewf','-depsc')
+end
+
 
 %%%%%%%%%%%%%%%%% Image + incident %%%%%%%%%%%%%%%%%%%%%%
 
@@ -1533,8 +1640,12 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 8
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
 'Position', [460 561 150 30],...
-'Callback',{@plotimageincreal,ximage,imageincm,imageincxc,imageincyc,imageinczc});
+	  'Callback',{@plotimageincreal,ximage,imageincm,imageincxc,imageincyc,imageinczc,nprint});
 	
+if (nprint == 1)
+print('-f550','imageincwf','-depsc')
+end
+
 end;
 
 
@@ -1568,7 +1679,9 @@ axis image
 hold on
 rectangle('Position',[-numaperinc -numaperinc 2*numaperinc 2*numaperinc],'Curvature',[1 1],'linewidth',1,'edgecolor','red')
 
-
+if (nprint == 1)
+print('-f560','angleincdf','-depsc')
+end
 
 end;
 	

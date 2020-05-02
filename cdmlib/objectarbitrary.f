@@ -61,15 +61,16 @@ c     Initialization
 !$OMP END PARALLEL  
       dddis=1
       inv=1
-
+      if (nmat.eq.0) then
 c     mesh 
-      open(20,file='x.mat')
-      open(21,file='y.mat')
-      open(22,file='z.mat')  
+         open(20,file='x.mat')
+         open(21,file='y.mat')
+         open(22,file='z.mat')  
 c     discretization of the object under study
-      open(10,file='xc.mat')
-      open(11,file='yc.mat')
-      open(12,file='zc.mat')  
+         open(10,file='xc.mat')
+         open(11,file='yc.mat')
+         open(12,file='zc.mat')  
+      endif
 c     read the input file
       open(15,file=namefile,status='old',iostat=ierror)
       if (ierror.ne.0) then
@@ -118,11 +119,11 @@ c     read the input file
                nbsphere=nbsphere+1
                Tabdip(ndipole)=nbsphere
 
-               if (j.eq.1.and.k.eq.1.and.nmat.ne.1) write(22,*) zs(1)
+               if (j.eq.1.and.k.eq.1.and.nmat.eq.0) write(22,*) zs(1)
      $              +dble(i-1)*aretecube
-               if (i.eq.1.and.k.eq.1.and.nmat.ne.1) write(21,*) ys(1)
+               if (i.eq.1.and.k.eq.1.and.nmat.eq.0) write(21,*) ys(1)
      $              +dble(j-1)*aretecube
-               if (j.eq.1.and.i.eq.1.and.nmat.ne.1) write(20,*) xs(1)
+               if (j.eq.1.and.i.eq.1.and.nmat.eq.0) write(20,*) xs(1)
      $              +dble(k-1)*aretecube
 
                
