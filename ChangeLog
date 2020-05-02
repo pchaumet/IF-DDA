@@ -9,6 +9,11 @@
 	5) correction dans object pour ne pas ecrire quand nmat pas égale à 0.
 	6) meme correction que 5 sur xwf, ywf et zwf.
 
+	7) Correction pour wf écrit au format hdf5 et plus en .mat quand
+	option 2 choisie.
+	8) wf lit dans ifdda.m
+	9) correction sur ecriture eps.
+	10) Changement nett.
 	
 	Dans ifdda.m changement des titres pour etre en relatif, champ
 	local macroscopique et microscopie.

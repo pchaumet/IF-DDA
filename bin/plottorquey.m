@@ -19,7 +19,7 @@ set(300,'DefaultTextfontName','Times')
 set(300,'DefaultTextfontSize',12)
 set(300,'DefaultTextfontWeight','Bold')
 set(300,'Position',[0 0 1000 600])
-scale=1
+  scale=1;
 
  quiver(xx(:,j,:),zz(:,j,:),matxytorquex(:,j,:),matxytorquez(:,j,:),scale)
   

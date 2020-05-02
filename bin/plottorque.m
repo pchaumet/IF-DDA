@@ -19,7 +19,7 @@ uicontrol('Style', 'text', 'String', 'Choice of z','Position', [250 15 90 20]);
 uicontrol('Style', 'text', 'String', 'm','Position', [640 15 15 20]);
 uicontrol('Style', 'text', 'String', num2str(z(1),'%+1.2e\n'),'Position', [560 15 80 20]);
 
-scale=1
+scale=1;
 subplot('position',[0.2 0.15 0.6 0.7])
 
 quiver(xx(:,:,1),yy(:,:,1),matxytorquex(:,:,1),matxytorquey(:,:,1),scale)
@@ -49,7 +49,7 @@ uicontrol('Style', 'text', 'String', 'Choice of y','Position', [250 15 90 20]);
 uicontrol('Style', 'text', 'String', 'm','Position', [640 15 15 20]);
 uicontrol('Style', 'text', 'String', num2str(y(1),'%+1.2e\n'),'Position', [560 15 80 20]);
 
-scale=1
+scale=1;
 subplot('position',[0.2 0.15 0.6 0.7])
 
   quiver(xx(:,1,:),zz(:,1,:),matxytorquex(:,1,:),matxytorquez(:,1,:),scale)
@@ -80,7 +80,7 @@ uicontrol('Style', 'text', 'String', 'Choice of x','Position', [250 15 90 20]);
 uicontrol('Style', 'text', 'String', 'm','Position', [640 15 15 20]);
 uicontrol('Style', 'text', 'String', num2str(x(1),'%+1.2e\n'),'Position', [560 15 80 20]);
 
-scale=1
+scale=1;
 subplot('position',[0.2 0.15 0.6 0.7])
   
   quiver(yy(1,:,:),zz(1,:,:),matxytorquey(1,:,:),matxytorquez(1,:,:),scale)

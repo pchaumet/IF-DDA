@@ -60,3 +60,5 @@ rm doc/*.maf
 rm doc/*.out
 rm doc/*.toc
 rm cdmlib/lib/lib*
+rm bin/*.eps
+rm bin/filenameh5

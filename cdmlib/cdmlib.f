@@ -2099,7 +2099,30 @@ c     initialize and reuse polarisa : pola= background
 !$OMP ENDDO 
 !$OMP END PARALLEL
          cntwf = 0
-         
+c     write xyz wf for hdf5
+         if (nmat.eq.2) then
+            do i=1,nzmpp
+               zswf(i)=zmin+dble(i-nzmp-1)*aretecube
+            enddo
+            do j=1,nympp
+               yswf(j)=ymin+dble(j-nymp-1)*aretecube
+            enddo
+            do k=1,nxmpp
+               xswf(k)=xmin+dble(k-nxmp-1)*aretecube
+            enddo
+            dim(1)=nzmpp
+            dim(2)=nmax
+            datasetname='zwf'
+            call hdf5write1d(group_idnf,datasetname,zswf,dim)
+            dim(1)=nympp
+            datasetname='ywf'
+            call hdf5write1d(group_idnf,datasetname,yswf,dim)
+            dim(1)=nxmpp
+            datasetname='xwf'
+            call hdf5write1d(group_idnf,datasetname,xswf,dim)
+            
+         endif
+        
          if (beam(1:8).eq.'gfftwave') then
             do i=1,nzmpp
                do j=1,nympp

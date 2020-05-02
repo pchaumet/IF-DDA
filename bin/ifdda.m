@@ -388,6 +388,11 @@ end
  else
 
    
+
+
+
+if (ntypefile == 0);
+
 load xwf.mat -ascii
 load ywf.mat -ascii
 load zwf.mat -ascii
@@ -396,13 +401,21 @@ nxm=max(size(xwf));
 nym=max(size(ywf));
 nzm=max(size(zwf));
 
-
-if (ntypefile == 0);
 load incidentfieldwf.mat -ascii
 load incidentfieldxwf.mat -ascii
 load incidentfieldywf.mat -ascii
 load incidentfieldzwf.mat -ascii
+
 elseif (ntypefile ==2);
+
+xwf=h5read(namefileh5,'/Near Field/xwf');
+ywf=h5read(namefileh5,'/Near Field/ywf');
+zwf=h5read(namefileh5,'/Near Field/zwf');
+
+nxm=max(size(xwf));
+nym=max(size(ywf));
+nzm=max(size(zwf));
+
 incidentfieldwf=h5read(namefileh5,'/Near Field/Incident field modulus wf');
 incidentfieldxwf(:,1)=h5read(namefileh5,'/Near Field/Incident field x component real part wf');
 incidentfieldxwf(:,2)=h5read(namefileh5,'/Near Field/Incident field x component imaginary part wf');
@@ -507,6 +520,10 @@ end
 
  else
    
+
+
+if (ntypefile ==0);
+
 load xwf.mat -ascii
 load ywf.mat -ascii
 load zwf.mat -ascii
@@ -515,12 +532,21 @@ nxm=max(size(xwf));
 nym=max(size(ywf));
 nzm=max(size(zwf));
 
-if (ntypefile ==0);
 load localfieldwf.mat -ascii
 load localfieldxwf.mat -ascii
 load localfieldywf.mat -ascii
 load localfieldzwf.mat -ascii
+
 elseif (ntypefile ==2);
+
+xwf=h5read(namefileh5,'/Near Field/xwf');
+ywf=h5read(namefileh5,'/Near Field/ywf');
+zwf=h5read(namefileh5,'/Near Field/zwf');
+
+nxm=max(size(xwf));
+nym=max(size(ywf));
+nzm=max(size(zwf));
+
 localfieldwf=h5read(namefileh5,'/Near Field/Local field modulus wf');
 localfieldxwf(:,1)=h5read(namefileh5,'/Near Field/Local field x component real part wf');
 localfieldxwf(:,2)=h5read(namefileh5,'/Near Field/Local field x component imaginary part wf');
@@ -624,6 +650,9 @@ end
 
 
  else
+
+if (ntypefile == 0);  
+
 load xwf.mat -ascii
 load ywf.mat -ascii
 load zwf.mat -ascii
@@ -631,12 +660,22 @@ load zwf.mat -ascii
 nxm=max(size(xwf));
 nym=max(size(ywf));
 nzm=max(size(zwf));
-if (ntypefile == 0);  
+
 load macroscopicfieldwf.mat -ascii
 load macroscopicfieldxwf.mat -ascii
 load macroscopicfieldywf.mat -ascii
 load macroscopicfieldzwf.mat -ascii
+
 elseif (ntypefile ==2);
+
+xwf=h5read(namefileh5,'/Near Field/xwf');
+ywf=h5read(namefileh5,'/Near Field/ywf');
+zwf=h5read(namefileh5,'/Near Field/zwf');
+
+nxm=max(size(xwf));
+nym=max(size(ywf));
+nzm=max(size(zwf));
+
 macroscopicfieldwf=h5read(namefileh5,'/Near Field/Macroscopic field modulus wf');
 macroscopicfieldxwf(:,1)=h5read(namefileh5,'/Near Field/Macroscopic field x component real part wf');
 macroscopicfieldxwf(:,2)=h5read(namefileh5,'/Near Field/Macroscopic field x component imaginary part wf');
@@ -889,7 +928,7 @@ uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[350 570 3
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
 'Position', [420 500 170 50],...
-	  'Callback',{@plotforce,nx,ny,nz,x,y,z,xx,yy,zz,matxyforcex,matxyforcey,matxyforcez});
+	  'Callback',{@plotforce,nx,ny,nz,x,y,z,xx,yy,zz,matxyforcex,matxyforcey,matxyforcez,nprint});
 
 if (nprint == 1)
 print('-f200','force2d','-depsc')
@@ -1165,7 +1204,7 @@ uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 	  'Callback',{@plotfourier,numaper,kxfourier,fourierm,fourierxc,fourieryc,fourierzc,nprint});
 
 if (nprint == 1)
-print('-f400','fourierpos','-depsc')
+print('-f400','fourier','-depsc')
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Fourier +incident %%%%%%%%%%%%%%%%%%%%%%%%%
