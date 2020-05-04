@@ -72,8 +72,8 @@ c     energie
 !$OMP END PARALLEL
       
       imax=nint(k0/deltakx)+1
-      write(*,*) 'Number of point in the numerical aperture',imax*2+1
-      write(*,*) 'Size of FFT',nfft2d
+      write(*,*) 'Number of point in NA :',imax*2+1
+      write(*,*) 'Size of the FFT       :',nfft2d
       
       if (2*imax+1.gt.nfft2d) then
          infostr='In FFT diffract nfft2d too small'
@@ -230,7 +230,7 @@ c     energie
 c     calcul pour rajouter le champ incident
       deltax=2.d0*pi/(dble(nfft2d)*deltakx)
       deltay=2.d0*pi/(dble(nfft2d)*deltaky)
-      write(*,*) 'Size of the pixel',deltax
+      write(*,*) 'Size of the pixel     :',deltax,'nm'
       z=0.d0
       nloin=0
       fac=1.d0/deltakx/deltakx/dble(nfft2d*nfft2d)
@@ -422,10 +422,10 @@ c     $              ,2),Ediffkzpos(ii,jj,3)
 !$OMP ENDDO 
 !$OMP END PARALLEL     
       tmp=4.d0*pi*pi*deltaky*deltakx/(k0*8.d0*pi*1.d-7*299792458.d0)
-      write(*,*) 'Incident flux   :',fluxinc*tmp,'W'
-      write(*,*) 'Reflected flux  :',fluxref*tmp,'W'
-      write(*,*) 'Transmitted flux:',fluxtra*tmp,'W'
-      write(*,*) 'Total flux      :',fluxref*tmp+fluxtra*tmp,'W'
+      write(*,*) 'Incident flux         :',fluxinc*tmp,'W'
+      write(*,*) 'Reflected flux        :',fluxref*tmp,'W'
+      write(*,*) 'Transmitted flux      :',fluxtra*tmp,'W'
+      write(*,*) 'Total flux            :',fluxref*tmp+fluxtra*tmp,'W'
       efficacite=(fluxref+fluxtra)/fluxinc
       efficaciteref=fluxref/fluxinc
       efficacitetrans=fluxtra/fluxinc
@@ -464,7 +464,7 @@ c     $              ,2),Ediffkzpos(ii,jj,3)
       enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
-      write(*,*) 'Energy outside the NA (%)',dabs(tmp1-tmp2)/tmp2*100.d0
+      write(*,*) 'Energy outside the NA (%):',dabs(tmp1-tmp2)/tmp2*100.d0
       if (dabs(tmp1-tmp2)/tmp2*100.d0.ge.1.d0) then
       infostr='Energy: Beam too inclined or waist or nfft too small'
          nstop=1

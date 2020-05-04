@@ -77,7 +77,7 @@ end;
 
 if (ntypefile == 1);
 disp('Data files do not computed')
-disp('Please use Advanced interface')
+disp('Please use advanced interface')
 disp('and uncheck the option "Do not write file" if necessary')
 return;
 end;
@@ -103,7 +103,7 @@ end;
 
 icomp=complex(0,1);
 
-nprint = input('Print figures in eps (yes=1)')
+nprint = input('Print figures in eps (yes=1) : ');
 
 
 %%%%%%%%%%%%%%%% Begin plot dipole %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -148,6 +148,8 @@ z=zmin:pasz:zmax;
 
 end;
   
+%[x,y,z,unitmes] = chgtunit(x,y,z)
+%xlabel(strcat('x',unitmes))
 
 if (niso == 0);
 if (nproche == -1 );
@@ -274,11 +276,11 @@ set(2,'DefaultTextfontWeight','Bold')
 set(2,'Position',[0 600 1000 500])
 
 uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
-'Position',[380 440 300 50],'String','Plot relative permittivity');
+'units','normalized','Position', [0.25 0.9 0.5 0.1],'String','Plot relative permittivity');
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
-'Position', [420 400 170 50],...
+'units','normalized','Position', [0.4 0.85 0.2 0.05],...
 	  'Callback',{@plotepsilon,nx,ny,nz,x,y,z,matxyepsilonr,matxyepsiloni,nprint});
 
 if (nprint == 1)
@@ -374,11 +376,12 @@ set(10,'Position',[0 0 1000 600])
 
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 570 210 20],'String','Plot incident field');
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
+'units','normalized','Position', [0.4 0.7 0.2 0.3],'String','Plot incident field');
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
-'Position', [420 500 170 50],...
+'units','normalized','Position', [0.4 0.65 0.2 0.05],...
 	  'Callback',{@plotincifield,nx,ny,nz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz,nprint});
 
 if (nprint == 1)
@@ -447,11 +450,12 @@ set(10,'Position',[0 0 1000 600])
 
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 570 210 20],'String','Plot incident field');
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
+'units','normalized','Position', [0.4 0.7 0.2 0.3],'String','Plot incident field');
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
-'Position', [420 500 170 50],...
+'units','normalized','Position', [0.4 0.65 0.2 0.05],...
 	  'Callback',{@plotincifield,nx,ny,nz,x,y,z,matxyincifield,matxyincifieldx,matxyincifieldy,matxyincifieldz,nprint});
 
 if (nprint == 1)
@@ -507,11 +511,12 @@ set(20,'Position',[0 0 1000 600])
 
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 570 200 20],'String','Plot local field');
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
+'units','normalized','Position', [0.4 0.7 0.2 0.3],'String','Plot local field');
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
-'Position', [420 500 170 50],...
+'units','normalized','Position', [0.4 0.65 0.2 0.05],...
 	  'Callback',{@plotlocalfield,nx,ny,nz,x,y,z,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz,nprint});
 
 if (nprint == 1)
@@ -577,11 +582,12 @@ set(20,'DefaultTextfontWeight','Bold')
 set(20,'Position',[0 0 1000 600])
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 570 200 20],'String','Plot local field');
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
+'units','normalized','Position', [0.4 0.7 0.2 0.3],'String','Plot local field');
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
-'Position', [420 500 170 50],...
+'units','normalized','Position', [0.4 0.65 0.2 0.05],...
 	  'Callback',{@plotlocalfield,nxm,nym,nzm,xwf,ywf,zwf,matxylocalfield,matxylocalfieldx,matxylocalfieldy,matxylocalfieldz,nprint});
 
 if (nprint == 1)
@@ -637,11 +643,12 @@ set(30,'Position',[0 0 1000 600])
 
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 550 200 50],'String','Plot macroscopic field')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
+'units','normalized','Position', [0.4 0.7 0.2 0.3],'String','Plot macroscopic field')
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
-'Position', [420 500 170 50],...
+'units','normalized','Position', [0.4 0.65 0.2 0.05],...
 	  'Callback',{@plotmacrofield,nx,ny,nz,x,y,z,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz,nprint});
 
 if (nprint == 1)
@@ -706,11 +713,12 @@ set(30,'Position',[0 0 1000 600])
 
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[400 550 200 50],'String','Plot macroscopic field')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
+'units','normalized','Position', [0.4 0.7 0.2 0.3],'String','Plot macroscopic field')
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
-'Position', [420 500 170 50],...
+'units','normalized','Position', [0.4 0.65 0.2 0.05],...
 	  'Callback',{@plotmacrofield,nxm,nym,nzm,xwf,ywf,zwf,matxymacrofield,matxymacrofieldx,matxymacrofieldy,matxymacrofieldz,nprint});
 
 if (nprint == 1)
@@ -923,11 +931,12 @@ set(200,'Position',[0 0 1000 600])
 
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[350 570 300 25],'String','Plot Optical force');
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
+'units','normalized','Position', [0.25 0.9 0.5 0.1],'String','Plot Optical force');
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
-'Position', [420 500 170 50],...
+'units','normalized','Position', [0.4 0.85 0.2 0.05],...
 	  'Callback',{@plotforce,nx,ny,nz,x,y,z,xx,yy,zz,matxyforcex,matxyforcey,matxyforcez,nprint});
 
 if (nprint == 1)
@@ -993,11 +1002,12 @@ set(300,'DefaultTextfontWeight','Bold')
 set(300,'Position',[0 0 1000 600])
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[350 570 300 25],'String','Plot Optical torque');
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold',...
+'units','normalized','Position', [0.25 0.9 0.5 0.1],'String','Plot Optical torque');
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'2D-view cutting planes','(x,y)-plane','(x,z)-plane','(y,z)-plane'},...
-'Position', [420 500 170 50],...
+'units','normalized','Position', [0.4 0.85 0.2 0.05],...
 	  'Callback',{@plottorque,nx,ny,nz,x,y,z,xx,yy,zz,matxytorquex,matxytorquey,matxytorquez,nprint});
 
 if (nprint == 1)
@@ -1187,20 +1197,20 @@ xlabel('$k_x/k_0$','Interpreter','latex','Fontsize',18)
 ylabel('$k_y/k_0$','Interpreter','latex','Fontsize',18)
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[80 572 400 25],'String','Fourier plane scattered field:')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.15 0.91 0.32 0.09],'String','Fourier plane scattered field:')
 
 if (nside == 1);
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','kz>0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.15 0.05],'String','kz>0')
  else  (nside == -1);
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','kz<0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.15 0.05],'String','kz<0')
 end;
 
-uicontrol('Style','text','Fontsize',12,'Fontweight','bold','Position',[350 545 200 18],'String','Numerical aperture:')
-uicontrol('Style', 'text','Fontsize',12,'Fontweight','bold', 'String', num2str(numaper),'Position', [540 545 40 18]);
+uicontrol('Style','text','Fontsize',12,'Fontweight','bold','units','normalized','Position',[0.50 0.91 0.09 0.033],'String','NA=')
+uicontrol('Style', 'text','Fontsize',12,'Fontweight','bold', 'String', num2str(numaper),'units','normalized','Position',[0.60 0.91 0.08 0.033]);
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
-'Position', [460 566 150 30],...
+'units','normalized','Position',[0.48 0.94 0.15 0.05],...
 	  'Callback',{@plotfourier,numaper,kxfourier,fourierm,fourierxc,fourieryc,fourierzc,nprint});
 
 if (nprint == 1)
@@ -1241,15 +1251,15 @@ xlabel('$k_x/k_0$','Interpreter','latex','Fontsize',18)
 ylabel('$k_y/k_0$','Interpreter','latex','Fontsize',18)
 
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[150 572 300 25],'String','Fourier plane total field:')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.15 0.91 0.32 0.09],'String','Fourier plane total field:')
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','kz>0')
-uicontrol('Style','text','Fontsize',12,'Fontweight','bold','Position',[350 545 200 18],'String','Numerical aperture:')
-uicontrol('Style', 'text','Fontsize',12,'Fontweight','bold', 'String', num2str(numaper),'Position', [540 545 40 18]);
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.15 0.05],'String','kz>0')
+uicontrol('Style','text','Fontsize',12,'Fontweight','bold','units','normalized','Position',[0.50 0.91 0.09 0.033],'String','NA=')
+uicontrol('Style', 'text','Fontsize',12,'Fontweight','bold', 'String', num2str(numaper),'units','normalized','Position',[0.60 0.91 0.08 0.033]);
 
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
-'Position', [460 566 150 30],...
+'units','normalized','Position',[0.48 0.94 0.15 0.05],...
 	  'Callback',{@plotfourierinc,numaper,kxfourier,fourierincm,fourierincxc,fourierincyc,fourierinczc,nprint});
 
 if (nprint == 1)
@@ -1284,15 +1294,15 @@ colorbar
 xlabel('$x$','Interpreter','latex','Fontsize',18)
 ylabel('$y$','Interpreter','latex','Fontsize',18)
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[80 572 400 25],'String','Image plane scattered field:')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.05 0.94 0.40 0.06],'String','Image plane scattered field:')
 if (nside == 1);
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','z>0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.10 0.05],'String','z>0')
  else  (nside == -1);
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','z<0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.10 0.05],'String','z<0')
 end;
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
-'Position', [460 561 150 30],...
+'units','normalized','Position',[0.48 0.94 0.15 0.05],...
 	  'Callback',{@plotimage,ximage,imagem,imagexc,imageyc,imagezc,nprint});
 
 if (nprint == 1)
@@ -1327,11 +1337,11 @@ colorbar
 xlabel('$x$','Interpreter','latex','Fontsize',18)
 ylabel('$y$','Interpreter','latex','Fontsize',18)
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[150 572 300 25],'String','Image plane total field:')
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','z>0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.05 0.94 0.40 0.06],'String','Image plane total field:')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.10 0.05],'String','z>0')
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
-'Position', [460 561 150 30],...
+'units','normalized','Position',[0.48 0.94 0.15 0.05],...
 	  'Callback',{@plotimageinc,ximage,imageincm,imageincxc,imageincyc,imageinczc,nprint});
 
 if (nprint == 1)
@@ -1439,11 +1449,11 @@ colorbar
 xlabel('$x$','Interpreter','latex','Fontsize',18)
 ylabel('$y$','Interpreter','latex','Fontsize',18)
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[80 572 400 25],'String','Image plane scattered field:')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.05 0.94 0.40 0.06],'String','Image plane scattered field:')
 if (nside == 1);
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','z>0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.10 0.05],'String','z>0')
  else  (nside == -1);
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','z<0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.10 0.05],'String','z<0')
 end;
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
@@ -1481,11 +1491,11 @@ colorbar
 xlabel('$x$','Interpreter','latex','Fontsize',18)
 ylabel('$y$','Interpreter','latex','Fontsize',18)
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[150 572 300 25],'String','Image plane total field:')
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','z>0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.05 0.94 0.40 0.06],'String','Image plane total field:')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.10 0.05],'String','z>0')
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
-'Position', [460 561 150 30],...
+'units','normalized','Position',[0.48 0.94 0.15 0.05],...
 	  'Callback',{@plotimageincreal,ximage,imageincm,imageincxc,imageincyc,imageinczc,nprint});
 
 if (nprint == 1)
@@ -1631,15 +1641,15 @@ colorbar
 xlabel('$x$','Interpreter','latex','Fontsize',18)
 ylabel('$y$','Interpreter','latex','Fontsize',18)
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[80 572 400 25],'String','Image plane scattered field:')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.05 0.94 0.40 0.06],'String','Image plane scattered field:')
 if (nside == 1);
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','z>0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.10 0.05],'String','z>0')
  else  (nside == -1);
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','z<0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.10 0.05],'String','z<0')
 end;
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
-'Position', [460 561 150 30],...
+'units','normalized','Position',[0.48 0.94 0.15 0.05],...
 	  'Callback',{@plotimagereal,ximage,imagem,imagexc,imageyc,imagezc,nprint});
 
 if (nprint == 1)
@@ -1674,11 +1684,11 @@ colorbar
 xlabel('$x$','Interpreter','latex','Fontsize',18)
 ylabel('$y$','Interpreter','latex','Fontsize',18)
 
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[150 572 300 25],'String','Image plane total field:')
-uicontrol('Style','text','Fontsize',16,'Fontweight','bold','Position',[650 572 80 25],'String','z>0')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.05 0.94 0.40 0.06],'String','Image plane total field:')
+uicontrol('Style','text','Fontsize',16,'Fontweight','bold','units','normalized','Position',[0.65 0.94 0.10 0.05],'String','z>0')
 uicontrol('Style', 'popupmenu','Fontsize',12,'String',...
 {'Intensity','Modulus','x-component','y-component','z-component'},...
-'Position', [460 561 150 30],...
+'units','normalized','Position',[0.48 0.94 0.15 0.05],...
 	  'Callback',{@plotimageincreal,ximage,imageincm,imageincxc,imageincyc,imageinczc,nprint});
 	
 if (nprint == 1)

@@ -3707,10 +3707,10 @@ c     calcul sur des forces et couple sur differents objets si presents
      $        ,nstop ,infostr)
 c         write(*,*) 'ff diff',Ediffkzpos
          if (nstop.eq.1) return
-         write(*,*) 'Conservation of energy:',efficacite
-         write(*,*) 'Absorptivity          :',1.d0-efficacite
-         write(*,*) 'Reflextivity          :',efficaciteref
-         write(*,*) 'Transmittivity        :',efficacitetrans
+         write(*,*) 'Conservation of energy :',efficacite
+         write(*,*) 'Absorptivity           :',1.d0-efficacite
+         write(*,*) 'Reflextivity           :',efficaciteref
+         write(*,*) 'Transmittivity         :',efficacitetrans
 
          write(*,*) '******** END ENERGY CONSERVATION *******'
          write(*,*) ' '
@@ -3724,7 +3724,7 @@ c         write(*,*) 'ff diff',Ediffkzpos
          write(*,*) 'Microscopy with NA    :',numaper
          write(*,*) 'Magnifying factor     :',gross
          write(*,*) 'Type of Microscopy    :',ntypemic,'(0 holography)'
-         write(*,*) 'Position focal plane  :',zlens*dble(nside)
+         write(*,*) 'Focal plane position  :',zlens*dble(nside),'nm'
          
          nfft2d2=nfft2d/2
          numaper=numaper*k0
@@ -4656,11 +4656,11 @@ c     output file
          CALL h5gclose_f(group_idof,error)
          CALL h5gclose_f(group_idnf,error)
          call hdf5close(file_id)
-         write(*,*) 'Close h5file'
+         write(*,*) 'Close HDF5 files'
 #else
-        write(*,*) "No HDF5!"
+        write(*,*) 'No HDF5 files'
 #endif
-
+        write(*,*) ' '
       endif
 
       

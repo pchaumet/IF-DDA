@@ -1,4 +1,17 @@
- 	version 0.6.11
+ 	version 0.6.12
+		
+	1) changement nom de version.
+	2) Réécriture de sortie énergie.
+	3) Dans ifdda.m changement des titres pour etre en relatif, champ
+	local macroscopique et microscopie, force et torque
+	4) pareil pour microscopie.
+	5) création de chgtunit.m si on veut changer des unites. Pas
+	implementé, il faut rajouter un argument ds toutes les functions
+	pour passer l'unité....
+
+	
+	---------------------------------------------------------------
+	version 0.6.11
 
 	1) rajoute unité dans faisceau ecriture.
 	2) mis en if nmat.eq.0 de l'ouverture des fichiers matlab, evite
@@ -15,8 +28,7 @@
 	9) correction sur ecriture eps.
 	10) Changement nett.
 	
-	Dans ifdda.m changement des titres pour etre en relatif, champ
-	local macroscopique et microscopie.
+
 
 	----------------------------------------------------------	
 	version 0.6.10
