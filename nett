@@ -62,3 +62,4 @@ rm doc/*.toc
 rm cdmlib/lib/lib*
 rm bin/*.eps
 rm bin/filenameh5
+rm bin/*.opt

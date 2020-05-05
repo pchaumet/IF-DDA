@@ -1,0 +1,269 @@
+\chapter{Fichiers de test}\label{chaptest}
+\markboth{\uppercase{Fichiers de test}}{\uppercase{Fichiers de test}}
+
+\minitoc
+
+\section{Introduction}
+
+Dans bin/tests est disposé un fichier options.db3. Si on le copie un
+directory en dessous ``cp options.db3 ../.'', quand on lance le code
+après un load il apparaît quatre configurations tests qui permettent de
+voir toutes les options en action.
+
+\section{Test1}
+
+Le but du test1 est de tester un cas simple et de nombreuses options
+du code afin de les valider.  La Fig.~\ref{test1conf} montre les
+options de la configuration choisie.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test1conf.eps}
+\end{center}
+\caption{Test1: configuration choisie.}
+\label{test1conf}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Les Figures suivantes montrent les résultats obtenus.  Les tracés sont
+effectués avec Matlab et ce sont directement les fichiers eps tirés du
+script ifdda.m qui sont utilisés, mais ceux-ci peuvent bien sûr être 
+réalisés avec l'interface graphique intégrée. L'avantage de matlab dans
+ce cas est de donner toutes les figures d'un seul coup.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test1local.eps}
+\end{center}
+\caption{Module du champ local dans le plan $(x,y)$.}
+%\label{test1res1}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test1macro.eps}
+\end{center}
+\caption{Module du champ macroscopique dans le plan $(x,y)$.}
+%\label{test1res1}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Le champ incident étant polarisé suivant la composante $y$ (TE), il
+est clair que la composante $y$ du champ à l'intérieur de la sphère
+est la plus forte.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test1poynting2d.eps}
+\end{center}
+\caption{Champ rayonné par l'objet.}
+%\label{test1res1}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{cc}
+  \includegraphics*[width=7.0cm,draft=false]{test1force2d.eps}
+&  \includegraphics*[width=9.0cm,draft=false]{test1force3d.eps}
+\end{tabular}
+
+\end{center}
+\caption{Force optique dans la plan $(x,y)$ et en trois D.}
+%\label{test1res2}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{cc}
+  \includegraphics*[width=7.0cm,draft=false]{test1torque2d.eps}
+&  \includegraphics*[width=9.0cm,draft=false]{test1torque3d.eps}
+\end{tabular}
+
+\end{center}
+\caption{Couple optique dans la plan $(x,y)$ et en trois D.}
+%\label{test1res2}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{ccc}
+  \includegraphics*[width=5.0cm,draft=false]{test1fourier.eps}
+& \includegraphics*[width=5.0cm,draft=false]{test1image.eps}
+&  \includegraphics*[width=5.0cm,draft=false]{test1imageinc.eps}
+
+\end{tabular}
+
+\end{center}
+\caption{Microscopie en tramsmission: Module du champ diffracté dans
+  le domaine de Fourier (gauche), module du champ diffracté dans le
+  plan image (milieu), et module du champ total dans le plan image
+  (droite).}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Test2}
+
+Le but du test2 est de tester un cas simple et de nombreuses options
+du code afin de les valider.  La Fig.~\ref{test2conf} montre les
+options de la configuration choisie. L'éclairement est fait par deux
+ondes planes qui interfèrent.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test2conf.eps}
+\end{center}
+\caption{Test2: configuration choisie.}
+\label{test2conf}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{ccc}
+  \includegraphics*[width=7.0cm,draft=false]{test2dipolepos.eps}
+& \includegraphics*[width=7.0cm,draft=false]{test2epsilon.eps}
+\end{tabular}
+
+\end{center}
+\caption{Représenation tridimensionnelle de l'objet (gauche) et carte
+  de permittivité dans le plan $(x,y)$ (droite).}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Les Figures suivantes montrent les résultats obtenus.  Les tracés sont
+effectués avec
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test2incident.eps}
+\end{center}
+\caption{Module du champ local dans le plan $(x,y)$.}
+%\label{test1res1}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test2local.eps}
+\end{center}
+\caption{Module du champ local dans le plan $(x,y)$.}
+%\label{test1res1}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test2macro.eps}
+\end{center}
+\caption{Module du champ macroscopique dans le plan $(x,y)$.}
+%\label{test1res1}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test2poynting2d.eps}
+\end{center}
+\caption{Champ rayonné par l'objet.}
+%\label{test1res1}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{ccc}
+  \includegraphics*[width=7.0cm,draft=false]{test2fourier.eps}
+& \includegraphics*[width=7.0cm,draft=false]{test2image.eps}
+\end{tabular}
+
+\end{center}
+\caption{Microscopie en réflexion: Module du champ diffracté dans le
+  domaine de Fourier (gauche), module du champ diffracté dans le plan
+  image (milieu).}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\section{Test3}
+
+Le but du test3 est de tester la microscopie en champ sombre et champ
+brillant entransmission. On étudie une sphère de 500~nm de rayon est
+de permittivté 1.5.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test3conf.eps}
+\end{center}
+\caption{Test3: configuration choisie.}
+\label{test3conf}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{ccc}
+ \includegraphics*[width=5.0cm,draft=false]{test3angleincbf.eps}
+&  \includegraphics*[width=5.0cm,draft=false]{test3imagewf.eps}
+& \includegraphics*[width=5.0cm,draft=false]{test3imageincwf.eps}
+\end{tabular}
+
+\end{center}
+\caption{Microscopie en transmission: incident pris pour créer l'image
+  (gauche). Module du champ diffracté dans le plan image (gauche),
+  module du champ total dans le plan image (milieu).}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Test4}
+
+Le but du test4 est de tester la microscopie en champ sombre et champ
+brillant entransmission. On étudie une sphère de 500~nm de rayon est
+de permittivté 1.5.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+  \includegraphics*[width=15.0cm,draft=false]{test4conf.eps}
+\end{center}
+\caption{Test4: configuration choisie.}
+\label{test4conf}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{cc}
+ \includegraphics*[width=7.0cm,draft=false]{test4angleincdf.eps}
+&  \includegraphics*[width=7.0cm,draft=false]{test4imagewf.eps}
+\end{tabular}
+
+\end{center}
+\caption{Microscopie en réflexion: incident pris pour créer l'image
+  (gauche). Module du champ diffracté dans le plan image (droite).}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -464,7 +464,8 @@ c     $              ,2),Ediffkzpos(ii,jj,3)
       enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
-      write(*,*) 'Energy outside the NA (%):',dabs(tmp1-tmp2)/tmp2*100.d0
+      write(*,*) 'Energy outside the NA (%):',dabs(tmp1-tmp2)/tmp2*100
+     $     .d0
       if (dabs(tmp1-tmp2)/tmp2*100.d0.ge.1.d0) then
       infostr='Energy: Beam too inclined or waist or nfft too small'
          nstop=1

@@ -1,4 +1,24 @@
- 	version 0.6.12
+	version 0.6.13
+
+	1) cdmOptionsWindow gère la sauvegarde du fichier de
+	configuration. ajout sauvegarde multiple wave.
+	2) correction ds diffracte energie depassement de ligne.
+	3) ds cdmOptionsWindow.cpp rajoute Antenna comme source
+	4) ds cdmOptionsWindow.cpp correction concentric sphere.
+	5) ds cdmOptionsWindow.cpp rajoute nside, NA condenser, et focal
+	plane.
+ 	6) ds cdmOptionsWindow.cpp rajoute emissivity.
+	7) ds cdmOptionsWindow.cpp rajoute gaussian avec FFT.
+	8) remet en forme cdmOptionsWindow.cpp
+	9) ds nett nettoie les .opt ds le bin.
+	10) changement nom version.
+	11) ajout de test1 dans le userguide en Francais.
+	12) ajout de test2 dans le userguide en Francais.	
+	13) ajout de test3 dans le userguide en Francais.	
+	14) ajout de test4 dans le userguide en Francais.		
+	
+	---------------------------------------------------------------	
+	version 0.6.12
 		
 	1) changement nom de version.
 	2) Réécriture de sortie énergie.
