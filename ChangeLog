@@ -1,3 +1,11 @@
+	version 0.6.14
+
+	1) remet en forme cdmOptionsWindow.cpp + toutes les options sont
+	maintenant mises.
+	2) correction chaptest 
+	3) création chaptest en anglais.
+
+	----------------------------------------------------------
 	version 0.6.13
 
 	1) cdmOptionsWindow gère la sauvegarde du fichier de

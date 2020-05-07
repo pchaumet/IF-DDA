@@ -182,249 +182,260 @@ OptionsWindow::tofile(){
      return;
   QTextStream opt(&optfile);
   // Fill ASCII options here
-  opt << "Calculation options [0=rigorous, 1=renormalized Born, 2=Born, 3=Born order, 4=renormalized Rytov, 5=Rytov, 6=Beam propagation, 7=renormalized Beam propagation]:" << options->getNrig() << endl;
-  opt << "Illumination properties options:" << endl;
-  opt << " wavelength:" << options->getWavelength() << endl;
+  opt << "List of the options taken for the code" << endl;
+
+
+  opt << "Calculation options [0=rigorous, 1=renormalized Born, 2=Born, 3=Born order, 4=renormalized Rytov, 5=Rytov, 6=Beam propagation, 7=renormalized Beam propagation]: " << options->getNrig() << endl;
+
+  opt << "Reread from a file: " << options->getNread() << endl;
+  opt << "Database file: " << options->getNmatlab() << endl;
+  opt << "H5 file used: " << options->getH5File() << endl;
+  opt << "Advanced interface used: " << options->getAdvancedinterface() << endl;
+  opt << "------------------------------------------" << endl;
+  opt << "Illumination properties options: " << endl;
+  opt << " Wavelength: " << options->getWavelength() << endl;
   opt << " P0: " << options->getP0() << endl;
   opt << " W0: " << options->getW0() << endl;
   opt << " Beam: " << options->getBeam() << endl;
   if (options->getBeam() == "Circular plane wave") {
-    opt << "  incidence angle (theta with respect to z):" << options->getIncidenceangle_theta_z() << endl;
-    opt << "  incidence angle (phi with respect to x):" << options->getIncidenceangle_phi_x() << endl;
-    opt << "  polarization L (-1) R (1):" << options->getPolarizationRL() << endl;
+    opt << "  incidence angle (theta with respect to z): " << options->getIncidenceangle_theta_z() << endl;
+    opt << "  incidence angle (phi with respect to x): " << options->getIncidenceangle_phi_x() << endl;
+    opt << "  polarization L (-1) R (1): " << options->getPolarizationRL() << endl;
   }
   else if (options->getBeam() == "Linear plane wave") {
-    opt << "  incidence angle (theta with respect to z):" << options->getIncidenceangle_theta_z() << endl;
-    opt << "  incidence angle (phi with respect to x):" << options->getIncidenceangle_phi_x() << endl;
-    opt << "  polarization TM (1) TE (0):" << options->getPolarizationTM() << endl;
+    opt << "  incidence angle (theta with respect to z): " << options->getIncidenceangle_theta_z() << endl;
+    opt << "  incidence angle (phi with respect to x): " << options->getIncidenceangle_phi_x() << endl;
+    opt << "  polarization TM (1) TE (0): " << options->getPolarizationTM() << endl;
   }
   else if (options->getBeam() == "Circular Gaussian" || options->getBeam() == "Circular Gaussian (para)"|| options->getBeam() == "Circular Gaussian (FFT)" ) {
-    opt << "  incidence angle (theta with respect to z):" << options->getIncidenceangle_theta_z() << endl;
-    opt << "  incidence angle (phi with respect to x):" << options->getIncidenceangle_phi_x() << endl;
-    opt << "  polarization L (-1) R (1):" << options->getPolarizationRL() << endl;
-    opt << "  gaussian X:" << options->getXgaus() << endl;
-    opt << "  gaussian Y:" << options->getYgaus() << endl;
-    opt << "  gaussian Z:" << options->getZgaus() << endl;
+    opt << "  incidence angle (theta with respect to z): " << options->getIncidenceangle_theta_z() << endl;
+    opt << "  incidence angle (phi with respect to x): " << options->getIncidenceangle_phi_x() << endl;
+    opt << "  polarization L (-1) R (1): " << options->getPolarizationRL() << endl;
+    opt << "  gaussian X: " << options->getXgaus() << endl;
+    opt << "  gaussian Y: " << options->getYgaus() << endl;
+    opt << "  gaussian Z: " << options->getZgaus() << endl;
   }
   else if (options->getBeam() == "Linear Gaussian" || options->getBeam() == "Linear Gaussian (para)" || options->getBeam() == "Linear Gaussian (FFT)" ) {
-    opt << "  incidence angle (theta with respect to z):" << options->getIncidenceangle_theta_z() << endl;
-    opt << "  incidence angle (phi with respect to x):" << options->getIncidenceangle_phi_x() << endl;
-    opt << "  polarization TM (1) TE (0):" << options->getPolarizationTM() << endl;
-    opt << "  gaussian X:" << options->getXgaus() << endl;
-    opt << "  gaussian Y:" << options->getYgaus() << endl;
-    opt << "  gaussian Z:" << options->getZgaus() << endl;
+    opt << "  incidence angle (theta with respect to z): " << options->getIncidenceangle_theta_z() << endl;
+    opt << "  incidence angle (phi with respect to x): " << options->getIncidenceangle_phi_x() << endl;
+    opt << "  polarization TM (1) TE (0): " << options->getPolarizationTM() << endl;
+    opt << "  gaussian X: " << options->getXgaus() << endl;
+    opt << "  gaussian Y: " << options->getYgaus() << endl;
+    opt << "  gaussian Z: " << options->getZgaus() << endl;
   }
   else if (options->getBeam() == "Multiple wave"  ) {
     for (int i = 0 ; i < options->getWaveMultiNumber(); i++) {
-      opt << "  incidence angle (theta with respect to z):" << options->getThetam().at(i) << endl;
-      opt << "  incidence angle (phi with respect to x):" << options->getPhim().at(i) << endl;
-      opt << "  polarization TM (1) TE (0):" << options->getPpm().at(i) << endl;
-      opt << "  Magnitude field real:" << (real(options->getE0m().at(i))) << endl;
-      opt << "  Magnitude field imag:" << (imag(options->getE0m().at(i))) << endl;
+      opt << "  incidence angle (theta with respect to z): " << options->getThetam().at(i) << endl;
+      opt << "  incidence angle (phi with respect to x): " << options->getPhim().at(i) << endl;
+      opt << "  polarization TM (1) TE (0): " << options->getPpm().at(i) << endl;
+      opt << "  Magnitude field real: " << (real(options->getE0m().at(i))) << endl;
+      opt << "  Magnitude field imag: " << (imag(options->getE0m().at(i))) << endl;
     }
   }
   else if (options->getBeam() == "Antenna" ) {
-    opt << "  incidence angle (theta with respect to z):" << options->getIncidenceangle_theta_z() << endl;
+    opt << "  incidence angle (theta with respect to z): " << options->getIncidenceangle_theta_z() << endl;
     opt << "  orientation angle (phi with respect to x)" << options->getIncidenceangle_phi_x() << endl;
-    opt << "  position X:" << options->getXgaus() << endl;
-    opt << "  position Y:" << options->getYgaus() << endl;
-    opt << "  position Z:" << options->getZgaus() << endl;
+    opt << "  position X: " << options->getXgaus() << endl;
+    opt << "  position Y: " << options->getYgaus() << endl;
+    opt << "  position Z: " << options->getZgaus() << endl;
   }
-
-  opt << "Object properties options:" << endl;
+  opt << "------------------------------------------" << endl;
+  opt << "Object properties options: " << endl;
   for (int i = 0 ; i < options->getObjectNumber(); i++) {
     opt << " object : " << i << " : " << options->getObject() << endl;
     if (options->getObject() == "sphere" || options->getObject() == "multiple spheres") {
-      opt << "  radius:" << options->getSphereradius().at(i) << endl;
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
+      opt << "  radius: " << options->getSphereradius().at(i) << endl;
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
     }
     else if (options->getObject() == "inhomogeneous sphere") {
-      opt << "  radius:" << options->getSphereradius().at(i) << endl;
-      opt << "  seed:" << options->getSphereseed() << endl;
-      opt << "  coherence length:" << options->getSpherecoherencelength() << endl;
-      opt << "  standard deviation:" << options->getSpherestandardev() << endl;
+      opt << "  radius: " << options->getSphereradius().at(i) << endl;
+      opt << "  seed: " << options->getSphereseed() << endl;
+      opt << "  coherence length: " << options->getSpherecoherencelength() << endl;
+      opt << "  standard deviation: " << options->getSpherestandardev() << endl;
     }
     else if (options->getObject() == "random spheres (length)") {
-      opt << "  cube side X:" << options->getCubesidex() << endl;
-      opt << "  cube side Y:" << options->getCubesidey() << endl;
-      opt << "  cube side Z:" << options->getCubesidez() << endl;
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
-      opt << "  radius:" << options->getSphereradius().at(i) << endl;
-      opt << "  seed:" << options->getSphereseed() << endl;
-      opt << "  density:" << options->getDensity() << endl;
+      opt << "  cube side X: " << options->getCubesidex() << endl;
+      opt << "  cube side Y: " << options->getCubesidey() << endl;
+      opt << "  cube side Z: " << options->getCubesidez() << endl;
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
+      opt << "  radius: " << options->getSphereradius().at(i) << endl;
+      opt << "  seed: " << options->getSphereseed() << endl;
+      opt << "  density: " << options->getDensity() << endl;
      }
     else if (options->getObject() == "random spheres (meshsize)") {
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
-      opt << "  number of subunit X:" << options->getNxx() << endl;
-      opt << "  number of subunit Y:" << options->getNyy() << endl;
-      opt << "  number of subunit Z:" << options->getNzz() << endl;
-      opt << "  meshsize:" << options->getMeshsize() << endl;      
-      opt << "  radius:" << options->getSphereradius().at(i) << endl;
-      opt << "  seed:" << options->getSphereseed() << endl;
-      opt << "  density:" << options->getDensity() << endl;
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
+      opt << "  number of subunit X: " << options->getNxx() << endl;
+      opt << "  number of subunit Y: " << options->getNyy() << endl;
+      opt << "  number of subunit Z: " << options->getNzz() << endl;
+      opt << "  meshsize: " << options->getMeshsize() << endl;      
+      opt << "  radius: " << options->getSphereradius().at(i) << endl;
+      opt << "  seed: " << options->getSphereseed() << endl;
+      opt << "  density: " << options->getDensity() << endl;
      }
     else if (options->getObject() == "concentric spheres") {
-      opt << "  radius:" << options->getSphereradius().at(i) << endl;
+      opt << "  radius: " << options->getSphereradius().at(i) << endl;
       if (i == 0) {
-        opt << "  position X:" << options->getPositionx().at(i) << endl;
-        opt << "  position Y:" << options->getPositiony().at(i) << endl;
-        opt << "  position Z:" << options->getPositionz().at(i) << endl;
+        opt << "  position X: " << options->getPositionx().at(i) << endl;
+        opt << "  position Y: " << options->getPositiony().at(i) << endl;
+        opt << "  position Z: " << options->getPositionz().at(i) << endl;
       }
     }
     else if (options->getObject() == "cube") {
-      opt << "  cube side:" << options->getCubeside() << endl;
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
+      opt << "  cube side: " << options->getCubeside() << endl;
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
     }
     else if (options->getObject() == "inhomogeneous cuboid (length)") {
-      opt << "  cube side X:" << options->getCubesidex() << endl;
-      opt << "  cube side Y:" << options->getCubesidey() << endl;
-      opt << "  cube side Z:" << options->getCubesidez() << endl;
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
-      opt << "  seed:" << options->getSphereseed() << endl;
-      opt << "  coherence length:" << options->getSpherecoherencelength() << endl;
-      opt << "  standard deviation:" << options->getSpherestandardev() << endl;
+      opt << "  cube side X: " << options->getCubesidex() << endl;
+      opt << "  cube side Y: " << options->getCubesidey() << endl;
+      opt << "  cube side Z: " << options->getCubesidez() << endl;
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
+      opt << "  seed: " << options->getSphereseed() << endl;
+      opt << "  coherence length: " << options->getSpherecoherencelength() << endl;
+      opt << "  standard deviation: " << options->getSpherestandardev() << endl;
     }
        else if (options->getObject() == "inhomogeneous cuboid (meshsize)") {
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
-      opt << "  number of subunit X:" << options->getNxx() << endl;
-      opt << "  number of subunit Y:" << options->getNyy() << endl;
-      opt << "  number of subunit Z:" << options->getNzz() << endl;
-      opt << "  meshsize:" << options->getMeshsize() << endl;
-      opt << "  seed:" << options->getSphereseed() << endl;
-      opt << "  coherence length:" << options->getSpherecoherencelength() << endl;
-      opt << "  standard deviation:" << options->getSpherestandardev() << endl;
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
+      opt << "  number of subunit X: " << options->getNxx() << endl;
+      opt << "  number of subunit Y: " << options->getNyy() << endl;
+      opt << "  number of subunit Z: " << options->getNzz() << endl;
+      opt << "  meshsize: " << options->getMeshsize() << endl;
+      opt << "  seed: " << options->getSphereseed() << endl;
+      opt << "  coherence length: " << options->getSpherecoherencelength() << endl;
+      opt << "  standard deviation: " << options->getSpherestandardev() << endl;
     }
       else if (options->getObject() == "cuboid (length)") {
-      opt << "  cube side X:" << options->getCubesidex() << endl;
-      opt << "  cube side Y:" << options->getCubesidey() << endl;
-      opt << "  cube side Z:" << options->getCubesidez() << endl;
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
-      opt << "  theta:" << options->getThetaobj() << endl;
-      opt << "  phi:" << options->getPhiobj() << endl;
-      opt << "  psi:" << options->getPsiobj() << endl;
+      opt << "  cube side X: " << options->getCubesidex() << endl;
+      opt << "  cube side Y: " << options->getCubesidey() << endl;
+      opt << "  cube side Z: " << options->getCubesidez() << endl;
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
+      opt << "  theta: " << options->getThetaobj() << endl;
+      opt << "  phi: " << options->getPhiobj() << endl;
+      opt << "  psi: " << options->getPsiobj() << endl;
     }
       else if (options->getObject() == "cuboid (meshsize)") {
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
-      opt << "  number of subunit X:" << options->getNxx() << endl;
-      opt << "  number of subunit Y:" << options->getNyy() << endl;
-      opt << "  number of subunit Z:" << options->getNzz() << endl;
-      opt << "  meshsize:" << options->getMeshsize() << endl;      
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
+      opt << "  number of subunit X: " << options->getNxx() << endl;
+      opt << "  number of subunit Y: " << options->getNyy() << endl;
+      opt << "  number of subunit Z: " << options->getNzz() << endl;
+      opt << "  meshsize: " << options->getMeshsize() << endl;      
     }
     else if (options->getObject() == "ellipsoid") {
-      opt << "  half axe A:" << options->getDemiaxea() << endl;
-      opt << "  half axe B:" << options->getDemiaxeb() << endl;
-      opt << "  half axe C:" << options->getDemiaxec() << endl;
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
+      opt << "  half axe A: " << options->getDemiaxea() << endl;
+      opt << "  half axe B: " << options->getDemiaxeb() << endl;
+      opt << "  half axe C: " << options->getDemiaxec() << endl;
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
     }
     else if (options->getObject() == "cylinder") {
-      opt << "  radius:" << options->getSphereradius().at(i) << endl;
-      opt << "  height:" << options->getHauteur() << endl;
-      opt << "  position X:" << options->getPositionx().at(i) << endl;
-      opt << "  position Y:" << options->getPositiony().at(i) << endl;
-      opt << "  position Z:" << options->getPositionz().at(i) << endl;
-      opt << "  theta:" << options->getThetaobj() << endl;
-      opt << "  phi:" << options->getPhiobj() << endl;
+      opt << "  radius: " << options->getSphereradius().at(i) << endl;
+      opt << "  height: " << options->getHauteur() << endl;
+      opt << "  position X: " << options->getPositionx().at(i) << endl;
+      opt << "  position Y: " << options->getPositiony().at(i) << endl;
+      opt << "  position Z: " << options->getPositionz().at(i) << endl;
+      opt << "  theta: " << options->getThetaobj() << endl;
+      opt << "  phi: " << options->getPhiobj() << endl;
     }
   }
-    opt << " anisotropy:" << options->getAnisotropy() << endl;
+    opt << " anisotropy: " << options->getAnisotropy() << endl;
   for (int i = 0 ; i < options->getObjectNumber(); i++) {
     if ( options->getAnisotropy() == "iso" ) {
-      opt << "  material" << i << ":" << options->getMaterial()[i] << endl;
-      opt << "  epsilon real:" << QString::number(real(options->getEpsilon().at(i))) << endl;
-      opt << "  epsilon imag:" << QString::number(imag(options->getEpsilon().at(i))) << endl;
+      opt << "  material" << i << ": " << options->getMaterial()[i] << endl;
+      opt << "  epsilon real: " << QString::number(real(options->getEpsilon().at(i))) << endl;
+      opt << "  epsilon imag: " << QString::number(imag(options->getEpsilon().at(i))) << endl;
     }
     else if ( options->getAnisotropy() == "ani" ) {
-      opt << "  epsilon11 real:" << QString::number(real(options->getEpsilon11().at(i))) << endl;
-      opt << "  epsilon11 imag:" << QString::number(imag(options->getEpsilon11().at(i))) << endl;
-      opt << "  epsilon12 real:" << QString::number(real(options->getEpsilon12().at(i))) << endl;
-      opt << "  epsilon12 imag:" << QString::number(imag(options->getEpsilon12().at(i))) << endl;
-      opt << "  epsilon13 real:" << QString::number(real(options->getEpsilon13().at(i))) << endl;
-      opt << "  epsilon13 imag:" << QString::number(imag(options->getEpsilon13().at(i))) << endl;
-      opt << "  epsilon21 real:" << QString::number(real(options->getEpsilon21().at(i))) << endl;
-      opt << "  epsilon21 imag:" << QString::number(imag(options->getEpsilon21().at(i))) << endl;
-      opt << "  epsilon22 real:" << QString::number(real(options->getEpsilon22().at(i))) << endl;
-      opt << "  epsilon22 imag:" << QString::number(imag(options->getEpsilon22().at(i))) << endl;
-      opt << "  epsilon23 real:" << QString::number(real(options->getEpsilon23().at(i))) << endl;
-      opt << "  epsilon23 imag:" << QString::number(imag(options->getEpsilon23().at(i))) << endl;
-      opt << "  epsilon31 real:" << QString::number(real(options->getEpsilon31().at(i))) << endl;
-      opt << "  epsilon31 imag:" << QString::number(imag(options->getEpsilon31().at(i))) << endl;
-      opt << "  epsilon32 real:" << QString::number(real(options->getEpsilon32().at(i))) << endl;
-      opt << "  epsilon32 imag:" << QString::number(imag(options->getEpsilon32().at(i))) << endl;
-      opt << "  epsilon33 real:" << QString::number(real(options->getEpsilon33().at(i))) << endl;
-      opt << "  epsilon33 imag:" << QString::number(imag(options->getEpsilon33().at(i))) << endl;
+      opt << "  epsilon11 real: " << QString::number(real(options->getEpsilon11().at(i))) << endl;
+      opt << "  epsilon11 imag: " << QString::number(imag(options->getEpsilon11().at(i))) << endl;
+      opt << "  epsilon12 real: " << QString::number(real(options->getEpsilon12().at(i))) << endl;
+      opt << "  epsilon12 imag: " << QString::number(imag(options->getEpsilon12().at(i))) << endl;
+      opt << "  epsilon13 real: " << QString::number(real(options->getEpsilon13().at(i))) << endl;
+      opt << "  epsilon13 imag: " << QString::number(imag(options->getEpsilon13().at(i))) << endl;
+      opt << "  epsilon21 real: " << QString::number(real(options->getEpsilon21().at(i))) << endl;
+      opt << "  epsilon21 imag: " << QString::number(imag(options->getEpsilon21().at(i))) << endl;
+      opt << "  epsilon22 real: " << QString::number(real(options->getEpsilon22().at(i))) << endl;
+      opt << "  epsilon22 imag: " << QString::number(imag(options->getEpsilon22().at(i))) << endl;
+      opt << "  epsilon23 real: " << QString::number(real(options->getEpsilon23().at(i))) << endl;
+      opt << "  epsilon23 imag: " << QString::number(imag(options->getEpsilon23().at(i))) << endl;
+      opt << "  epsilon31 real: " << QString::number(real(options->getEpsilon31().at(i))) << endl;
+      opt << "  epsilon31 imag: " << QString::number(imag(options->getEpsilon31().at(i))) << endl;
+      opt << "  epsilon32 real: " << QString::number(real(options->getEpsilon32().at(i))) << endl;
+      opt << "  epsilon32 imag: " << QString::number(imag(options->getEpsilon32().at(i))) << endl;
+      opt << "  epsilon33 real: " << QString::number(real(options->getEpsilon33().at(i))) << endl;
+      opt << "  epsilon33 imag: " << QString::number(imag(options->getEpsilon33().at(i))) << endl;
     }
   }
-  opt << "Study options:" << endl;
-  opt << " Dipole/epsilon checked:" << options->getDipolepsilon() << endl;
-  opt << " Farfield checked:" << options->getFarfield() << endl;
+  opt << "------------------------------------------" << endl;
+  opt << "Study options: " << endl;
+  opt << " Dipole/epsilon checked: " << options->getDipolepsilon() << endl;
+  opt << " Farfield checked: " << options->getFarfield() << endl;
   if ( options->getFarfield() ) {
-    opt << "  cross section checked:" << options->getCrosssection() << endl;
-    opt << "  cross section + poynting checked:" << options->getCrosssectionpoynting() << endl;
-    opt << "  quick computation:" << options->getQuickdiffract() << endl;
-    opt << "  ntheta:" << options->getNtheta() << endl;
-    opt << "  nphi:" << options->getNphi() << endl;
-    opt << "  Emissivity:" << options->getNenergie() << endl;
+    opt << "  cross section checked: " << options->getCrosssection() << endl;
+    opt << "  cross section + poynting checked: " << options->getCrosssectionpoynting() << endl;
+    opt << "  quick computation: " << options->getQuickdiffract() << endl;
+    opt << "  ntheta: " << options->getNtheta() << endl;
+    opt << "  nphi: " << options->getNphi() << endl;
+    opt << "  Emissivity: " << options->getNenergie() << endl;
   }
-  opt << " Microscopy checked:" << options->getMicroscopy() << endl;
+  opt << " Microscopy checked: " << options->getMicroscopy() << endl;
   if ( options->getMicroscopy() ) {
-    opt << "  Microscope [0=Holographic, 1=Brightfield, 2=Darkfield & phase]:" << options->getNtypemic() << endl;
-    opt << "  Side of observation [0 trans, 1 ref.]:" << options->getNside() << endl;
-    opt << "  Quick computation:" << options->getMicroscopyFFT() << endl;
-    opt << "  Numerical aperture lens:" << options->getNA() << endl;
-    opt << "  Numerical aperture condenser:" << options->getNAinc() << endl;
-    opt << "  Magnification:" << options->getGross() << endl;
-    opt << "  Focal plane position:" << options->getZlens() << endl;
+    opt << "  Microscope [0=Holographic, 1=Brightfield, 2=Darkfield & phase]: " << options->getNtypemic() << endl;
+    opt << "  Side of observation [0 trans, 1 ref.]: " << options->getNside() << endl;
+    opt << "  Quick computation: " << options->getMicroscopyFFT() << endl;
+    opt << "  Numerical aperture lens: " << options->getNA() << endl;
+    opt << "  Numerical aperture condenser: " << options->getNAinc() << endl;
+    opt << "  Magnification: " << options->getGross() << endl;
+    opt << "  Focal plane position: " << options->getZlens() << endl;
   }
-  opt << " Force checked:" << options->getForce() << endl;
+  opt << " Force checked: " << options->getForce() << endl;
   if ( options->getForce() ) {
-    opt << "  optical force checked:" << options->getOpticalforce() << endl;
-    opt << "  optical force density checked:" << options->getOpticalforcedensity() << endl;
-    opt << "  optical torque checked:" << options->getOpticaltorque() << endl;
-    opt << "  optical torque density checked:" << options->getOpticaltorquedensity() << endl;
+    opt << "  optical force checked: " << options->getOpticalforce() << endl;
+    opt << "  optical force density checked: " << options->getOpticalforcedensity() << endl;
+    opt << "  optical torque checked: " << options->getOpticaltorque() << endl;
+    opt << "  optical torque density checked: " << options->getOpticaltorquedensity() << endl;
   }
-  opt << " Nearfield checked:" << options->getNearfield() << endl;
+  opt << " Nearfield checked: " << options->getNearfield() << endl;
   if ( options->getNearfield() ) {
-    opt << "  localfield checked:" << options->getLocalfield() << endl;
-    opt << "  macroscopic field checked:" << options->getMacroscopicfield() << endl;
+    opt << "  localfield checked: " << options->getLocalfield() << endl;
+    opt << "  macroscopic field checked: " << options->getMacroscopicfield() << endl;
     int nproche = options->getNproche();
-    opt << "  range of study (-1,0,1):" << nproche << endl;
-    opt << "  nxm:" << options->getNxm() << endl;
-    opt << "  nym:" << options->getNym() << endl;
-    opt << "  nzm:" << options->getNzm() << endl;
-    opt << "  nxmp:" << options->getNxmp() << endl;
-    opt << "  nymp:" << options->getNymp() << endl;
-    opt << "  nzmp:" << options->getNzmp() << endl;
+    opt << "  range of study (0,1,2): " << options->getNproche() << endl;
+    opt << "  Discretization: " << options->getDiscretization() << endl;
+    opt << "  nxm: " << options->getNxm() << endl;
+    opt << "  nym: " << options->getNym() << endl;
+    opt << "  nzm: " << options->getNzm() << endl;
+    opt << "  nxmp: " << options->getNxmp() << endl;
+    opt << "  nymp: " << options->getNymp() << endl;
+    opt << "  nzmp: " << options->getNzmp() << endl;
   }
-
-  opt << "Numerical parameters options:" << endl;
-  opt << " Tolerance:" << options->getTolerance() << endl;
-  opt << " Methode:" << options->getMethodeit() << endl;
-  opt << " Polarizability:" << options->getPolarizability() << endl;
-  opt << " Quadrature:" << options->getQuad() << endl;
-  opt << " FFT:" << options->getnfft2d() << endl;
+  opt << "------------------------------------------" << endl;
+  opt << "Numerical parameters options: " << endl;
+  opt << " Tolerance: " << options->getTolerance() << endl;
+  opt << " Methode: " << options->getMethodeit() << endl;
+  opt << " Polarizability: " << options->getPolarizability() << endl;
+  opt << " Quadrature: " << options->getQuad() << endl;
+  opt << " FFT: " << options->getnfft2d() << endl;
   optfile.close();
   initOptionsTbl();
 }
 void 
 OptionsWindow::showWarning(QString message) {
-  QMessageBox::warning(this, "Error:", message);
+  QMessageBox::warning(this, "Error: ", message);
 }
 

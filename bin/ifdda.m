@@ -148,8 +148,6 @@ z=zmin:pasz:zmax;
 
 end;
   
-%[x,y,z,unitmes] = chgtunit(x,y,z)
-%xlabel(strcat('x',unitmes))
 
 if (niso == 0);
 if (nproche == -1 );
@@ -1165,6 +1163,12 @@ load ximage.mat -ascii
 elseif (ntypefile ==2)
 ximage=h5read(namefileh5,'/Microscopy/x Image');
 end;
+
+%[x,y,z,unitmes] = chgtunit(x,y,z)
+%xlabel(strcat('x',unitmes))
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Fourier %%%%%%%%%%%%%%%%%%%%%%%%%
 
 figure(400)

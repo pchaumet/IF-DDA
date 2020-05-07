@@ -1,43 +1,44 @@
-\chapter{Fichiers de test}\label{chaptest}
+\chapter{Examples}\label{chaptest}
 \markboth{\uppercase{Fichiers de test}}{\uppercase{Fichiers de test}}
 
 \minitoc
 
 \section{Introduction}
 
-Dans bin/tests est disposé un fichier options.db3. Si on le copie un
-directory en dessous ``cp options.db3 ../.'', quand on lance le code
-après un load il apparaît quatre configurations tests qui permettent de
-voir toutes les options en action.
+In bin/tests there is the file options.db3. You should copy it in the
+directory bin as ''cp options.db3.. /.', and then you launch the code
+after the load is appeara four test configurations that allow you to
+see all the options in action.
+
+
 
 \section{Test1}
 
-Le but du test1 est de tester un cas simple et de nombreuses options
-du code afin de les valider.  La Fig.~\ref{test1conf} montre les
-options de la configuration choisie.
-
+The aim of test1 is to test a simple case and many options of the code
+to validate them. Figure~\ref{test1conf} shows the options of the
+chosen configuration.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[H]
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test1conf.eps}
 \end{center}
-\caption{Test1: configuration choisie.}
+\caption{Test1: configuration taken.}
 \label{test1conf}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Les Figures suivantes montrent les résultats obtenus.  Les tracés sont
-effectués avec Matlab et ce sont directement les fichiers eps tirés du
-script ifdda.m qui sont utilisés, mais ceux-ci peuvent bien sûr être 
-réalisés avec l'interface graphique intégrée. L'avantage de matlab dans
-ce cas est de donner toutes les figures d'un seul coup.
+The following figures show the results obtained. The plots are done
+with Matlab and these are directly the eps files from the ifdda.m
+script that are used. The advantage of matlab in this case is to give
+all the figures in one go.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[H]
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test1local.eps}
 \end{center}
-\caption{Module du champ local dans le plan $(x,y)$.}
+\caption{Modulus of the local field in $(x,y)$ plane.}
 %\label{test1res1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -46,20 +47,20 @@ ce cas est de donner toutes les figures d'un seul coup.
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test1macro.eps}
 \end{center}
-\caption{Module du champ macroscopique dans le plan $(x,y)$.}
+\caption{Modulus of the macroscopic field in $(x,y)$ plane.}
 %\label{test1res1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Le champ incident étant polarisé suivant la composante $y$ (TE), il
-est clair que la composante $y$ du champ à l'intérieur de la sphère
-est la plus forte.
+Because the incident field is polarized along the $y$ direction (TE),
+hence the $y$ component of the field inside the sphere is the largest.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[H]
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test1poynting2d.eps}
 \end{center}
-\caption{Champ rayonné par l'objet.}
+\caption{Modulus of the Poyting vector.}
 %\label{test1res1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,7 +73,7 @@ est la plus forte.
 \end{tabular}
 
 \end{center}
-\caption{Force optique dans la plan $(x,y)$ et en trois D.}
+\caption{Optical force in the $(x,y)$ plane and in 3D.}
 %\label{test1res2}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -85,7 +86,7 @@ est la plus forte.
 \end{tabular}
 
 \end{center}
-\caption{Couple optique dans la plan $(x,y)$ et en trois D.}
+\caption{Optical torque in the $(x,y)$ plane and in 3D.}
 %\label{test1res2}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -97,23 +98,21 @@ est la plus forte.
   \includegraphics*[width=5.0cm,draft=false]{test1fourier.eps}
 & \includegraphics*[width=5.0cm,draft=false]{test1image.eps}
 &  \includegraphics*[width=5.0cm,draft=false]{test1imageinc.eps}
-
 \end{tabular}
 
 \end{center}
-\caption{Microscopie en tramsmission: Module du champ diffracté dans
-  le domaine de Fourier (gauche), module du champ diffracté dans le
-  plan image (milieu), et module du champ total dans le plan image
-  (droite).}
+\caption{Microscopy in tramsmission: Modulus of the diffracted field
+  in the Fourier plane (left), modulus of teh diffracted field in the
+  image plane (middle), and modulus of the total field in the image
+  plane (right).}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Test2}
 
-Le but du test2 est de tester un cas simple et de nombreuses options
-du code afin de les valider.  La Fig.~\ref{test2conf} montre les
-options de la configuration choisie. L'éclairement est fait par deux
-ondes planes qui interfèrent.
+The aim of the test2 is to test a simple case and many options code to
+validate them.  Figure~\ref{test2conf}. shows the options of the
+chosen configuration. The illumination is done by two plane waves.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -121,7 +120,7 @@ ondes planes qui interfèrent.
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test2conf.eps}
 \end{center}
-\caption{Test2: configuration choisie.}
+\caption{Test2: configuration taken.}
 \label{test2conf}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -136,19 +135,19 @@ ondes planes qui interfèrent.
 \end{tabular}
 
 \end{center}
-\caption{Représentation tridimensionnelle de l'objet (gauche) et carte
-  de permittivité dans le plan $(x,y)$ (droite).}
+\caption{Object in 3D (left) and map of permittivity in the $(x,y)$
+  plane (right).}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-Les Figures suivantes montrent les résultats obtenus.
+The following figures show the results obtained.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[H]
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test2incident.eps}
 \end{center}
-\caption{Module du champ incident dans le plan $(x,y)$.}
+\caption{Modulus of the incident field in $(x,y)$ plane.}
 %\label{test1res1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,7 +156,7 @@ Les Figures suivantes montrent les résultats obtenus.
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test2local.eps}
 \end{center}
-\caption{Module du champ local dans le plan $(x,y)$.}
+\caption{Modulus of the local field in $(x,y)$ plane.}
 %\label{test1res1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -166,7 +165,7 @@ Les Figures suivantes montrent les résultats obtenus.
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test2macro.eps}
 \end{center}
-\caption{Module du champ macroscopique dans le plan $(x,y)$.}
+\caption{Modulus of the macroscopic field in $(x,y)$ plane.}
 %\label{test1res1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,7 +175,7 @@ Les Figures suivantes montrent les résultats obtenus.
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test2poynting2d.eps}
 \end{center}
-\caption{Champ rayonné par l'objet.}
+\caption{Modulus of the Poynting vector.}
 %\label{test1res1}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -191,9 +190,8 @@ Les Figures suivantes montrent les résultats obtenus.
 \end{tabular}
 
 \end{center}
-\caption{Microscopie en réflexion: Module du champ diffracté dans le
-  domaine de Fourier (gauche), module du champ diffracté dans le plan
-  image (droite).}
+\caption{Microscopy in reflexion: Modulus of the diffracted field in
+  the fourier plane (left) and in image plane (right).}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -202,9 +200,10 @@ Les Figures suivantes montrent les résultats obtenus.
 
 \section{Test3}
 
-Le but du test3 est de tester la microscopie en champ sombre et champ
-brillant en transmission. On étudie une sphère de 500~nm de rayon et
-de permittivité 1.5.
+The aim of the test3 is to test the microscopy in dark field and
+bright field in transmission. One studies a sphere with a radius of
+500~nm and permittivity 1.5. 
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -212,7 +211,7 @@ de permittivité 1.5.
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test3conf.eps}
 \end{center}
-\caption{Test3: configuration choisie.}
+\caption{Test3: configuration taken.}
 \label{test3conf}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -228,18 +227,16 @@ de permittivité 1.5.
 \end{tabular}
 
 \end{center}
-\caption{Microscopie en transmission: incident pris pour créer l'image
-  (gauche). Module du champ diffracté dans le plan image (milieu),
-  module du champ total dans le plan image (droite).}
+\caption{Microscopy in transmission: incident taken to make the image
+  (left). Modulus of the diffracted field in the image plane (middle),
+  and modulus of the total field inthe image plane (right).}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \section{Test4}
 
-Le but du test4 est de tester la microscopie en champ sombre et champ
-brillant entransmission. On étudie une sphère de 500~nm de rayon est
-de permittivté 1.5.
+Same configuration as in test3 for a dark field microscope.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -247,7 +244,7 @@ de permittivté 1.5.
 \begin{center}
   \includegraphics*[width=15.0cm,draft=false]{test4conf.eps}
 \end{center}
-\caption{Test4: configuration choisie.}
+\caption{Test4: configuration taken.}
 \label{test4conf}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -262,7 +259,7 @@ de permittivté 1.5.
 \end{tabular}
 
 \end{center}
-\caption{Microscopie en réflexion: incident pris pour créer l'image
-  (gauche). Module du champ diffracté dans le plan image (droite).}
+\caption{Microscope in reflexion: incident taken to make the image
+  (left). Modulus of the diffracted field in the image plane (right).}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
