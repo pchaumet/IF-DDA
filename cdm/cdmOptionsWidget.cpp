@@ -63,6 +63,8 @@ OptionsWidget::OptionsWidget(QMainWindow *_mainwindow, Options *_options)
   nmatlab->addItems(options->nmatlabList);
   nmatlab->setCurrentIndex(options->getNmatlab());
   nmatlab->setFixedWidth(200);
+  connect(nmatlab, SIGNAL(currentIndexChanged(int)),this,
+	SLOT(nmatlabStateChanged(int)));
   fileh5Label= new QLabel("Name h5 file");
   fileh5 = new QLineEdit(options->getH5File());
   fileh5->setFixedWidth(120);
@@ -684,8 +686,14 @@ OptionsWidget::advancedinterfaceCheckBoxStateChanged(int state) {
     nmatlabLabel->show();
     nmatlab->show();
 #ifdef USE_HDF5
+    if ( nmatlab->currentText() == "Save in HDF5 file" )  {
     fileh5Label->show();
     fileh5->show();
+    }
+    else {
+      fileh5Label->hide();
+      fileh5->hide();
+    }
 #else
     fileh5Label->hide();
     fileh5->hide();
@@ -840,6 +848,17 @@ QLOG_DEBUG() << " TYPE  MIC3 " << options->getNtypemic() << ntypemic->currentTex
    naincLabel->show();
    nainc->show();
 }  
+}
+void 
+OptionsWidget::nmatlabStateChanged(int state) {
+ if ( nmatlab->currentText() == "Save in HDF5 file" )  {
+   fileh5Label->show();
+   fileh5->show();
+ }
+ else {
+   fileh5Label->hide();
+   fileh5->hide();
+ }  
 }
 void
 OptionsWidget::nsideStateChanged(int state) {

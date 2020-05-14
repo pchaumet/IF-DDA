@@ -1,0 +1,5 @@
+latex userguide-EN.tex
+bibtex userguide-EN.aux
+latex userguide-EN.tex
+latex userguide-EN.tex	
+dvipdf userguide-EN.dvi

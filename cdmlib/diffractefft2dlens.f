@@ -23,7 +23,7 @@
       deltakx=2.d0*pi/(dble(nfft2d)*aretecube)
       deltaky=deltakx
       dside=dble(nside)
-      if (nfft2d.gt.4096) then
+      if (nfft2d.gt.16384) then
          nstop=1
          infostr='nfft2d too large'
          return

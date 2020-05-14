@@ -4,7 +4,7 @@
 
 TEMPLATE 	= 	app
 
-VERSION         =       0.6.13
+VERSION         =       0.6.15
 
 TARGET 		=       cdm
 

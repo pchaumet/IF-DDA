@@ -96,6 +96,7 @@ class OptionsWidget : public QWidget
       void microscopyCheckBoxStateChanged(int state);
       void ntypemicStateChanged(int index);
       void nsideStateChanged(int index);
+      void nmatlabStateChanged(int index);
       void forceCheckBoxStateChanged(int state);
       void opticalforceCheckBoxStateChanged(int state);
       void opticalforcedensityCheckBoxStateChanged(int state);
