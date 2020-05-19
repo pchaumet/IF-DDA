@@ -28,7 +28,7 @@ DEFINES 	+= 	QT_NO_DEBUG_OUTPUT
 
 QMAKE_CC        =       gfortran 
 
-QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large -fopenmp -g
+QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large -g
 QMAKE_LFLAGS    = -mcmodel=large
 
 QMAKE_CFLAGS_RELEASE    = -O3 
@@ -167,6 +167,7 @@ INCLUDEPATH     += .
 CDMLIB_LIB_PATH  =      ../cdmlib/lib
 
 CONFIG(fftw) {
+	QMAKE_CFLAGS    += -fopenmp
 	LIBS 		+= -lgfortran -lfftw3_omp -lfftw3 -lm 
 } else {
 	LIBS 		+= 	-lgfortran -lm 
