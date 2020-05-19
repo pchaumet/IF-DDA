@@ -1,7 +1,7 @@
 # tests sur plusieurs OS
 
 ubuntu:default:
-  image: "ubuntu:latest"
+  image: "ubuntu:18.04"
   before_script:
     - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake libqt4-dev
   script:
@@ -14,7 +14,7 @@ ubuntu:default:
     - tag1
 
 ubuntu:fftw:
-  image: "ubuntu:latest"
+  image: "ubuntu:18.04"
   before_script:
     - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake libqt4-dev fftw*
   script:
@@ -27,7 +27,7 @@ ubuntu:fftw:
     - tag1
 
 ubuntu:hdf5:
-  image: "ubuntu:latest"
+  image: "ubuntu:18.04"
   before_script:
     - apt-get update -qq && apt-get install -y -qq build-essential gfortran qt4-qmake libqt4-dev fftw* libhdf5-dev
   script:
