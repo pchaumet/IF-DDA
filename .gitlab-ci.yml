@@ -7,7 +7,13 @@ ubuntu:default:
   script:
     - qmake-qt4
     - make
-    - ulimit -s unlimited; cd tests; ./tests
+    - ulimit -s unlimited; cd tests
+    - >
+      for dir in $(ls -d */ ); do
+        cd $dir
+        ./main
+        cd ..
+      done
   only:
     - master
   tags:
