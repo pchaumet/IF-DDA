@@ -36,7 +36,7 @@ RCC_DIR         = resources
 
 QMAKE_CXXFLAGS_RELEASE  -= -O2
 
-QMAKE_CXXFLAGS 	+= -g -O3 
+QMAKE_CXXFLAGS 	+= -O3 
 
 QMAKE_CC        =       gfortran
 
