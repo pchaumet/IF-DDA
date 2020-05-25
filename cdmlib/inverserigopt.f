@@ -1074,7 +1074,6 @@ c         write(*,*) 'CORS tol1',tol1,tmp/NORM
          
          
       else
-         write(99,*) 'Iterative method not correct',methodeit
          write(*,*) 'Iterative method not correct',methodeit
          nstop=1
          infostr='Iterative method not correct!'

@@ -126,7 +126,6 @@ c     discretization of the object under study
       if (nx.gt.nxm.or.ny.gt.nym.or.nz.gt.nzm) then
          nstop=1
          infostr='Dimension Problem of the Box : Box too small!'
-         write(99,*) 'dimension Problem',nx,nxm,ny,nym,nz,nzm
          write(*,*) 'dimension Problem',nx,nxm,ny,nym,nz,nzm
          return
       endif

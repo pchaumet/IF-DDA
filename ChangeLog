@@ -2,7 +2,10 @@
 
 	1) modification make file pour résoudre problème
 	2) supression des -g ds la compilation
-
+	3) changement organisation début du panneau de configuration
+	4) améliore l'interface advancedinterface.
+	5) supression de l'output 99.
+	6) changement nom version.
 	
 	----------------------------------------------------------
 	version 0.6.15
