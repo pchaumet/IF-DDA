@@ -26,7 +26,13 @@ ubuntu:fftw:
   script:
     - qmake-qt4 "CONFIG+=fftw"
     - make
-    - ulimit -s unlimited; cd tests; ./tests
+    - ulimit -s unlimited; cd tests
+    - >
+      for dir in $(ls -d */ ); do
+        cd $dir
+        ./main
+        cd ..
+      done
   only:
     - master
   tags:
@@ -39,7 +45,13 @@ ubuntu:hdf5:
   script:
     - qmake-qt4 "CONFIG+=fftw hdf5"
     - make
-    - ulimit -s unlimited; cd tests; ./tests
+    - ulimit -s unlimited; cd tests
+    - >
+      for dir in $(ls -d */ ); do
+        cd $dir
+        ./main
+        cd ..
+      done
   only:
     - master
   tags:
@@ -52,7 +64,13 @@ fedora:29:
   script:
     - qmake-qt4
     - make
-    - ulimit -s unlimited; cd tests; ./tests
+    - ulimit -s unlimited; cd tests
+    - >
+      for dir in $(ls -d */ ); do
+        cd $dir
+        ./main
+        cd ..
+      done
   only:
     - master
   tags:
@@ -65,7 +83,13 @@ fedora:fftw:
   script:
     - qmake-qt4 "CONFIG+=fftw"
     - make
-    - ulimit -s unlimited; cd tests; ./tests
+    - ulimit -s unlimited; cd tests
+    - >
+      for dir in $(ls -d */ ); do
+        cd $dir
+        ./main
+        cd ..
+      done
   only:
     - master
   tags:
@@ -78,7 +102,13 @@ fedora:hdf5:
   script:
     - qmake-qt4 "CONFIG+=fftw hdf5"
     - make
-    - ulimit -s unlimited; cd tests; ./tests
+    - ulimit -s unlimited; cd tests
+    - >
+      for dir in $(ls -d */ ); do
+        cd $dir
+        ./main
+        cd ..
+      done
   only:
     - master
   tags:
