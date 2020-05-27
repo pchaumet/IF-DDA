@@ -1,3 +1,6 @@
+*DS_Store
+tests/*/*.o
+tests/*/main
 qwt-6.1.2/src/moc/
 qwt-6.1.2/src/obj/
 qwtplot3d/src/tmp/
