@@ -57,13 +57,13 @@ c     fac=dble(nfft2d*nfft2d)
       imax=nint(k0/deltakx)+1
       write(*,*) 'Number of point in NA : ',2*imax+1
       if (2*imax+1.gt.nfft2d) then
-         write(99,*) '2*imax+1',imax,2*imax+1,nfft2d
+         write(*,*) 'Size',2*imax+1,nfft2d
          infostr='In FFT diffraction for lens nfft2d too small!'
          nstop = 1
          return
       endif
       if (2*imax+1.lt.7) then
-         write(99,*) '2*imax+1',imax,2*imax+1,nfft2d
+         write(*,*) 'Size',2*imax+1,nfft2d
          infostr='In FFT diffract nfft2d too small'
          nstop = 1
          return

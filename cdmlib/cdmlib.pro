@@ -4,7 +4,7 @@
 
 TEMPLATE 	= 	lib
 
-VERSION         =       0.6.15
+VERSION         =       0.6.16
 
 TARGET 		=       cdmlib
 
@@ -28,7 +28,8 @@ DEFINES 	+= 	QT_NO_DEBUG_OUTPUT
 
 QMAKE_CC        =       gfortran 
 
-QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large -g
+QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large 
+
 QMAKE_LFLAGS    = -mcmodel=large
 
 QMAKE_CFLAGS_RELEASE    = -O3 

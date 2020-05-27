@@ -82,12 +82,12 @@ c     a la position du dipole le plus proche.
             xdip=xs(i)
             ydip=ys(i)
             zdip=zs(i)
-            write(99,*) 'antenna inside the near field domain',xdip,ydip
+            write(*,*) 'antenna inside the near field domain',xdip,ydip
      $           ,zdip
             return
          endif
       enddo
 
-      write(99,*) 'antenna outside the near field domain'
+      write(*,*) 'antenna outside the near field domain'
       
       end

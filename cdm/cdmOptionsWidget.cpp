@@ -45,29 +45,30 @@ OptionsWidget::OptionsWidget(QMainWindow *_mainwindow, Options *_options)
   calculationlayout->addWidget(saveButton);
 
   QHBoxLayout *startnreadlayout = new QHBoxLayout();
-  nrigLabel = new QLabel("Calculation options");
+  nrigLabel = new QLabel("Near field computation");
   nrig      = new QComboBox();
   nrig->addItems(options->nrigList);
   nrig->setCurrentIndex(options->getNrig());
-  nrig->setFixedWidth(200);
+  nrig->setFixedWidth(180);
   nreadLabel = new QLabel("Read local field from file");
   nread = new QCheckBox(this);
   connect(nread, SIGNAL(stateChanged(int)),this,
 	SLOT(nreadCheckBoxStateChanged(int)));
   filerereadLabel = new QLabel("File name:");
   filereread = new QLineEdit(options->getFilereread());
-  startnreadlayout->addWidget(filerereadLabel);
-  startnreadlayout->addWidget(filereread);
+  filereread->setFixedWidth(180);
+  //  startnreadlayout->addWidget(filerereadLabel);
+  //  startnreadlayout->addWidget(filereread);
   nmatlabLabel = new QLabel("Database file");
   nmatlab = new QComboBox();
   nmatlab->addItems(options->nmatlabList);
   nmatlab->setCurrentIndex(options->getNmatlab());
-  nmatlab->setFixedWidth(200);
+  nmatlab->setFixedWidth(180);
   connect(nmatlab, SIGNAL(currentIndexChanged(int)),this,
 	SLOT(nmatlabStateChanged(int)));
   fileh5Label= new QLabel("Name h5 file");
   fileh5 = new QLineEdit(options->getH5File());
-  fileh5->setFixedWidth(120);
+  fileh5->setFixedWidth(180);
   advancedinterfaceLabel = new QLabel("Advanced interface");
   advancedinterface = new QCheckBox(this);
   connect(advancedinterface, SIGNAL(stateChanged(int)),this,
@@ -369,15 +370,16 @@ OptionsWidget::OptionsWidget(QMainWindow *_mainwindow, Options *_options)
 
   QFrame *hsep000 = new QFrame(this);
   hsep000->setFrameShape(QFrame::HLine);
+  layout->addRow(calculationlayout);
   hsep000->setFrameShadow(QFrame::Sunken);
   layout->addRow(hsep000);
-  layout->addRow(calculationlayout);
+  layout->addRow(advancedinterfaceLabel->text(),advancedinterface);
   layout->addRow(nrigLabel,nrig);
   layout->addRow(nreadLabel,nread);
-  layout->addRow(startnreadlayout);
+  layout->addRow(filerereadLabel,filereread);
   layout->addRow(nmatlabLabel,nmatlab);
   layout->addRow(fileh5Label,fileh5);
-  layout->addRow(advancedinterfaceLabel->text(),advancedinterface);
+
 
   QFrame *hsep0 = new QFrame(this);
   QFrame *hsep00 = new QFrame(this);
@@ -685,6 +687,15 @@ OptionsWidget::advancedinterfaceCheckBoxStateChanged(int state) {
     nread->show();
     nmatlabLabel->show();
     nmatlab->show();
+    options->setNread(nread->isChecked());
+    if (options->getNread() == 0) {
+      filerereadLabel->hide();
+      filereread->hide();
+    }
+    else{
+      filerereadLabel->show();
+      filereread->show();
+    }
 #ifdef USE_HDF5
     if ( nmatlab->currentText() == "Save in HDF5 file" )  {
     fileh5Label->show();
@@ -718,6 +729,8 @@ OptionsWidget::advancedinterfaceCheckBoxStateChanged(int state) {
      nmatlab->hide();
      fileh5Label->hide();
      fileh5->hide();
+     filerereadLabel->hide();
+     filereread->hide();
    }
 }
 void 

@@ -483,8 +483,6 @@ c     transform the input data in meter
          return
       endif
 c     open the output file:
-      open(99,file='output')
-      write(99,*) '************* OUTPUT FILE ***************'
 
       if (nmat.eq.0) then
 c     Intensity of the incident field
@@ -557,18 +555,15 @@ c     passe arbitrary car epsilon pas defini encore, car objet pas fait
             call interpdielec(lambda,materiau,epr,epi,infostr,nstop)
             if (nstop.eq.1) return
             epsmulti(k)=(epr*uncomp+icomp*epi)
-            write(99,*) 'Relative permittivity',eps
-            write(99,*) 'Relative permittivity',eps,materiau(1:2),lambda
+            write(*,*) 'Relative permittivity',eps,materiau(1:2)
          else
             if (trope(1:3).eq.'iso') then
                write(*,*) 'Relative permittivity: ',eps
-               write(99,*) 'Relative permittivity',eps
             else 
                do i=1,3
                   do j=1,3
                      write(*,*) 'Relative
      $permittivity',epsanimulti(i,j,k),i,j,k
-                     write(99,*) 'Relative permittivity',epsani(i,j),i,j
                   enddo
                enddo
             endif
@@ -657,13 +652,12 @@ c     Built the object
      $        ,tabdip,nnnr,nmax,nbsphere,ndipole,nx,ny,nz,polarizability
      $        ,nproche,epsilon,polarisa,rayon,xg,yg,zg,nmat,file_id
      $        ,group_iddip,infostr ,nstop)
-         write(99,*) 'sphere',rayon
       elseif (object(1:12).eq.'inhomosphere') then
          numberobjet=1
          if (trope.ne.'iso') then
             nstop=1
             infostr='Permittivity not scalar for inhomogenous sphere'
-            write(99,*)
+            write(*,*)
      $           'Permittivity not scalar for inhomogenous sphere'
             return
          endif
@@ -673,7 +667,7 @@ c     Built the object
      $        ,nproche,epsilon,polarisa,rayon,lc,hc ,ng
      $        ,macroscopicfieldx ,nmat,file_id ,group_iddip,infostr
      $        ,nstop)
-         write(99,*) 'inhomogenous sphere',rayon,lc,hc,ng
+
          macroscopicfieldx=0.d0
 
 
@@ -682,7 +676,7 @@ c     Built the object
          if (trope.ne.'iso') then
             nstop=1
             infostr='Permittivity not scalar for inhomogenous cuboid'
-            write(99,*)
+            write(*,*)
      $           'Permittivity not scalar for inhomogenous cuboid'
             return
          endif
@@ -694,9 +688,6 @@ c     Built the object
      $        ,zg,lc,hc,ng,macroscopicfieldx,nproche,nmat,file_id
      $        ,group_iddip,infostr,nstop)
 
-         write(99,*) 'inhomogenous cuboid',sidex,sidey,sidez,xg,yg ,zg
-     $        ,lc,hc,ng
-
          macroscopicfieldx=0.d0
 
       elseif (object(1:13).eq.'inhomocuboid2') then
@@ -704,7 +695,7 @@ c     Built the object
          if (trope.ne.'iso') then
             nstop=1
             infostr='Permittivity not scalar for inhomogenous cuboid'
-            write(99,*)
+            write(*,*)
      $           'Permittivity not scalar for inhomogenous cuboid'
             return
          endif
@@ -715,9 +706,6 @@ c     Built the object
      $        ,nxmp,nymp,nzmp,polarizability ,epsilon ,polarisa,sidex
      $        ,sidey,sidez,xg,yg ,zg,lc,hc,ng,macroscopicfieldx,nproche
      $        ,nmat,file_id ,group_iddip,infostr,nstop)
-
-         write(99,*) 'inhomogenous cuboid',sidex,sidey,sidez,xg,yg ,zg
-     $        ,lc,hc,ng
 
          macroscopicfieldx=0.d0
          
@@ -731,8 +719,6 @@ c     Built the object
      $        ,nmat,file_id ,group_iddip,infostr ,nstop)
          
          
-         write(99,*) 'random sphere',rayon,density,ng
-
       elseif (object(1:13).eq.'randomsphere2') then
          numberobjet=1
 
@@ -743,12 +729,7 @@ c     Built the object
      $        ,ng,nproche ,nmat,file_id ,group_iddip,infostr ,nstop)
          
          
-         write(99,*) 'random sphere',rayon,density,ng
-
-
-         
       elseif (object(1:4).eq.'cube') then
-         write(99,*) 'cube:side',side
          write(*,*) 'cube:side',side
          numberobjet=1
          call objetcube(trope,eps,epsani ,eps0,xs,ys,zs,k0,aretecube
@@ -756,7 +737,6 @@ c     Built the object
      $        ,epsilon,polarisa,side,xg,yg,zg,nmat,file_id ,group_iddip
      $        ,infostr,nstop)
       elseif(object(1:7).eq.'cuboid1') then
-         write(99,*) 'cuboid:sidex,sidey,sizez ',sidex,sidey,sidez
          write(*,*) 'cuboid:sidex,sidey,sizez ',sidex,sidey,sidez
          numberobjet=1
          call objetpara(trope,eps,epsani,eps0,xs,ys,zs,k0,aretecube
@@ -764,9 +744,8 @@ c     Built the object
      $        ,polarizability ,epsilon,polarisa,sidex,sidey,sidez,xg,yg
      $        ,zg,phiobj ,thetaobj,psiobj,nproche,nmat,file_id
      $        ,group_iddip,infostr,nstop)
-         write(99,*) 'side',sidex,sidey,sidez,nx,ny,nz
+
       elseif(object(1:7).eq.'cuboid2') then
-         write(99,*) 'cuboid:sidex,sidey,sizez ',sidex,sidey,sidez
          write(*,*) 'cuboid:sidex,sidey,sizez ',sidex,sidey,sidez
          numberobjet=1
          call objetparanxnynz(trope,eps,epsani,eps0,xs,ys,zs,k0
@@ -774,7 +753,6 @@ c     Built the object
      $        ,nym,nzm,nxmp,nymp,nzmp,polarizability ,epsilon,polarisa
      $        ,sidex,sidey ,sidez,xg,yg,zg,nproche,nmat,file_id
      $        ,group_iddip,infostr,nstop)
-         write(99,*) 'side',sidex,sidey,sidez,nx,ny,nz
       elseif(object(1:9).eq.'ellipsoid') then
          numberobjet=1
          call objetellipse(trope,eps,epsani,eps0,xs,ys,zs,k0 ,aretecube
@@ -782,14 +760,13 @@ c     Built the object
      $        ,polarizability ,nproche,epsilon,polarisa,demiaxea
      $        ,demiaxeb,demiaxec,xg ,yg,zg,phiobj,thetaobj,psiobj ,nmat
      $        ,file_id ,group_iddip,infostr,nstop)
-         write(99,*) 'ellipse',nbsphere,ndipole,nx,ny,nz
       elseif(object(1:8).eq.'nspheres') then
          call objetnspheres(trope,epsmulti,epsanimulti,numberobjet
      $        ,numberobjet,xgmulti,ygmulti,zgmulti,rayonmulti,eps0,xs
      $        ,ys,zs,k0 ,aretecube,tabdip,tabmulti,nnnr,nmax,nbsphere
      $        ,ndipole,nx,ny,nz,polarizability,nproche ,epsilon,polarisa
      $        ,nmat,file_id ,group_iddip,infostr,nstop)
-         write(99,*) 'multisphere',nbsphere,ndipole,nx,ny,nz
+
       elseif(object(1:8).eq.'cylinder') then
          numberobjet=1
          call objetcylindre(trope,eps,epsani,eps0,xs,ys,zs,k0 ,aretecube
@@ -797,23 +774,20 @@ c     Built the object
      $        ,polarizability,nproche,epsilon,polarisa,rayon ,hauteur,xg
      $        ,yg,zg,phiobj,thetaobj,psiobj,nmat,file_id ,group_iddip
      $        ,infostr,nstop)
-         write(99,*) 'cylindre',nbsphere,ndipole,nx,ny,nz
       elseif(object(1:16).eq.'concentricsphere') then
          call objetsphereconcentric(trope,epsmulti,epsanimulti
      $        ,numberobjet,numberobjet,xg,yg,zg,rayonmulti,eps0,xs,ys
      $        ,zs,k0,aretecube,tabdip,tabmulti,nnnr,nmax,nbsphere
      $        ,ndipole,nx,ny,nz,polarizability,nproche ,epsilon,polarisa
      $        ,nmat,file_id ,group_iddip,infostr,nstop)
-         write(99,*) 'concentricsphere',nbsphere,ndipole,nx,ny,nz
       elseif(object(1:9).eq.'arbitrary') then
          numberobjet=1
          call objetarbitrary(trope,eps,epsani,eps0,xs,ys,zs,k0
      $        ,aretecube,tabdip,nnnr,nmax,nbsphere,ndipole,nx,ny,nz
      $        ,polarizability,namefileobj,nproche,epsilon ,polarisa,nmat
      $        ,file_id ,group_iddip,infostr,nstop)
-         write(99,*) 'arbitrary',nbsphere,ndipole,nx,ny,nz
       else
-         write(99,*) 'Object unknown'
+         write(*,*) 'Object unknown'
          infostr='Object unknown!'
          nstop=1
          return
@@ -832,14 +806,12 @@ c     endif
       if (nx.gt.nxm.or.ny.gt.nym.or.nz.gt.nzm) then
          nstop=1
          infostr='Dimension Problem of the Box : Box too small!'
-         write(99,*) 'dimension Problem',nx,nxm,ny,nym,nz,nzm
          write(*,*) 'dimension Problem',nx,nxm,ny,nym,nz,nzm
          return
       endif
       if (nx.le.1.or.ny.le.1.or.nz.le.1) then
          nstop=1
          infostr='Dimension Problem nx ny nz too small!'
-         write(99,*) 'dimension Problem',nx,nxm,ny,nym,nz,nzm
          write(*,*) 'dimension Problem',nx,nxm,ny,nym,nz,nzm
          return
       endif
@@ -1012,39 +984,20 @@ c     fin ecriture du epsilon
       write(*,*) 'Number of subunit for the mesh   :',ndipole
       write(*,*) 'Size of the mesh size            :',aretecube
       write(*,*) 'number of subunit along x y and z:',nx,ny,nz
-      write(99,*) 'number of subunit for the object',nbsphere
-      write(99,*) 'number of subunit for the mesh ',ndipole
-      write(99,*) 'number of subunit along x y and z',nx,ny,nz
-      write(99,*) 'mesh size',aretecube
-      write(99,*) 'lambda/(10n)',lambda/10.d0/cdabs(cdsqrt(eps))
+      write(*,*) 'lambda/(10n)                     :',lambda/10.d0
+     $     /cdabs(cdsqrt(eps))
 
       write(*,*) '*************** END OBJECT *****************'
       write(*,*) ' '
 
-      if (beam(1:11).eq.'pwavelinear') then
-         write(99,*) 'Beam pwavelinear'
-      elseif (beam(1:13).eq.'pwavecircular') then
-         write(99,*) 'Beam pwavecircular'
-      elseif (beam(1:7).eq.'antenna') then
-         write(99,*) 'Beam antenna'
-      elseif (beam(1:11).eq.'gwavelinear') then
-         write(99,*) 'Beam gwavelinear'
-      elseif (beam(1:13).eq.'gwavecircular') then
-         write(99,*) 'Beam gwavecircular'
-      elseif (beam(1:14).eq.'gfftwavelinear') then
-         write(99,*) 'Beam gwavelinear fft'
-      elseif (beam(1:16).eq.'gfftwavecircular') then
-         write(99,*) 'Beam gwavecircular fft'
-      elseif (beam(1:15).eq.'gparawavelinear') then
-         write(99,*) 'Beam gparawavelinear'
-      elseif (beam(1:17).eq.'gparawavecircular') then
-         write(99,*) 'Beam gparawavecircular'
-      elseif (beam(1:15).eq.'wavelinearmulti') then 
-         write(99,*) 'Beam wavelinearmulti'
-      elseif (beam(1:9).eq.'arbitrary') then
-         write(99,*) 'Beam arbitrary'
-      else
-         write(99,*) 'Beam unknown'
+      if (beam(1:11).ne.'pwavelinear'.and .beam(1:13).ne.'pwavecircular'
+     $     . and.beam(1:7).ne.'antenna'.and.beam(1:11).ne.'gwavelinear'
+     $     .and. beam(1:13).ne.'gwavecircular'.and. beam(1:14).ne
+     $     .'gfftwavelinear'.and.beam(1:16).ne.'gfftwavecircular'. and
+     $     .beam(1:15).ne.'gparawavelinear'.and.beam(1:17).ne
+     $     .'gparawavecircular'.and.beam(1:15).ne.'wavelinearmulti'.and
+     $     .beam(1:9).ne.'arbitrary') then
+         write(*,*) 'Beam unknown'
          infostr='Beam unknown!'
          nstop=1
          return
@@ -1198,14 +1151,11 @@ c     calcul les plans pour la FFT2D
       write(*,*) '******** COMPUTE INCIDENT  FIELD ********'
       write(*,*) '*****************************************'
       write(*,*) 'Beam used  : ',trim(beam)
-      write(99,*) '******* Compute the incident field *******'
-      write(99,*) 'Beam used',trim(beam)
-      write(99,*) 'k0=',k0     
       if (beam(1:11).eq.'pwavelinear') then
-         write(99,*) 'theta=',theta
-         write(99,*) 'phi=',phi
-         write(99,*) 'pol1=',pp
-         write(99,*) 'pol2=',ss
+         write(*,*) 'theta=',theta
+         write(*,*) 'phi=',phi
+         write(*,*) 'pola=',pp
+
 c     compute E0
          call irradiance(P0,w0,E0,irra)
          I0=cdabs(E0)**2
@@ -1218,9 +1168,9 @@ c     compute E0
 !$OMP ENDDO 
 !$OMP END PARALLEL  
       elseif (beam(1:13).eq.'pwavecircular') then
-         write(99,*) 'theta=',theta
-         write(99,*) 'phi=',phi
-         write(99,*) 'pol=',ss
+         write(*,*) 'theta=',theta
+         write(*,*) 'phi=',phi
+         write(*,*) 'pola=',ss
 c     compute E0
          call irradiance(P0,w0,E0,irra)
          I0=cdabs(E0)**2
@@ -1250,11 +1200,10 @@ c     compute E0
          enddo
          
          do i=1,nbinc
-            write(99,*) 'theta=',thetam(i)
-            write(99,*) 'phi=',phim(i)
-            write(99,*) 'pol1=',ppm(i)
-            write(99,*) 'pol2=',ssm(i)
-            write(99,*) 'E0=',E0m(i)
+            write(*,*) 'theta=',thetam(i)
+            write(*,*) 'phi=',phim(i)
+            write(*,*) 'pola=',ppm(i)
+            write(*,*) 'E0=',E0m(i)
          enddo
 c     compute E0
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i)   
@@ -1288,10 +1237,10 @@ c     compute the intenisty at the first object location
      $        ,infostr)
          I0=cdabs(Em(1))**2.d0+cdabs(Em(2))**2.d0+cdabs(Em(3))**2.d0
       elseif (beam(1:11).eq.'gwavelinear') then
-         write(99,*) 'theta=',theta
-         write(99,*) 'phi=',phi
-         write(99,*) 'pol1=',pp
-         write(99,*) 'pol2=',ss
+         write(*,*) 'theta=',theta
+         write(*,*) 'phi=',phi
+         write(*,*) 'pola=',pp
+
 
          xgaus=xgaus*1.d-9
          ygaus=ygaus*1.d-9
@@ -1316,9 +1265,9 @@ c            write(*,*) 'champ',i,FF0(3*i-2),FF0(3*i-1),FF0(3*i)
 c         enddo
 c         stop
       elseif (beam(1:13).eq.'gwavecircular') then
-         write(99,*) 'theta=',theta
-         write(99,*) 'phi=',phi
-         write(99,*) 'pol=',ss
+         write(*,*) 'theta=',theta
+         write(*,*) 'phi=',phi
+         write(*,*)  'pola=',ss
          
          xgaus=xgaus*1.d-9
          ygaus=ygaus*1.d-9
@@ -1339,10 +1288,10 @@ c         stop
 !$OMP END PARALLEL     
       elseif (beam(1:8).eq.'gfftwave') then
          write(*,*) 'incident wave with FFT'
-         write(99,*) 'theta=',theta
-         write(99,*) 'phi=',phi
-         write(99,*) 'pol1=',pp
-         write(99,*) 'pol2=',ss
+         write(*,*) 'theta=',theta
+         write(*,*) 'phi=',phi
+         write(*,*) 'pola=',pp
+
          
          xgaus=xgaus*1.d-9
          ygaus=ygaus*1.d-9
@@ -1356,10 +1305,10 @@ c         stop
      $        ,plan2b,nstop ,infostr)
          
       elseif (beam(1:15).eq.'gparawavelinear') then
-         write(99,*) 'theta=',theta
-         write(99,*) 'phi=',phi
-         write(99,*) 'pol1=',pp
-         write(99,*) 'pol2=',ss
+         write(*,*) 'theta=',theta
+         write(*,*) 'phi=',phi
+         write(*,*) 'pola=',pp
+
          call gaussianpuissancepara(w0,P0,irra,E0)
 
          xgaus=xgaus*1.d-9
@@ -1377,9 +1326,9 @@ c         stop
 !$OMP ENDDO 
 !$OMP END PARALLEL    
       elseif (beam(1:17).eq.'gparawavecircular') then
-         write(99,*) 'theta=',theta
-         write(99,*) 'phi=',phi
-         write(99,*) 'pol=',ss
+         write(*,*) 'theta=',theta
+         write(*,*) 'phi=',phi
+         write(*,*) 'pola=',ss
          
          xgaus=xgaus*1.d-9
          ygaus=ygaus*1.d-9
@@ -1497,7 +1446,6 @@ c     cLose intensity of the incident field
       close(38)
       close(39)
       
-      write(99,*) 'Field modulus',cdabs(E0)
       if (nstop.eq.1) return
       if (nstop == -1) then
          infostr = 'Calculation cancelled after incident field!'
@@ -1586,7 +1534,7 @@ c     Compute the incident field at each subunit of the object
       call date_and_time(date,time,zone,values)
       
       if (nrig.eq.0) then
-         write(99,*) '***** Solve the linear system *****'
+
 c     Compute the local field at each subunit position by solving Ax=b
 c     as an initial guess the incident field
 c     initilization for solve Ax=b
@@ -1616,17 +1564,10 @@ c     initilization for solve Ax=b
          endif
          if (nstop.eq.1) return
          
-         write(99,*) 'methode iterative used',methodeit
-         write(99,*) 'Tolerance asked for the iterative method',tolinit
-         write(99,*) 'Tolerance obtained for the iterative method',tol1
-         write(99,*) 'Number of product Ax for the iterative method'
-     $        ,ncompte,nloop
-         
          if (tol1.ge.tolinit) then
             nstop=1
             infostr='Converge do not reach!'
             write(*,*) 'Converge do not reach!',tol1,'Tol Asked',tolinit
-            write(99,*) tol1,tolinit
             return
          endif
          
@@ -2784,13 +2725,9 @@ c     Compute the extinction cross section and absorbing cross section
 
 c     compute the scattering cross section
          Csca=Cext-Cabs
-         write(99,*) 'extinction cross section',Cext,'m2'
-         write(99,*) 'scattering cross section',Csca,'m2'
+        
          if (Cabs.le.Cext*1.d-12) then
             Cabs=0.d0
-            write(99,*) 'absorbing cross section ',Cabs,'m2'
-         else
-            write(99,*) 'absorbing cross section ',Cabs,'m2'
          endif
          if (nstop == -1) then
             infostr = 'Calculation cancelled after cross section!'
@@ -2911,9 +2848,6 @@ c     save the Poynting vecteur
             
             gasym=gasym/cscai
             Cscai=Cscai*k03*k0/I0
-            write(99,*) 'scattering cross section with integration'
-     $           ,Cscai
-            write(99,*) 'scattering asymetric parameter',gasym
 
             if (beam(1:11).ne.'pwavelinear'.and.beam(1:13).ne
      $           .'pwavecircular') then
@@ -3145,7 +3079,7 @@ c     save the Poynting vecteur
 
 
       if (nforce.eq.1) then
-         write(99,*) '****** Compute the optical force *********'
+
          write(*,*) '******************************************'
          write(*,*) '******** COMPUTE OPTICAL FORCE ***********'
          write(*,*) '******************************************'
@@ -3207,9 +3141,6 @@ c               write(*,*) 'z',i,xi(ii+1),xi(ii+2),xi(ii+3)
      $           ,vectx,vecty,vectz,FF,planb)
          endif
          
-c     do i=1,nx2*ny2*nz2
-c     write(99,*) 'vect',vectx(i),vecty(i),vectz(i)
-c     enddo
 c     Compute the x derivative of the local field
          test=1            
          
@@ -3489,9 +3420,6 @@ c     save the density of the optical force
 
          forcem=dsqrt(forcet(1)*forcet(1)+forcet(2)*forcet(2)+forcet(3)
      $        *forcet(3))
-         write(99,*) 'optical force x',forcet(1)
-         write(99,*) 'optical force y',forcet(2)
-         write(99,*) 'optical force z',forcet(3)
          write(*,*) 'Optical force x      : ',forcet(1),'N'
          write(*,*) 'Optical force y      : ',forcet(2),'N'
          write(*,*) 'Optical force z      : ',forcet(3),'N'
@@ -3530,13 +3458,12 @@ c     calcul sur des forces et couple sur differents objets si presents
             enddo
          endif
          
-         write(99,*) 'Modulus of the force',forcem
+         write(*,*) 'Modulus of the force',forcem,'N'
          write(*,*) ' ********** END OPTICAL FORCE *********'
          write(*,*) ' '
       endif 
 
       if (ntorque*nforce.eq.1) then
-         write(99,*) ' Compute the optical torque '
          write(*,*) '*****************************************'
          write(*,*) '********** COMPUTE OPTICAL TORQUE *******'
          write(*,*) '*****************************************'
@@ -3561,7 +3488,6 @@ c     compute the center of gravity of the object
          xg=xg/dble(nbsphere)
          yg=yg/dble(nbsphere)
          zg=zg/dble(nbsphere)
-         write(99,*) 'position of the center of gravity',xg,yg,zg
          write(*,*) 'Position of the center of gravity :'
          write(*,*) 'xg=',xg
          write(*,*) 'yg=',yg
@@ -3647,13 +3573,9 @@ c     save the density of optical torque
 
          couplem=dsqrt(couplet(1)*couplet(1)+couplet(2)*couplet(2)
      $        +couplet(3)*couplet(3))
-         write(99,*) 'Optical torque x',couplet(1),'N/m'
-         write(99,*) 'Optical torque y',couplet(2),'N/m'
-         write(99,*) 'Optical torque z',couplet(3),'N/m'
          write(*,*) 'optical torque x',couplet(1),'N/m'
          write(*,*) 'optical torque y',couplet(2),'N/m'
          write(*,*) 'optical torque z',couplet(3),'N/m'
-         write(99,*) 'Modulus of the optical torque',couplem,'N/m'
          write(*,*) 'Modulus of the optical torque',couplem,'N/m'
 
          if (nsection.eq.1.or.nsectionsca.eq.1) then
@@ -4563,17 +4485,9 @@ c     calcul en reflexion
 
          write(*,*) 'Compute the images through the microscope'
          if (nside.eq.1) then
-c            write(*,*) 'fff Efourier',Eimagey
-c            do i=1,nfft2D*nfft2D
-c               write(999,*) 'f',Eimagey(i),i
-c            enddo
             call fouriertoimage(deltakx,deltaky,gross,Eimagex,Eimagey
      $           ,Eimagez,Eimageincx,Eimageincy,Eimageincz,nfft2D
      $           ,nfft2d2 ,plan2b,plan2f)
-c            do i=1,nfft2D*nfft2D
-c               write(999,*) 'f',Eimagey(i),i
-c            enddo
-c            write(*,*) 'fff Eimage',Eimagey
          else
             call fouriertoimage2(deltakx,deltaky,gross,Eimagex,Eimagey
      $           ,Eimagez,nfft2D ,nfft2d2 ,plan2b,plan2f)
@@ -4642,7 +4556,7 @@ c     remet kx pour interface graphique
 
  
 c     output file
-      close(99)
+
  9999 format(512(d22.15,1x))
 
       if (nmat.eq.2) then

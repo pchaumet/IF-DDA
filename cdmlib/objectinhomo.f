@@ -299,8 +299,4 @@ c     write (*,*) 'nbsphere = ', nbsphere
       write (*,*) ' SEED',ng,'Average',moyenne,'Standard deviation'
      $     ,dsqrt(ecartype-moyenne*moyenne)
 
-      write (99,*) ' SEED',ng
-      write(99,*) 'Average',moyenne
-      write(99,*) 'Standard deviation',dsqrt(ecartype-moyenne*moyenne)
-
       end
