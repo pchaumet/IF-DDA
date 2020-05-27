@@ -1161,7 +1161,7 @@ c     ne fait que l'objet
          CALL h5gclose_f(group_idnf,error)
          call hdf5close(file_id)
 #else
-        write(*,*) "No HDF5!"
+        write(*,*) __FILE__, ":", __LINE__, "No HDF5!"
 #endif
          return
       endif
@@ -4658,7 +4658,7 @@ c     output file
          call hdf5close(file_id)
          write(*,*) 'Close HDF5 files'
 #else
-        write(*,*) 'No HDF5 files'
+        write(*,*) __FILE__, ":", __LINE__, "No HDF5!"
 #endif
         write(*,*) ' '
       endif
