@@ -550,7 +550,7 @@ c     (6) BPM, (7) renormalized BPM.
 
       nenergie=1                ! 0 Do not compute energy, 1 compute energy conservation.
 
-      nmat=0                    ! 1 Do not save the data, 0 save the data in mat file, 2 save the data in one hdf5 file.
+      nmat=2                    ! 1 Do not save the data, 0 save the data in mat file, 2 save the data in one hdf5 file.
       h5file='ifdda.h5'         ! name of the hdf5 file
 
       nquad=0                   !0 -> 5 define the level of integration of the Green tensor.
