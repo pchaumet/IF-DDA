@@ -17,9 +17,9 @@ You are free to:
 VERSION
 -----------------------------------------------------------
 
-By default, the code compiles without FFTW and HDF5. A custom FFT library is uded. It is single processor.
+By default, the code compiles without FFTW and HDF5. A custom FFT library is used. It is single processor.
 If you have FFTW installed, type:
-qmake-qt4 "CONFIG+=fftw hdf5"
+qmake-qt4 "CONFIG+=fftw" or qmake-qt5 "CONFIG+=fftw" following the qt version you have
 before make.
 
 if you have 4 processors,
@@ -34,14 +34,14 @@ instructions (on LINUX system).
 ulimit-s unlimited
 
 If you want to use HDF5, type:
-qmake-qt4 "CONFIG+=fftw hdf5"
+qmake-qt4 "CONFIG+=fftw hdf5" or qmake-qt5 "CONFIG+=fftw hdf5"
 make
 
 -------------------------------------------------------------
 Linux installation:
 -------------------------------------------------------------
 
-The application is based on Qt-4.8 and gfortran
+The application is based on Qt-4 (or Qt-5 for recent system) and gfortran
 
 To install it on Fedora (take a look into .gitlab-ci.yml in cas), first you need to:
 
@@ -59,20 +59,23 @@ dnf install hdf hdf5 hdf5-static hdf5-devel
 
 1) 2) 3) 4) on Ubuntu system you need to do:
 sudo  apt install build-essential
-sudo  apt install qt4-qmake
+sudo  apt install qt4-qmake (or qt5-qmake)
 sudo  apt install gfortran
-sudo  apt install libqt4-dev
+sudo  apt install libqt4-dev (or libqt5-dev)
 sudo  apt install fftw*
 sudo  apt install libhdf5-dev
 
 5) at root directory
-qmake-qt4 "CONFIG+=fftw hdf5"
+qmake-qt4 "CONFIG+=fftw hdf5" for qt4 or qmake-qt5 "CONFIG+=fftw hdf5" for qt5 
 make
 make install
 
 To run the application:
 cd bin
 ./cdm
+
+If you get Segmentation fault (core dumped), please fix it with
+$ulimit -s unlimited
 
 -------------------------------------------------------------
 Windows installation:

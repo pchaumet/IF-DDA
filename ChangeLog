@@ -1,3 +1,12 @@
+	version 0.6.18
+
+	1) Changement readme pour qt5
+	2) write hdf5 numaperinc en entier alors que c'est un double.
+	3) changement doc pour qt4 et qt5
+	4) ajout d'une ligne dans README
+
+
+	-----------------------------------------------------
 	version 0.6.17
 
 	1) changement de TRUE en true

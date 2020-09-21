@@ -1097,7 +1097,7 @@ c     cré le fichier de data pour connaitre les options pour matlab
          datasetname='nmat'
          call hdf5write1d_int(group_idopt,datasetname,nmat,dim)
          datasetname='numaperinc'
-         call hdf5write1d_int(group_idopt,datasetname,numaperinc,dim)
+         call hdf5write1d(group_idopt,datasetname,numaperinc,dim)
 
       endif
 

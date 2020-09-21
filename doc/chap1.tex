@@ -173,15 +173,19 @@ openmp version 4.5 minimum, et la troisième qui utilise en plus le
 format HDF5 pour sauvegarder les données dans un seul fichier
 binaire. Par défaut le code est compilé sans HDF5 et FFTW ce qui donne
 donc un code avec des FFT plus lentes et qui n'est pas parallélisé et
-une écriture des datas forcément en ascii.
+une écriture des datas forcément en ascii. Actuellement selon l'age du
+linux que vous utilisez vous avez Qt4 ou Qt5. Le code a été testé sous
+les deux environnements par contre pour compiler il faut bien sûr
+s'adpater qt4 devenant qt5 sur les versions récentes, je noterai pour
+faire compact qt4(5).
 
 \begin{tabular}{|c|c|c|}
   \hline
   Code par défaut & Code avec FFTW & Code avec FFTW et HDF5 \\
   \hline
-  qmake-qt4 & qmake-qt4 ``CONFIG+=fftw'' & qmake-qt4 ``CONFIG+=fftw hdf5'' \\
+  qmake-qt4(5) & qmake-qt4(5) ``CONFIG+=fftw'' & qmake-qt4(5) ``CONFIG+=fftw hdf5'' \\
   make & make & make \\
-make install & make install & make install \\
+  make install & make install & make install \\
   \hline
 \end{tabular}
 Puis pour lancer le code, taper, cd bin, puis ./cdm.

@@ -149,12 +149,15 @@ objects.
 
 \section{How to compile the code}
 
-The application is based on Qt-4.8 and gfortran To install it you need
-: qt, qt-devel, gcc-c++ et gfortran.  Notice that there is three
+The application is based on Qt and gfortran To install it you need :
+qt, qt-devel, gcc-c++ et gfortran.  Notice that there is three
 versions of the code, the first one is sequential and uses FFTE (Fast
 Fourier Transform in the east), the second one uses FFTW (Fast Fourier
 Transform in the west) which needs openmp 4.5 minimum and the third
-uses HDF5 format to save data file. Then to compile:
+uses HDF5 format to save data file. Currently according to the age of
+the linux you use, you have Qt4 or Qt5. The code has been tested under
+the two environments, but to compile you need adapt qt4 in qt5 on
+recent versions, I will note for make compact qt4(5). Then to compile:
 
 \begin{tabular}{|c|c|c|}
   \hline
