@@ -1,3 +1,13 @@
+
+
+	version 0.6.19
+
+	1) ajoute sous tests pour compiler que les fortrans sans
+	l'interface graphique.
+	2) la doc est changée en conséquence	
+	3) README changé aussi.
+	
+	-----------------------------------------------------
 	version 0.6.18
 
 	1) Changement readme pour qt5

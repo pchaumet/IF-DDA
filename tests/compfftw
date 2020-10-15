@@ -1,0 +1,17 @@
+cd ../cdmlib
+gfortran -cpp -DUSE_FFTW -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c *.f -lfftw3_omp -lfftw3 -lm 
+rm libcdm.a
+ar vq libcdm.a *.o
+cd ../tests
+cd test1
+gfortran -cpp -DUSE_FFTW -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c main.f -lfftw3_omp -lfftw3 -lm 
+gfortran -cpp -DUSE_FFTW -O3 -Warray-bounds -w -mcmodel=large -fopenmp -o main main.o -lfftw3_omp -lfftw3 -lm ../../cdmlib/libcdm.a
+cd ../test2
+gfortran -cpp -DUSE_FFTW -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c main.f -lfftw3_omp -lfftw3 -lm 
+gfortran -cpp -DUSE_FFTW -O3 -Warray-bounds -w -mcmodel=large -fopenmp -o main main.o -lfftw3_omp -lfftw3 -lm ../../cdmlib/libcdm.a
+cd ../test3
+gfortran -cpp -DUSE_FFTW -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c main.f -lfftw3_omp -lfftw3 -lm
+gfortran -cpp -DUSE_FFTW -O3 -Warray-bounds -w -mcmodel=large -fopenmp -o main main.o -lfftw3_omp -lfftw3 -lm ../../cdmlib/libcdm.a
+cd ../test4
+gfortran -cpp -DUSE_FFTW -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c main.f -lfftw3_omp -lfftw3 -lm 
+gfortran -cpp -DUSE_FFTW -O3 -Warray-bounds -w -mcmodel=large -fopenmp -o main main.o -lfftw3_omp -lfftw3 -lm ../../cdmlib/libcdm.a

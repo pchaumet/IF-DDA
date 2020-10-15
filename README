@@ -37,6 +37,17 @@ If you want to use HDF5, type:
 qmake-qt4 "CONFIG+=fftw hdf5" or qmake-qt5 "CONFIG+=fftw hdf5"
 make
 
+
+Notice that the code can be installed without the graphical interface.
+Go to the directory tests, and then write ./comp (or /compfftw or
+./compfftwhdf5 depending on the packages installed), then in the four
+test directories four executables each are created corresponding to
+four different configuration. It is quite clear that to change the
+configuration you need to open the file main.f and change the options
+inside the fortran, which is more tiedous than with the interface.
+graphic.
+
+
 -------------------------------------------------------------
 Linux installation:
 -------------------------------------------------------------

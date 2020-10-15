@@ -180,7 +180,14 @@ hdf5 hdf5-static hdf5-devel''.
 The code works on windows system but it is tricky to compile it if you
 want to use FFTW.
 
-
+Notice that the code can be installed without the graphical interface.
+Go to the directory tests, and then write ./comp (or /compfftw or
+./compfftwhdf5 depending on the packages installed), then in the four
+test directories four executables each are created corresponding to
+four different configuration. It is quite clear that to change the
+configuration you need to open the file main.f and change the options
+inside the fortran, which is more tiedous than with the interface.
+graphic.
 
 \section{A word about the authors}
 

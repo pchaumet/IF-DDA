@@ -203,6 +203,16 @@ Le code s'installe aussi sous windows, mais la version parallèle
 nécessite évidemment d'installer FFTW sur windows.
 
 
+A noter que le code peut s'installer sans l'interface graphique. Il
+faut aller dans le directory tests, et après faire ./comp (ou
+./compfftw ou ./compfftwhdf5 suivant les paquets installés), il
+s'installe alors dans les quatres directories test quatre executables
+correspondant chacun à une configuration. Il est bien clair qu'il faut
+pour changer la configuration aller dans le code main.f et changer les
+options dans le fortran, ce qui est plus délicat qu'avec l'interface
+graphique.
+
+
 \section{Un mot sur les auteurs}
 
 \begin{itemize}

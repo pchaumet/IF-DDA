@@ -1,0 +1,17 @@
+cd ../cdmlib
+gfortran -cpp -DUSE_FFTW -DUSE_HDF5 -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c *.f -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+rm libcdm.a
+ar vq libcdm.a *.o
+cd ../tests
+cd test1
+gfortran -cpp -DUSE_FFTW -DUSE_HDF5 -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c main.f -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+gfortran -cpp -DUSE_FFTW -DUSE_HDF5 -O3 -Warray-bounds -w -mcmodel=large -fopenmp -o main main.o -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5 ../../cdmlib/libcdm.a
+cd ../test2
+gfortran -cpp -DUSE_FFTW -DUSE_HDF5 -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c main.f -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+gfortran -cpp -DUSE_FFTW -DUSE_HDF5 -O3 -Warray-bounds -w -mcmodel=large -fopenmp -o main main.o -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5 ../../cdmlib/libcdm.a
+cd ../test3
+gfortran -cpp -DUSE_FFTW -DUSE_HDF5 -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c main.f -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+gfortran -cpp -DUSE_FFTW -DUSE_HDF5 -O3 -Warray-bounds -w -mcmodel=large -fopenmp -o main main.o -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5 ../../cdmlib/libcdm.a
+cd ../test4
+gfortran -cpp -DUSE_FFTW -DUSE_HDF5 -O3 -Warray-bounds -w -mcmodel=large -fopenmp -c main.f -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
+gfortran -cpp -DUSE_FFTW -DUSE_HDF5 -O3 -Warray-bounds -w -mcmodel=large -fopenmp -o main main.o -lfftw3_omp -lfftw3 -lm -I/usr/lib64/gfortran/modules -I/usr/include -L/usr/lib64 -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5 ../../cdmlib/libcdm.a

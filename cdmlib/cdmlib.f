@@ -1161,12 +1161,13 @@ c     compute E0
          I0=cdabs(E0)**2
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i)   
 !$OMP DO SCHEDULE(STATIC)
-         do i=1,nbsphere           
+         do i=1,nbsphere
             call ondeplane(xs(i),ys(i),zs(i),k0,E0,ss,pp,theta,phi,
      $           FF0(3*i-2),FF0(3*i-1),FF0(3*i),nstop,infostr)
          enddo
 !$OMP ENDDO 
-!$OMP END PARALLEL  
+!$OMP END PARALLEL
+
       elseif (beam(1:13).eq.'pwavecircular') then
          write(*,*) 'theta=',theta
          write(*,*) 'phi=',phi

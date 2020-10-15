@@ -1,0 +1,17 @@
+cd ../cdmlib
+gfortran -cpp -O3 -Warray-bounds -w -mcmodel=large -c *.f
+rm libcdm.a
+ar vq libcdm.a *.o
+cd ../tests
+cd test1
+gfortran -cpp -O3 -Warray-bounds -w -mcmodel=large -c main.f 
+gfortran -cpp -O3 -Warray-bounds -w -mcmodel=large -o main main.o ../../cdmlib/libcdm.a
+cd ../test2
+gfortran -cpp -O3 -Warray-bounds -w -mcmodel=large -c main.f -lfftw3_omp 
+gfortran -cpp -O3 -Warray-bounds -w -mcmodel=large -o main main.o ../../cdmlib/libcdm.a
+cd ../test3
+gfortran -cpp -O3 -Warray-bounds -w -mcmodel=large -c main.f
+gfortran -cpp -O3 -Warray-bounds -w -mcmodel=large -o main main.o ../../cdmlib/libcdm.a
+cd ../test4
+gfortran -cpp -O3 -Warray-bounds -w -mcmodel=large -c main.f 
+gfortran -cpp -O3 -Warray-bounds -w -mcmodel=large -o main main.o ../../cdmlib/libcdm.a
