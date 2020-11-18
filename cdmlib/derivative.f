@@ -2,8 +2,8 @@ c     proramme qui calcul la derivee
       subroutine derivative(nordre,nderiv,f,x,h,xderiv,deriv)
       implicit none
       integer nordre,nderiv
-      double precision h,heps,x(0:5),xderiv
-      double complex f(0:5),deriv
+      double precision h,heps,x(0:4),xderiv
+      double complex f(0:4),deriv
 
       heps=h/10.d0
 c     derivee premiere

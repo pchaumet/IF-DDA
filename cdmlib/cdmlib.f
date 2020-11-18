@@ -870,6 +870,8 @@ c     fin ecriture du epsilon
          call hdf5write1d_int(group_iddip,datasetname,nz,dim)
 
          if (trope.eq.'iso') then
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,k)   
+!$OMP DO SCHEDULE(STATIC)            
             do i=1,ndipole
                k=tabdip(i)
                if (k.ne.0) then
@@ -878,6 +880,8 @@ c     fin ecriture du epsilon
                   wrk(i,1)=(1.d0,0.d0)
                endif
             enddo
+!$OMP ENDDO 
+!$OMP END PARALLEL            
             dim(1)=ndipole
             dim(2)=nmax*3
             datasetname='Epsilon real part'
@@ -887,6 +891,8 @@ c     fin ecriture du epsilon
             call hdf5write1d(group_iddip,datasetname,dimag(wrk(:,1))
      $           ,dim)
          else
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,k)   
+!$OMP DO SCHEDULE(STATIC)            
             do i=1,ndipole
                k=tabdip(i)
                if (k.ne.0) then
@@ -911,7 +917,8 @@ c     fin ecriture du epsilon
                   wrk(i,9)=(0.d0,0.d0)
                endif
             enddo   
-
+!$OMP ENDDO 
+!$OMP END PARALLEL  
             dim(1)=ndipole
             dim(2)=nmax*3
             datasetname='epsilon xx real part'
