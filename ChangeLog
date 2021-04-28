@@ -1,9 +1,25 @@
+	version 0.6.21
+
+	1) supprimer ligne write side avant cuboid2
+	2) supprimer ligne write side avant cuboid2
+	3) correction espacelibre pour eliminer cas Rab=0 et etre plus
+	rapide.
+	4) scalar approximation ds cdmOptions.cpp: pas fini!!
+	5) correction microscope en reflexion avec le jeu des options pb
+	pour nenergie=1
+
+
+	paralelisation boucle force ds cdmlib.f?
+	faire k_x et k_y
+
+
+
+
+	-----------------------------------------------------
 	version 0.6.20
 
 	1) Erreur ds la routine derivative: dimension 5 en 4.
 	2) para sur ecriture iso en hdf5.
-
-	paralelisation boucle force ds cdmlib.f?
 
 	-----------------------------------------------------
 	version 0.6.19

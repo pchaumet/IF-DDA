@@ -30,9 +30,10 @@ QMAKE_CC        =       gfortran
 
 QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large 
 
-QMAKE_LFLAGS    = -mcmodel=large
+QMAKE_LFLAGS    = 
 
-QMAKE_CFLAGS_RELEASE    = -O3 
+
+QMAKE_CFLAGS_RELEASE    = -O3 -g 
 
 QMAKE_CFLAGS_THREAD =
 
@@ -161,7 +162,7 @@ SOURCES		+= 	cdmlib.f \
                         hdf5write1d.f \
                         hdf5write2d.f \
                         writehdf5mic.f \
-                        primefactor.f
+                        primefactor.f 
                         
 INCLUDEPATH     += .
 

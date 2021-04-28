@@ -100,6 +100,5 @@ c     compute the FFT of the Green function
       
 #endif
       
-
       write(*,*) 'End FFT Green function'
       end

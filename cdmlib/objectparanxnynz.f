@@ -31,7 +31,6 @@
       integer :: dim(4)
       integer error
 
-      write(*,*) 'object2'
 c     Initialization
       nbsphere=0
       ndipole=0 
@@ -86,7 +85,6 @@ c     discretization of the object under study
       zg=zg*1.d-9
       
 
-      write(*,*) 'object4',nx,nxm,nxmp
       if (sidex.eq.0.d0) then
          nstop=1
          infostr='object cuboid: sidex=0!'
@@ -100,7 +98,6 @@ c     discretization of the object under study
          infostr='object cuboid: sidez=0!'
          return
       endif
-      write(*,*) 'object'
 
       if (nx.gt.nxm.or.ny.gt.nym.or.nz.gt.nzm) then
          nstop=1

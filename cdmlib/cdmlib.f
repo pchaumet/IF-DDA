@@ -117,6 +117,7 @@ c     variables for the incident field and local field
       double precision ss,pp,theta,phi,I0,Emod,tmp,Emod11,Emod22,Emod12
      $     ,Emod21
       double complex Eloc(3),Em(3),E0,uncomp,icomp,zzero,Emx,Emy,Emz
+     $     ,Uincx,Uincy,Uincz
       double complex, dimension(nxm*nym*nzm) :: macroscopicfieldx
       double complex, dimension(nxm*nym*nzm) :: macroscopicfieldy
       double complex, dimension(nxm*nym*nzm) :: macroscopicfieldz
@@ -452,7 +453,7 @@ c     arret pour tolerance dans la méthode itérative
          nstop = 1;
          return
       endif
-      if (tolinit.gt.0.1d0) then 
+      if (tolinit.gt.0.5d0) then 
          infostr='Tolerance  for the iterative method too large!'
          nstop = 1;
          return
@@ -746,7 +747,6 @@ c     Built the object
      $        ,group_iddip,infostr,nstop)
 
       elseif(object(1:7).eq.'cuboid2') then
-         write(*,*) 'cuboid:sidex,sidey,sizez ',sidex,sidey,sidez
          numberobjet=1
          call objetparanxnynz(trope,eps,epsani,eps0,xs,ys,zs,k0
      $        ,aretecube,tabdip,nnnr,nmax,nbsphere,ndipole,nx,ny,nz,nxm
@@ -1922,6 +1922,81 @@ c     Beam propagation method
          enddo            
 !$OMP ENDDO 
 !$OMP END PARALLEL    
+
+      elseif (nrig.eq.8) then
+         write(*,*) 'Scalar approximation'
+c$$$         if (trope.eq.'ani') then
+c$$$            infostr
+c$$$     $           ='Anisotropy can not be used with scalar approximation'
+c$$$            nstop=1
+c$$$            return
+c$$$         endif
+c$$$         if (beam(1:11).ne.'pwavelinear'.and .beam(1:13).ne
+c$$$     $        .'pwavecircular') then
+c$$$            infostr='Scalar approximation only with plane wave'
+c$$$            nstop=1
+c$$$            return
+c$$$         endif
+c$$$c     calcule le vecteur unitaire de polarisation incidente
+c$$$c     Approximation scalaire
+c$$$         x=0.d0
+c$$$         y=0.d0
+c$$$         z=0.d0
+c$$$         if (beam(1:11).eq.'pwavelinear') then
+c$$$            call ondeplane(x,y,z,k0,E0,ss,pp,theta,phi,Uincx,Uincy,Uincz
+c$$$     $           ,nstop,infostr)
+c$$$         elseif (beam(1:13).eq.'pwavecircular') then
+c$$$            call ondecirce(x,y,z,k0,E0,ss,theta,phi ,Uincx,Uincy,Uincz)
+c$$$         endif
+c$$$
+c$$$         Emod=dsqrt(cdabs(Uincx)**2.d0+cdabs(Uincy)**2.d0+cdabs(Uincz)
+c$$$     $        **2.d0)
+c$$$         Uincx=Uincx/Emod
+c$$$         Uincy=Uincy/Emod
+c$$$         Uincz=Uincz/Emod
+c$$$
+c$$$c     calcul la fonction de Green scalaire avec sa FFT
+c$$$         call greencalculscalairefft(nx,ny,nz,nx2,ny2,nz2,nxy2,nxm,nym
+c$$$     $        ,nzm,aretecube,k0,Uincx,Uincy,Uincz,FFTTENSORxx,planb)
+c$$$
+c$$$         tol=tolinit
+c$$$         ncompte=0
+c$$$         nloop=0
+c$$$
+c$$$         if (nproche.eq.-1) then
+c$$$            call inverserigscalaire(FFTTENSORxx,vectx,Tabdip
+c$$$     $           ,macroscopicfieldx,macroscopicfieldy,Uincx,Uincy,Uincz
+c$$$     $           ,ntotalm,ntotal,ldabi,nlar,nmax,ndipole,nxm,nym ,nzm,nx
+c$$$     $           ,ny,nz,nx2,ny2,nxy2,nz2,nbsphere,XI ,XR,wrk ,FF,FF0
+c$$$     $           ,FFloc,polarisa,methodeit,tol,tol1,nloop ,ncompte,planf
+c$$$     $           ,planb,nstop,infostr)
+c$$$            nstop=1
+c$$$            infostr='pas encore fait passe champ proche=boite!'
+c$$$            return
+c$$$         else
+c$$$
+c$$$            call inverserigoptscalaire(FFTTENSORxx,vectx
+c$$$     $           ,macroscopicfieldx,macroscopicfieldy,Uincx,Uincy,Uincz
+c$$$     $           ,ntotalm,ntotal,ldabi,nlar,nmax,nxm,nym,nzm,nx,ny,nz
+c$$$     $           ,nx2 ,ny2,nxy2,nz2,nbsphere,XI,XR,wrk,FF,FF0 ,FFloc
+c$$$     $           ,polarisa ,methodeit,tol,tol1,nloop,ncompte,planf,planb
+c$$$     $           ,nstop ,infostr)
+c$$$
+c$$$         endif
+c$$$         if (nstop.eq.1) return
+c$$$         
+c$$$         if (tol1.ge.tolinit) then
+c$$$            nstop=1
+c$$$            infostr='Converge do not reach!'
+c$$$            write(*,*) 'Converge do not reach!',tol1,'Tol Asked',tolinit
+c$$$            return
+c$$$         endif
+c$$$         
+c$$$         if (nstop == -1) then
+c$$$            infostr = 'Calculation cancelled after iterative method!'
+c$$$            return
+c$$$         endif
+
       endif
       
       if (nlecture.eq.1.and.nlecture1.eq.0) then
@@ -4072,54 +4147,131 @@ c     $              ,imaxk0,deltakx,deltaky
      $              ,Efourierz,FF,imaxk0,deltakx,deltaky,Ediffkzpos
      $              ,numaper,nside,plan2f ,plan2b,nstop ,infostr)
                if (nstop.eq.1) return
-c               write(*,*) 'ff diff',Ediffkzpos
+
+               if (nside.eq.-1) then
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,kx,ky,ii,jj)
+!$OMP DO SCHEDULE(DYNAMIC) COLLAPSE(2)               
+                  do i=-imaxk0,imaxk0
+                     do j=-imaxk0,imaxk0
+                        kx=dble(i)*deltakx
+                        ky=dble(j)*deltaky                     
+                        ii=imaxk0+i+1
+                        jj=imaxk0+j+1                   
+                        Ediffkzneg(ii,jj,1)=Ediffkzpos(ii,jj,1)
+                        Ediffkzneg(ii,jj,2)=Ediffkzpos(ii,jj,2)
+                        Ediffkzneg(ii,jj,3)=Ediffkzpos(ii,jj,3)
+                     enddo
+                  enddo
+!$OMP ENDDO 
+!$OMP END PARALLEL
+               endif
+c     write(*,*) 'ff diff',Ediffkzpos
             elseif (nsectionsca*nquickdiffracte.eq.1.and.nenergie.eq.0)
      $              then
                k02=k0*k0
+
+               if (nside.eq.1) then
+               
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,kx,ky,kz,ctmp,ii,jj)
 !$OMP DO SCHEDULE(STATIC) COLLAPSE(2)               
-               do i=-imaxk0,imaxk0
-                  do j=-imaxk0,imaxk0
-                     kx=dble(i)*deltakx
-                     ky=dble(j)*deltaky                     
-                     ii=imaxk0+i+1
-                     jj=imaxk0+j+1                   
-                     if (kx*kx+ky*ky.ge.numaper*numaper) then
-                        Ediffkzpos(ii,jj,1)=0.d0
-                        Ediffkzpos(ii,jj,2)=0.d0
-                        Ediffkzpos(ii,jj,3)=0.d0
-                     else
-                        kz=dsqrt(k0*k0-kx*kx-ky*ky)
-                        ctmp=-2.d0*pi*icomp*kz
-                        Ediffkzpos(ii,jj,1)=Ediffkzpos(ii,jj,1)*k02/ctmp
-                        Ediffkzpos(ii,jj,2)=Ediffkzpos(ii,jj,2)*k02/ctmp
-                        Ediffkzpos(ii,jj,3)=Ediffkzpos(ii,jj,3)*k02/ctmp
-                     endif
+                  do i=-imaxk0,imaxk0
+                     do j=-imaxk0,imaxk0
+                        kx=dble(i)*deltakx
+                        ky=dble(j)*deltaky                     
+                        ii=imaxk0+i+1
+                        jj=imaxk0+j+1                   
+                        if (kx*kx+ky*ky.ge.numaper*numaper) then
+                           Ediffkzpos(ii,jj,1)=0.d0
+                           Ediffkzpos(ii,jj,2)=0.d0
+                           Ediffkzpos(ii,jj,3)=0.d0
+                        else
+                           kz=dsqrt(k0*k0-kx*kx-ky*ky)
+                           ctmp=-2.d0*pi*icomp*kz
+                           Ediffkzpos(ii,jj,1)=Ediffkzpos(ii,jj,1)*k02
+     $                          /ctmp
+                           Ediffkzpos(ii,jj,2)=Ediffkzpos(ii,jj,2)*k02
+     $                          /ctmp
+                           Ediffkzpos(ii,jj,3)=Ediffkzpos(ii,jj,3)*k02
+     $                          /ctmp
+                        endif
+                     enddo
                   enddo
-               enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
-               
+
+               else
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,kx,ky,kz,ctmp,ii,jj)
+!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)               
+                  do i=-imaxk0,imaxk0
+                     do j=-imaxk0,imaxk0
+                        kx=dble(i)*deltakx
+                        ky=dble(j)*deltaky                     
+                        ii=imaxk0+i+1
+                        jj=imaxk0+j+1                   
+                        if (kx*kx+ky*ky.ge.numaper*numaper) then
+                           Ediffkzneg(ii,jj,1)=0.d0
+                           Ediffkzneg(ii,jj,2)=0.d0
+                           Ediffkzneg(ii,jj,3)=0.d0
+                        else
+                           kz=dsqrt(k0*k0-kx*kx-ky*ky)
+                           ctmp=-2.d0*pi*icomp*kz
+                           Ediffkzneg(ii,jj,1)=Ediffkzneg(ii,jj,1)*k02
+     $                          /ctmp
+                           Ediffkzneg(ii,jj,2)=Ediffkzneg(ii,jj,2)*k02
+     $                          /ctmp
+                           Ediffkzneg(ii,jj,3)=Ediffkzneg(ii,jj,3)*k02
+     $                          /ctmp
+                        endif
+                     enddo
+                  enddo
+!$OMP ENDDO 
+!$OMP END PARALLEL
+               endif
+
             else
 c     met a zero ce qui en dehors de l'AN
+               if (nside.eq.1) then
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,kx,ky,ii,jj)
 !$OMP DO SCHEDULE(DYNAMIC) COLLAPSE(2)               
-               do i=-imaxk0,imaxk0
-                  do j=-imaxk0,imaxk0
-                     kx=dble(i)*deltakx
-                     ky=dble(j)*deltaky                     
-                     ii=imaxk0+i+1
-                     jj=imaxk0+j+1                   
-                     if (kx*kx+ky*ky.ge.numaper*numaper) then
-                        Ediffkzpos(ii,jj,1)=0.d0
-                        Ediffkzpos(ii,jj,2)=0.d0
-                        Ediffkzpos(ii,jj,3)=0.d0
-                     endif                 
+                  do i=-imaxk0,imaxk0
+                     do j=-imaxk0,imaxk0
+                        kx=dble(i)*deltakx
+                        ky=dble(j)*deltaky                     
+                        ii=imaxk0+i+1
+                        jj=imaxk0+j+1                   
+                        if (kx*kx+ky*ky.ge.numaper*numaper) then
+                           Ediffkzpos(ii,jj,1)=0.d0
+                           Ediffkzpos(ii,jj,2)=0.d0
+                           Ediffkzpos(ii,jj,3)=0.d0
+                        endif                 
+                     enddo
                   enddo
-               enddo
 !$OMP ENDDO 
 !$OMP END PARALLEL
-               
+
+               else
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(i,j,kx,ky,ii,jj)
+!$OMP DO SCHEDULE(DYNAMIC) COLLAPSE(2)               
+                  do i=-imaxk0,imaxk0
+                     do j=-imaxk0,imaxk0
+                        kx=dble(i)*deltakx
+                        ky=dble(j)*deltaky                     
+                        ii=imaxk0+i+1
+                        jj=imaxk0+j+1                   
+                        if (kx*kx+ky*ky.ge.numaper*numaper) then
+                           Ediffkzneg(ii,jj,1)=0.d0
+                           Ediffkzneg(ii,jj,2)=0.d0
+                           Ediffkzneg(ii,jj,3)=0.d0
+                        endif                 
+                     enddo
+                  enddo
+!$OMP ENDDO 
+!$OMP END PARALLEL
+                  
+               endif
+
+
+                  
             endif
 
 
@@ -4407,15 +4559,9 @@ c     calcul en reflexion
                         ii=imaxk0+i+1
                         jj=imaxk0+j+1
                         kk=i+nfft2d2+1+nfft2d*(j+nfft2d2)
-                        Efourierx(kk)=Ediffkzpos(ii,jj,1)*zfocus
-                        Efouriery(kk)=Ediffkzpos(ii,jj,2)*zfocus
-                        Efourierz(kk)=Ediffkzpos(ii,jj,3)*zfocus
-                        Efourierincx(kk)=(Ediffkzpos(ii,jj,1)
-     $                       +Ediffkzneg(ii,jj,1))*zfocus
-                        Efourierincy(kk)=(Ediffkzpos(ii,jj,2)
-     $                       +Ediffkzneg(ii,jj,2))*zfocus                      
-                        Efourierincz(kk)=(Ediffkzpos(ii,jj,3)
-     $                       +Ediffkzneg(ii,jj,3))*zfocus
+                        Efourierx(kk)=Ediffkzneg(ii,jj,1)*zfocus
+                        Efouriery(kk)=Ediffkzneg(ii,jj,2)*zfocus
+                        Efourierz(kk)=Ediffkzneg(ii,jj,3)*zfocus
 
                         u(1)=kx/k0
                         u(2)=ky/k0
