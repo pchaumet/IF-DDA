@@ -55,7 +55,7 @@ INCLUDEPATH     += /usr/lib64/gfortran/modules
   exists( /usr/include/hdf5/serial ) {
 	LIBS 		+= 	-I/usr/include/hdf5/serial -I/usr/include -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5
 INCLUDEPATH     += /usr/include/hdf5/serial
-
+QMAKE_CFLAGS     += -I/usr/include/hdf5/serial
   }
 } else {
 	LIBS 		+= 	

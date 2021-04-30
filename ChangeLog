@@ -1,3 +1,13 @@
+	version 0.6.22
+
+	1) Correction ds les .pro QMAKE_CFLAGS +=
+	-I/usr/include/hdf5/serial ajouté pour ubutu.
+	2) density manquait ds les main pour randomsphere.
+
+	paralelisation boucle force ds cdmlib.f?
+	faire k_x et k_y
+
+	-----------------------------------------------------
 	version 0.6.21
 
 	1) supprimer ligne write side avant cuboid2
@@ -11,8 +21,6 @@
 
 	paralelisation boucle force ds cdmlib.f?
 	faire k_x et k_y
-
-
 
 
 	-----------------------------------------------------

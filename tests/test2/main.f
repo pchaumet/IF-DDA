@@ -336,6 +336,7 @@ c     object='arbitrary'        !Arbitrary object
          sidex=2000.d0
          sidey=2000.d0
          sidez=2000.d0
+         density=0.2d0
          materiaumulti(1)='xx'
          ng=2
          nnnr=20
@@ -344,6 +345,7 @@ c     object='arbitrary'        !Arbitrary object
       elseif (object(1:13).eq.'randomsphere2') then
          numberobjet=1
          rayonmulti(1)=200.d0         
+         density=0.2d0
          aretecube=25.d0
          materiaumulti(1)='xx'
          ng=0
