@@ -1,3 +1,15 @@
+	version 0.6.23
+
+	1) supression des auteurs Henry à sa demande.
+	2) changement nom version
+	3) création de version qui change le nom ds tous les fichiers.
+	4) ajout nom version dans titre.tex
+	5) recree les pdf userguide.
+	6) supression option -g ds cdmlib.pro
+	7) probleme fermeture de hdf5 quand arret code fait.
+
+	
+	-----------------------------------------------------
 	version 0.6.22
 
 	1) Correction ds les .pro QMAKE_CFLAGS +=

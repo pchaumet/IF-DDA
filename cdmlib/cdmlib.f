@@ -289,6 +289,16 @@ c     FFloc : champ local
      $     ,'0 ascii file: 1 no file: 2 hdf5 file'
 
       if (nmat.eq.2) then
+         if (file_id.ne.0) then
+            write(*,*) 'Close HFD5 if not done',file_id
+            CALL h5gclose_f(group_idopt,error) 
+            CALL h5gclose_f(group_iddip,error)
+            CALL h5gclose_f(group_idff,error)
+            CALL h5gclose_f(group_idmic,error)
+            CALL h5gclose_f(group_idof,error)
+            CALL h5gclose_f(group_idnf,error)
+            call hdf5close(file_id)
+         endif
          debug=1
 #ifdef USE_HDF5
          call hdf5create(h5file, file_id)
@@ -4652,6 +4662,7 @@ c     output file
          CALL h5gclose_f(group_idof,error)
          CALL h5gclose_f(group_idnf,error)
          call hdf5close(file_id)
+         file_id=0
          write(*,*) 'Close HDF5 files'
 #else
         write(*,*) 'No HDF5 files'

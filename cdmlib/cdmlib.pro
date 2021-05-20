@@ -4,7 +4,7 @@
 
 TEMPLATE 	= 	lib
 
-VERSION         =       0.6.16
+VERSION         =       0.6.23
 
 TARGET 		=       cdmlib
 
@@ -33,7 +33,7 @@ QMAKE_CFLAGS    += -Warray-bounds -fcray-pointer -w -cpp -mcmodel=large
 QMAKE_LFLAGS    = 
 
 
-QMAKE_CFLAGS_RELEASE    = -O3 -g 
+QMAKE_CFLAGS_RELEASE    = -O3
 
 QMAKE_CFLAGS_THREAD =
 
